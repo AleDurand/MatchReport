@@ -5,21 +5,21 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema match_report
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema match_report
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `match_report` DEFAULT CHARACTER SET utf8 ;
+USE `match_report` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`club`
+-- Table `match_report`.`club`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`club` ;
+DROP TABLE IF EXISTS `match_report`.`club` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`club` (
+CREATE TABLE IF NOT EXISTS `match_report`.`club` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `direccion` VARCHAR(45) NULL,
@@ -30,21 +30,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`table1`
+-- Table `match_report`.`jugador`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`table1` ;
+DROP TABLE IF EXISTS `match_report`.`jugador` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`table1` (
-)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`jugador`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`jugador` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`jugador` (
+CREATE TABLE IF NOT EXISTS `match_report`.`jugador` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `nombres` VARCHAR(45) NULL,
   `apellido` VARCHAR(45) NULL,
@@ -55,11 +45,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`juega_en`
+-- Table `match_report`.`juega_en`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`juega_en` ;
+DROP TABLE IF EXISTS `match_report`.`juega_en` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`juega_en` (
+CREATE TABLE IF NOT EXISTS `match_report`.`juega_en` (
   `jugador_id` BIGINT NOT NULL,
   `club_id` BIGINT NOT NULL,
   INDEX `fk_juega_en_jugador_idx` (`jugador_id` ASC),
@@ -67,12 +57,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`juega_en` (
   PRIMARY KEY (`jugador_id`, `club_id`),
   CONSTRAINT `fk_juega_en_jugador`
     FOREIGN KEY (`jugador_id`)
-    REFERENCES `mydb`.`jugador` (`id`)
+    REFERENCES `match_report`.`jugador` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_juega_en_club1`
     FOREIGN KEY (`club_id`)
-    REFERENCES `mydb`.`club` (`id`)
+    REFERENCES `match_report`.`club` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
