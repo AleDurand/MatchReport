@@ -15,17 +15,38 @@ CREATE SCHEMA IF NOT EXISTS `match_report` DEFAULT CHARACTER SET utf8 ;
 USE `match_report` ;
 
 -- -----------------------------------------------------
+-- Table `match_report`.`cancha`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `match_report`.`cancha` ;
+
+CREATE TABLE IF NOT EXISTS `match_report`.`cancha` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `direccion` VARCHAR(45) NOT NULL,
+  `foto` CHAR(32) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `match_report`.`club`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `match_report`.`club` ;
 
 CREATE TABLE IF NOT EXISTS `match_report`.`club` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL,
   `nombre` VARCHAR(45) NOT NULL,
-  `direccion` VARCHAR(45) NULL,
+  `direccion` VARCHAR(45) NOT NULL,
   `escudo` CHAR(32) NULL,
   `pagina_web` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
+  `id_cancha` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
+  INDEX `fk_club_cancha1_idx` (`id_cancha` ASC),
+  CONSTRAINT `fk_club_cancha1`
+    FOREIGN KEY (`id_cancha`)
+    REFERENCES `match_report`.`cancha` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -36,10 +57,25 @@ DROP TABLE IF EXISTS `match_report`.`jugador` ;
 
 CREATE TABLE IF NOT EXISTS `match_report`.`jugador` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `nombres` VARCHAR(45) NULL,
-  `apellido` VARCHAR(45) NULL,
+  `nombres` VARCHAR(45) NOT NULL,
+  `apellido` VARCHAR(45) NOT NULL,
   `fecha_nacimiento` DATE NULL,
   `status` TINYINT(1) NULL,
+  `tipo_documento` VARCHAR(45) NOT NULL,
+  `nro_documento` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `match_report`.`torneo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `match_report`.`torneo` ;
+
+CREATE TABLE IF NOT EXISTS `match_report`.`torneo` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `fecha_inicio` DATE NULL,
+  `fecha_fin` DATE NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -50,19 +86,146 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `match_report`.`juega_en` ;
 
 CREATE TABLE IF NOT EXISTS `match_report`.`juega_en` (
-  `jugador_id` BIGINT NOT NULL,
-  `club_id` BIGINT NOT NULL,
-  INDEX `fk_juega_en_jugador_idx` (`jugador_id` ASC),
-  INDEX `fk_juega_en_club1_idx` (`club_id` ASC),
-  PRIMARY KEY (`jugador_id`, `club_id`),
+  `id_jugador` BIGINT NOT NULL,
+  `id_club` BIGINT NOT NULL,
+  `id_torneo` BIGINT NOT NULL,
+  INDEX `fk_juega_en_jugador_idx` (`id_jugador` ASC),
+  INDEX `fk_juega_en_club1_idx` (`id_club` ASC),
+  PRIMARY KEY (`id_jugador`, `id_club`, `id_torneo`),
+  INDEX `fk_juega_en_torneo1_idx` (`id_torneo` ASC),
   CONSTRAINT `fk_juega_en_jugador`
-    FOREIGN KEY (`jugador_id`)
+    FOREIGN KEY (`id_jugador`)
     REFERENCES `match_report`.`jugador` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_juega_en_club1`
-    FOREIGN KEY (`club_id`)
+    FOREIGN KEY (`id_club`)
     REFERENCES `match_report`.`club` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_juega_en_torneo1`
+    FOREIGN KEY (`id_torneo`)
+    REFERENCES `match_report`.`torneo` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `match_report`.`fecha`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `match_report`.`fecha` ;
+
+CREATE TABLE IF NOT EXISTS `match_report`.`fecha` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `numero` INT NOT NULL,
+  `descripcion` VARCHAR(45) NULL,
+  `torneo_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_fecha_torneo1_idx` (`torneo_id` ASC),
+  CONSTRAINT `fk_fecha_torneo1`
+    FOREIGN KEY (`torneo_id`)
+    REFERENCES `match_report`.`torneo` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `match_report`.`partido`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `match_report`.`partido` ;
+
+CREATE TABLE IF NOT EXISTS `match_report`.`partido` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `fecha` DATE NOT NULL,
+  `hora` TIME NOT NULL,
+  `id_cancha` INT NOT NULL,
+  `status` ENUM('PENDIENTE', 'EN_CURSO', 'FINALIZADO', 'SUSPENDIDO', 'POSPUESTO') NOT NULL DEFAULT 'PENDIENTE',
+  `fecha_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_partido_cancha1_idx` (`id_cancha` ASC),
+  INDEX `fk_partido_fecha1_idx` (`fecha_id` ASC),
+  CONSTRAINT `fk_partido_cancha1`
+    FOREIGN KEY (`id_cancha`)
+    REFERENCES `match_report`.`cancha` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_partido_fecha1`
+    FOREIGN KEY (`fecha_id`)
+    REFERENCES `match_report`.`fecha` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `match_report`.`resultado`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `match_report`.`resultado` ;
+
+CREATE TABLE IF NOT EXISTS `match_report`.`resultado` (
+  `id_partido` BIGINT NOT NULL,
+  `goles_local` INT NOT NULL DEFAULT 0,
+  `goles_visitante` INT NOT NULL DEFAULT 0,
+  INDEX `fk_resultado_partido1_idx` (`id_partido` ASC),
+  PRIMARY KEY (`id_partido`),
+  CONSTRAINT `fk_resultado_partido1`
+    FOREIGN KEY (`id_partido`)
+    REFERENCES `match_report`.`partido` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `match_report`.`torneo_club`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `match_report`.`torneo_club` ;
+
+CREATE TABLE IF NOT EXISTS `match_report`.`torneo_club` (
+  `id_torneo` BIGINT NOT NULL,
+  `id_club` BIGINT NOT NULL,
+  `partidos_jugados` INT NOT NULL DEFAULT 0,
+  `partidos_ganados` INT NOT NULL,
+  `partidos_empatados` INT NOT NULL,
+  `partidos_perdidos` INT NOT NULL,
+  `goles_a_favor` INT NOT NULL,
+  `goles_en_contra` INT NOT NULL,
+  INDEX `fk_posiciones_torneo1_idx` (`id_torneo` ASC),
+  INDEX `fk_posiciones_club1_idx` (`id_club` ASC),
+  PRIMARY KEY (`id_club`, `id_torneo`),
+  CONSTRAINT `fk_posiciones_torneo1`
+    FOREIGN KEY (`id_torneo`)
+    REFERENCES `match_report`.`torneo` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_posiciones_club1`
+    FOREIGN KEY (`id_club`)
+    REFERENCES `match_report`.`club` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `match_report`.`jugo_partido`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `match_report`.`jugo_partido` ;
+
+CREATE TABLE IF NOT EXISTS `match_report`.`jugo_partido` (
+  `jugador_id` BIGINT NOT NULL,
+  `partido_id` BIGINT NOT NULL,
+  PRIMARY KEY (`jugador_id`, `partido_id`),
+  INDEX `fk_jugo_partido_partido1_idx` (`partido_id` ASC),
+  CONSTRAINT `fk_jugo_partido_jugador1`
+    FOREIGN KEY (`jugador_id`)
+    REFERENCES `match_report`.`jugador` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_jugo_partido_partido1`
+    FOREIGN KEY (`partido_id`)
+    REFERENCES `match_report`.`partido` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
