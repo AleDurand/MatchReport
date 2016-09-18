@@ -9,14 +9,14 @@ sourceCompatibility = 1.8
 
 buildscript {
     ext {
-        springBootVersion = '1.1.12.RELEASE'
+        springBootVersion = '1.4.0.RELEASE'
     }
     repositories {
         mavenCentral()
         jcenter()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
         classpath("mysql:mysql-connector-java:5.1.36")
     }
 }
@@ -35,7 +35,6 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-data-rest")
 	compile("org.springframework.boot:spring-boot-starter-security")
 	compile("mysql:mysql-connector-java:5.1.36")
-	compile('commons-io:commons-io:2.5')
     testCompile('junit:junit:4.+')
 }
 
