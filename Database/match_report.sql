@@ -162,9 +162,13 @@ CREATE TABLE IF NOT EXISTS `match_report`.`partido` (
   `id_cancha` INT(11) NOT NULL,
   `status` ENUM('PENDIENTE', 'EN_CURSO', 'FINALIZADO', 'SUSPENDIDO', 'POSPUESTO') NOT NULL DEFAULT 'PENDIENTE',
   `fecha_id` INT(11) NOT NULL,
+  `equipo_local` BIGINT(20) NOT NULL,
+  `equipo_visitante` BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_partido_cancha1_idx` (`id_cancha` ASC),
   INDEX `fk_partido_fecha1_idx` (`fecha_id` ASC),
+  INDEX `fk_partido_club1_idx` (`equipo_local` ASC),
+  INDEX `fk_partido_club2_idx` (`equipo_visitante` ASC),
   CONSTRAINT `fk_partido_cancha1`
     FOREIGN KEY (`id_cancha`)
     REFERENCES `match_report`.`cancha` (`id`)
@@ -173,6 +177,16 @@ CREATE TABLE IF NOT EXISTS `match_report`.`partido` (
   CONSTRAINT `fk_partido_fecha1`
     FOREIGN KEY (`fecha_id`)
     REFERENCES `match_report`.`fecha` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_partido_club1`
+    FOREIGN KEY (`equipo_local`)
+    REFERENCES `match_report`.`club` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_partido_club2`
+    FOREIGN KEY (`equipo_visitante`)
+    REFERENCES `match_report`.`club` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -185,10 +199,17 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `match_report`.`jugo_partido` ;
 
 CREATE TABLE IF NOT EXISTS `match_report`.`jugo_partido` (
-  `jugador_id` BIGINT(20) NOT NULL,
   `partido_id` BIGINT(20) NOT NULL,
-  PRIMARY KEY (`jugador_id`, `partido_id`),
+  `club_id` BIGINT(20) NOT NULL,
+  `jugador_id` BIGINT(20) NOT NULL,
+  `goles` INT(11) NOT NULL DEFAULT 0,
+  `amarilla` TINYINT(1) NOT NULL DEFAULT 0,
+  `descalifacion` TINYINT(1) NOT NULL DEFAULT 0,
+  `exclusion` INT(11) NOT NULL DEFAULT 0,
+  `tarjeta_azul` TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`partido_id`, `club_id`, `jugador_id`),
   INDEX `fk_jugo_partido_partido1_idx` (`partido_id` ASC),
+  INDEX `fk_jugo_partido_club1_idx` (`club_id` ASC),
   CONSTRAINT `fk_jugo_partido_jugador1`
     FOREIGN KEY (`jugador_id`)
     REFERENCES `match_report`.`jugador` (`id`)
@@ -197,6 +218,11 @@ CREATE TABLE IF NOT EXISTS `match_report`.`jugo_partido` (
   CONSTRAINT `fk_jugo_partido_partido1`
     FOREIGN KEY (`partido_id`)
     REFERENCES `match_report`.`partido` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_jugo_partido_club1`
+    FOREIGN KEY (`club_id`)
+    REFERENCES `match_report`.`club` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -291,6 +317,48 @@ CREATE TABLE IF NOT EXISTS `match_report`.`user_has_authority` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `match_report`.`user_has_authority`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `match_report`.`user_has_authority` ;
+
+CREATE TABLE IF NOT EXISTS `match_report`.`user_has_authority` (
+  `user_id` VARCHAR(50) NOT NULL,
+  `authority_id` INT(11) NOT NULL,
+  PRIMARY KEY (`user_id`, `authority_id`),
+  INDEX `fk_users_has_authorities_authorities1_idx` (`authority_id` ASC),
+  INDEX `fk_users_has_authorities_users1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_users_has_authorities_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `match_report`.`user` (`username`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_users_has_authorities_authorities1`
+    FOREIGN KEY (`authority_id`)
+    REFERENCES `match_report`.`authority` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `match_report`.`partido_observacion`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `match_report`.`partido_observacion` ;
+
+CREATE TABLE IF NOT EXISTS `match_report`.`partido_observacion` (
+  `observacion` VARCHAR(500) NOT NULL,
+  `partido_id` BIGINT(20) NOT NULL,
+  INDEX `fk_partido_observacion_partido1_idx` (`partido_id` ASC),
+  CONSTRAINT `fk_partido_observacion_partido1`
+    FOREIGN KEY (`partido_id`)
+    REFERENCES `match_report`.`partido` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
