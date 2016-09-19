@@ -48,12 +48,12 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `match_report`.`club` ;
 
 CREATE TABLE IF NOT EXISTS `match_report`.`club` (
-  `id` BIGINT(20) NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `direccion` VARCHAR(45) NOT NULL,
   `escudo` CHAR(32) NULL DEFAULT NULL,
   `pagina_web` VARCHAR(45) NULL DEFAULT NULL,
-  `id_cancha` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_cancha` INT(11) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_club_cancha1_idx` (`id_cancha` ASC),
   CONSTRAINT `fk_club_cancha1`
@@ -72,8 +72,8 @@ DROP TABLE IF EXISTS `match_report`.`torneo` ;
 
 CREATE TABLE IF NOT EXISTS `match_report`.`torneo` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `fecha_inicio` DATE NULL DEFAULT NULL,
-  `fecha_fin` DATE NULL DEFAULT NULL,
+  `fecha_inicio` DATE NOT NULL,
+  `fecha_fin` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -109,10 +109,10 @@ CREATE TABLE IF NOT EXISTS `match_report`.`jugador` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `nombres` VARCHAR(45) NOT NULL,
   `apellido` VARCHAR(45) NOT NULL,
-  `fecha_nacimiento` DATE NULL DEFAULT NULL,
+  `fecha_nacimiento` DATE NOT NULL,
   `status` TINYINT(1) NULL DEFAULT NULL,
-  `tipo_documento` VARCHAR(45) NOT NULL,
-  `nro_documento` VARCHAR(45) NOT NULL,
+  `tipo_documento` VARCHAR(10) NOT NULL,
+  `nro_documento` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `match_report`.`partido` (
   `fecha` DATE NOT NULL,
   `hora` TIME NOT NULL,
   `id_cancha` INT(11) NOT NULL,
-  `status` ENUM('PENDIENTE', 'EN_CURSO', 'FINALIZADO', 'SUSPENDIDO', 'POSPUESTO') NOT NULL DEFAULT 'PENDIENTE',
+  `status` ENUM('PENDIENTE', 'EN_CURSO', 'FINALIZADO', 'SUSPENDIDO', 'POSPUESTO') NULL DEFAULT 'PENDIENTE',
   `fecha_id` INT(11) NOT NULL,
   `equipo_local` BIGINT(20) NOT NULL,
   `equipo_visitante` BIGINT(20) NOT NULL,

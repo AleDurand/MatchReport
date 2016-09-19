@@ -6,29 +6,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-@Table(name = "authority")
-public class Role implements GrantedAuthority {
-
-	private static final long serialVersionUID = 1L;
+@Table(name = "cancha")
+public class StadiumModel {
 
 	@Id
-	@NotNull
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 
-	@NotNull
-	@NotEmpty
-	@Column(name = "name", nullable = false)
+	@Column(name = "nombre", nullable = false)
 	private String name;
 
-	public Role() {
+	@Column(name = "direccion", nullable = false)
+	private String address;
+
+	@Column(name = "foto", nullable = true)
+	private String image;
+
+	public StadiumModel() {
 
 	}
 
@@ -48,9 +45,20 @@ public class Role implements GrantedAuthority {
 		this.name = name;
 	}
 
-	@Override
-	public String getAuthority() {
-		return this.name;
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }
