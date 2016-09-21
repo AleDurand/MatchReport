@@ -7,10 +7,10 @@ env:
   - REST_API_DIR=$TRAVIS_BUILD_DIR/MatchReportAPI
   
 install:
-  - cd $REST_API_DIR && gradle assemble
+  - cd $REST_API_DIR && ./gradlew assemble
   
 script:
-  - cd $REST_API_DIR && gradle clean build
+  - cd $REST_API_DIR && ./gradlew clean build
   
 after_success:
   - bash <(curl -s https://codecov.io/bash)  
