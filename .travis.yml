@@ -1,0 +1,21 @@
+languaje: java
+
+jdk:
+  - oraclejdk8
+  
+env:
+  - REST_API_DIR=$TRAVIS_BUILD_DIR/MatchReportAPI
+  
+
+before_install:
+  - chmod +x $REST_API_DIR/gradlew
+  
+install:
+  - cd $REST_API_DIR && ./gradlew assemble
+  
+script:
+  - cd $REST_API_DIR && ./gradlew clean build
+  
+after_success:
+  - bash <(curl -s https://codecov.io/bash)  
+  
