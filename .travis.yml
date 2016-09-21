@@ -4,7 +4,7 @@ jdk:
   - oraclejdk8
   
 env:
-  - REST_API_DIR=MatchReportAPI
+  - REST_API_DIR=$TRAVIS_BUILD_DIR/MatchReportAPI
   
 install:
   - cd $REST_API_DIR && gradle assemble
