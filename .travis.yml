@@ -8,7 +8,7 @@ env:
   
 
 before_install:
-  - chmod +x $REST_API_DIR/.gradlew
+  - chmod +x $REST_API_DIR/gradlew
   
 install:
   - cd $REST_API_DIR && ./gradlew assemble
