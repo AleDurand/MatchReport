@@ -4,8 +4,13 @@ jdk:
   - oraclejdk8
   
 install:
+  - cd MatchReportAPI
   - gradle assemble
   
 script:
+  - cd MatchReportAPI
   - gradle clean build
+  
+after_success:
+  - bash <(curl -s https://codecov.io/bash)  
   
