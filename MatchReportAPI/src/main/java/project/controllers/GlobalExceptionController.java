@@ -47,6 +47,5 @@ public class GlobalExceptionController {
 		} catch (NoSuchMessageException ex) {
 			return new ErrorModel(httpStatus.value(), code);
 		}
-
 	}
 }
