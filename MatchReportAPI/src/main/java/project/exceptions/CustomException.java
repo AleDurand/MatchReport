@@ -9,6 +9,7 @@ public class CustomException extends RuntimeException {
 	public CustomException(String code, Object[] args) {
 		super();
 		this.code = code;
+		this.args = args;
 	}
 
 	public String getCode() {

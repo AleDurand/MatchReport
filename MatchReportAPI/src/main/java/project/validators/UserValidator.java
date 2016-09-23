@@ -17,13 +17,11 @@ public class UserValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "field.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "field.required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "field.required");
 		UserModel user = (UserModel) target;
-		if (user.getPassword() != null) {
-			if (user.getPassword().length() < MINIMUM_PASSWORD_LENGTH) {
-				errors.rejectValue("password", "field.min.length", new Object[] { MINIMUM_PASSWORD_LENGTH }, "");
-			}
+		if (user.getPassword() != null && user.getPassword().length() < MINIMUM_PASSWORD_LENGTH) {
+			errors.rejectValue("password", "field.min.length", new Object[] { MINIMUM_PASSWORD_LENGTH }, "");
 		}
 	}
 
