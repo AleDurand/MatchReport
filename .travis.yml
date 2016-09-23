@@ -5,7 +5,6 @@ jdk:
   
 env:
   - REST_API_DIR=$TRAVIS_BUILD_DIR/MatchReportAPI
-  
 
 before_install:
   - chmod +x $REST_API_DIR/gradlew
