@@ -13,6 +13,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -24,10 +26,13 @@ public class UserModel implements UserDetails {
 
 	@Id
 	@NotNull
+	@NotEmpty
 	@Column(name = "username", unique = true, nullable = false)
 	private String username;
 
 	@NotNull
+	@NotEmpty
+	@Length(min = 6, max = 50)
 	@Column(name = "password", nullable = false)
 	private String password;
 

@@ -9,7 +9,7 @@ sourceCompatibility = 1.8
 
 buildscript {
     ext {
-        springBootVersion = '1.4.0.RELEASE'
+        springBootVersion = "1.4.0.RELEASE"
     }
     repositories {
         mavenCentral()
@@ -31,11 +31,12 @@ repositories {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
 	compile("org.springframework.boot:spring-boot-starter-data-rest")
 	compile("org.springframework.boot:spring-boot-starter-security")
 	compile("mysql:mysql-connector-java:5.1.36")
-    testCompile('junit:junit:4.+')
+	compile("log4j:log4j:1.2.17")
+    testCompile("junit:junit:4.+")
 }
 
 test {
