@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import project.models.PlayerModel;
 import project.services.PlayerService;
-import project.validators.StadiumValidator;
+import project.validators.PlayerValidator;
 
 @RestController
 @RequestMapping(value = "/players")
@@ -26,7 +26,7 @@ public class PlayerController {
 	private PlayerService playerService;
 
 	@Autowired
-	private StadiumValidator stadiumValidator;
+	private PlayerValidator playerValidator;
 
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<PlayerModel> create(@Validated @RequestBody PlayerModel player) {
@@ -54,6 +54,6 @@ public class PlayerController {
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
-		binder.setValidator(stadiumValidator);
+		binder.setValidator(playerValidator);
 	}
 }
