@@ -39,10 +39,11 @@ public class Application extends SpringBootServletInitializer {
 	public Jackson2ObjectMapperBuilder jacksonBuilder() {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
 		builder.serializationInclusion(Include.NON_NULL);
+		builder.failOnUnknownProperties(false);
 		return builder;
 	}
 
-	@Bean(name = "validator")
+	@Bean
 	public LocalValidatorFactoryBean validator() {
 		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
 		bean.setValidationMessageSource(messageSource());

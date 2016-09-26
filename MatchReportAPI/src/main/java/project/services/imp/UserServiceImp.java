@@ -35,6 +35,14 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
+	public void delete(String username) {
+		if (!userRepository.exists(username)) {
+			throw new EntityNotFoundException("resource.not_found", null);
+		}
+		userRepository.delete(username);
+	}
+
+	@Override
 	public List<UserModel> getAll() {
 		return userRepository.findAll();
 	}

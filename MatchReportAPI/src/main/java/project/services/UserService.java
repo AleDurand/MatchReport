@@ -13,5 +13,8 @@ public interface UserService extends UserDetailsService {
 
 	public UserModel loadUserByUsername(String username) throws UsernameNotFoundException;
 
+	public void delete(String username);
+
 	public List<UserModel> getAll();
+
 }

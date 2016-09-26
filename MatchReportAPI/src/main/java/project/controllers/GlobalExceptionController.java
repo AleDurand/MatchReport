@@ -8,6 +8,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,10 +33,16 @@ public class GlobalExceptionController {
 
 	@ExceptionHandler({ MethodArgumentNotValidException.class })
 	public ResponseEntity<?> handleValidationError(MethodArgumentNotValidException ex) {
-		FieldError error = ex.getBindingResult().getFieldError();
-		ErrorModel message = getErrorMessage(error.getCode(), error.getArguments(), error.getField(),
-				HttpStatus.BAD_REQUEST);
-		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+		if (ex.getBindingResult().getFieldError() != null) {
+			FieldError error = ex.getBindingResult().getFieldError();
+			ErrorModel message = getErrorMessage(error.getCode(), error.getArguments(), error.getField(),
+					HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+		} else {
+			ObjectError error = ex.getBindingResult().getGlobalError();
+			ErrorModel message = getErrorMessage(error.getCode(), error.getArguments(), null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@ExceptionHandler({ EntityNotFoundException.class })

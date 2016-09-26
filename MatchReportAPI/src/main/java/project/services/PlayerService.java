@@ -6,6 +6,12 @@ import project.models.PlayerModel;
 
 public interface PlayerService {
 
+	public PlayerModel create(PlayerModel player);
+
+	public PlayerModel 	read(Integer id);
+
+	public void delete(Integer id);
+	
 	public List<PlayerModel> getAll();
 
 }

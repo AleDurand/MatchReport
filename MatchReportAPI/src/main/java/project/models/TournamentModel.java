@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "torneo")
 public class TournamentModel {
@@ -18,9 +20,11 @@ public class TournamentModel {
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "fecha_inicio", nullable = true)
 	private Date initDate;
 
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "fecha_fin", nullable = true)
 	private Date endDate;
 
