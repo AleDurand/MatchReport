@@ -32,9 +32,11 @@ public class UserModel implements UserDetails {
 	private boolean enabled;
 
 	@ManyToMany
-	@JoinTable(name = "user_has_authority", joinColumns = {
-			@JoinColumn(name = "user_id", referencedColumnName = "username") }, inverseJoinColumns = {
-					@JoinColumn(name = "authority_id", referencedColumnName = "id") })
+	@JoinTable( //@formatter:off
+		name = "user_has_authority", 
+		joinColumns = {	@JoinColumn(name = "user_id", referencedColumnName = "username") }, 
+		inverseJoinColumns = { @JoinColumn(name = "authority_id", referencedColumnName = "id") }
+	) //@formatter:on
 	private Set<RoleModel> authorities;
 
 	public UserModel() {
