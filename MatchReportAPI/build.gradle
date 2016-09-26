@@ -35,8 +35,9 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-data-rest")
 	compile("org.springframework.boot:spring-boot-starter-security")
 	compile("mysql:mysql-connector-java:5.1.36")
-	compile("log4j:log4j:1.2.17")
-    testCompile("junit:junit:4.+")
+	compile("log4j:log4j:1.2.17")		
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("junit:junit:4.+")     
 }
 
 test {
