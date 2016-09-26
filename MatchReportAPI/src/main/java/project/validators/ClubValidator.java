@@ -1,10 +1,12 @@
 package project.validators;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import project.models.ClubModel;
 
+@Component
 public class ClubValidator implements Validator {
 
 	@Override

@@ -9,9 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import project.exceptions.CustomException;
 import project.exceptions.EntityNotFoundException;
@@ -45,10 +48,33 @@ public class GlobalExceptionController {
 		}
 	}
 
+	@ExceptionHandler({ MethodArgumentTypeMismatchException.class })
+	public ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
+		Object[] args = new Object[] { ex.getName(), ex.getRequiredType() };
+		ErrorModel message = getErrorMessage("exception.type_mismatch", args, null, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+	}
+
 	@ExceptionHandler({ EntityNotFoundException.class })
 	public ResponseEntity<?> handleNotFounds(CustomException e) {
 		ErrorModel message = getErrorMessage(e.getCode(), e.getArgs(), null, HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
+	public ResponseEntity<?> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
+		Object[] args = new Object[] { ex.getMethod() };
+		ErrorModel message = getErrorMessage("exception.method_not_supported", args, null,
+				HttpStatus.METHOD_NOT_ALLOWED);
+		return new ResponseEntity<>(message, HttpStatus.METHOD_NOT_ALLOWED);
+	}
+
+	@ExceptionHandler({ HttpMediaTypeNotSupportedException.class })
+	public ResponseEntity<?> handleMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex) {
+		Object[] args = new Object[] { ex.getContentType() };
+		ErrorModel message = getErrorMessage("exception.media_type_not_supported", args, null,
+				HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+		return new ResponseEntity<>(message, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
 	}
 
 	@ExceptionHandler({ Exception.class, RuntimeException.class })

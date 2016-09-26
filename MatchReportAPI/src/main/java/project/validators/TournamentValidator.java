@@ -20,12 +20,21 @@ public class TournamentValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		TournamentModel tournament = (TournamentModel) target;
 
-		if (tournament.getInitDate() != null && tournament.getInitDate().before(new Date())) {
-			errors.rejectValue("initDate", "tournament.init_date.before_today", "{tournament.init_date.before_today}");
+		if (tournament.getInitDate() == null) {
+			errors.rejectValue("initDate", "tournament.init_date.not_null", "{tournament.init_date.not_null}");
+
+		} else {
+			if (tournament.getInitDate().before(new Date())) {
+				errors.rejectValue("initDate", "tournament.init_date.not_null", "{tournament.init_date.not_null}");
+			}
 		}
 
-		if (tournament.getEndDate() != null && tournament.getEndDate().before(new Date())) {
-			errors.rejectValue("endDate", "tournament.end_date.before_today", "{tournament.end_date.before_today}");
+		if (tournament.getEndDate() == null) {
+			errors.rejectValue("endDate", "tournament.end_date.not_null", "{tournament.end_date.not_null}");
+		} else {
+			if (tournament.getEndDate().before(new Date())) {
+				errors.rejectValue("endDate", "tournament.end_date.not_null", "{tournament.end_date.not_null}");
+			}
 		}
 
 		if (tournament.getInitDate() != null && tournament.getEndDate() != null) {
