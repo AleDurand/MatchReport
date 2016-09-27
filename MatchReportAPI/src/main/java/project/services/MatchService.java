@@ -2,7 +2,9 @@ package project.services;
 
 import java.util.List;
 
+import project.models.ClubModel;
 import project.models.MatchModel;
+import project.models.PlayerModel;
 
 public interface MatchService {
 
@@ -13,5 +15,7 @@ public interface MatchService {
 	public void delete(Integer id);
 	
 	public List<MatchModel> getAll();
+	
+	public List<PlayerModel> findPlayerbyClub(ClubModel club);
 
 }
