@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
-import project.models.ClubModel;
 import project.models.MatchModel;
-import project.models.PlayerModel;
 import project.repositories.MatchRepository;
 import project.services.MatchService;
 
@@ -44,9 +42,5 @@ public class MatchServiceImp implements MatchService {
 		return matchRepository.findAll();
 	}
 
-	@Override
-	public List<PlayerModel> findPlayerbyClub(ClubModel club) {
-		return matchRepository.findPlayerbyClub(club);
-	}
 
 }
