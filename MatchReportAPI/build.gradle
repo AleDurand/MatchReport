@@ -31,12 +31,12 @@ repositories {
 }
 
 dependencies {
-	compile("org.springframework.boot:spring-boot-starter-web")
-	compile("org.springframework.boot:spring-boot-starter-data-jpa")
-	compile("org.springframework.boot:spring-boot-starter-security")
-	compile("mysql:mysql-connector-java:5.1.36")
-	compile("log4j:log4j:1.2.17")	
-	testCompile("com.h2database:h2")	
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("mysql:mysql-connector-java:5.1.36")
+    compile("log4j:log4j:1.2.17")	
+    testCompile("com.h2database:h2")	
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("junit:junit:4.+")     
 }
