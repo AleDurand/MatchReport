@@ -45,6 +45,10 @@ public class MatchModel {
 	@JoinColumn(name = "equipo_visitante")
 	private ClubModel visitor;
 
+	@OneToOne
+	@JoinColumn(name = "fecha_id")
+	private RoundModel round;
+
 	public MatchModel() {
 	}
 
@@ -104,16 +108,12 @@ public class MatchModel {
 		this.visitor = visitor;
 	}
 
-	// public RoundModel getRound() {
-	// return round;
-	// }
-	//
-	// public void setRound(RoundModel round) {
-	// this.round = round;
-	// }
+	public RoundModel getRound() {
+		return round;
+	}
 
-	// @OneToOne
-	// @JoinColumn(name = "fecha_id")
-	// private RoundModel round; // TODO
+	public void setRound(RoundModel round) {
+		this.round = round;
+	}
 
 }

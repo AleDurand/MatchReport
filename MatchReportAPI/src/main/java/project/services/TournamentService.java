@@ -2,6 +2,7 @@ package project.services;
 
 import java.util.List;
 
+import project.models.RoundModel;
 import project.models.TournamentModel;
 
 public interface TournamentService {
@@ -13,5 +14,9 @@ public interface TournamentService {
 	public void delete(Integer id);
 
 	public List<TournamentModel> getAll();
+
+	public List<RoundModel> getAllRounds(Integer tournamentId);
+
+	public List<RoundModel> getAllMatches(Integer tournamentId, Integer roundId);
 
 }

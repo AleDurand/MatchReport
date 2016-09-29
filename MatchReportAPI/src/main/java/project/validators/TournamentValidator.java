@@ -22,10 +22,9 @@ public class TournamentValidator implements Validator {
 
 		if (tournament.getInitDate() == null) {
 			errors.rejectValue("initDate", "tournament.init_date.not_null", "{tournament.init_date.not_null}");
-
 		} else {
 			if (tournament.getInitDate().before(new Date())) {
-				errors.rejectValue("initDate", "tournament.init_date.not_null", "{tournament.init_date.not_null}");
+				errors.rejectValue("initDate", "tournament.init_date.before_today", "{tournament.init_date.before_today}");
 			}
 		}
 
@@ -33,7 +32,7 @@ public class TournamentValidator implements Validator {
 			errors.rejectValue("endDate", "tournament.end_date.not_null", "{tournament.end_date.not_null}");
 		} else {
 			if (tournament.getEndDate().before(new Date())) {
-				errors.rejectValue("endDate", "tournament.end_date.not_null", "{tournament.end_date.not_null}");
+				errors.rejectValue("endDate", "tournament.end_date.before_today", "{tournament.end_date.before_today}");
 			}
 		}
 
