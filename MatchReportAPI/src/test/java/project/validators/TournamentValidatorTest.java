@@ -49,6 +49,17 @@ public class TournamentValidatorTest {
 	}
 	
 	@Test
+	public void invalidInitDateNull() {
+		TournamentModel tournament = new TournamentModel();
+		tournament.setInitDate(null);
+		tournament.setEndDate(new Date(new Date().getTime() + TimeUnit.DAYS.toMillis(2)));
+		BindException errors = new BindException(tournament, "tournament");
+		ValidationUtils.invokeValidator(validator, tournament, errors);
+		assertTrue(errors.hasErrors());
+	}
+	
+	
+	@Test
 	public void invalidInitDate() {
 		TournamentModel tournament = new TournamentModel();
 		tournament.setInitDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
@@ -67,6 +78,17 @@ public class TournamentValidatorTest {
 		ValidationUtils.invokeValidator(validator, tournament, errors);
 		assertTrue(errors.hasErrors());
 	}
+	
+	@Test
+	public void invalidEndDateNull() {
+		TournamentModel tournament = new TournamentModel();
+		tournament.setInitDate(new Date(new Date().getTime() + TimeUnit.DAYS.toMillis(1)));
+		tournament.setEndDate(null);
+		BindException errors = new BindException(tournament, "tournament");
+		ValidationUtils.invokeValidator(validator, tournament, errors);
+		assertTrue(errors.hasErrors());
+	}
+
 	
 	@Test
 	public void invalidDates() {

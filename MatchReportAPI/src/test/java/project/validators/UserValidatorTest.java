@@ -54,12 +54,32 @@ public class UserValidatorTest {
 		ValidationUtils.invokeValidator(validator, user, errors);
 		assertTrue(errors.hasErrors());
 	}
+	
+	@Test
+	public void invalidUsernameEmpty() {
+		UserModel user = new UserModel();
+		user.setUsername("       ");
+		user.setPassword("password");
+		BindException errors = new BindException(user, "user");
+		ValidationUtils.invokeValidator(validator, user, errors);
+		assertTrue(errors.hasErrors());
+	}
 
 	@Test
 	public void invalidPasswordNull() {
 		UserModel user = new UserModel();
 		user.setUsername("username");
 		user.setPassword(null);
+		BindException errors = new BindException(user, "user");
+		ValidationUtils.invokeValidator(validator, user, errors);
+		assertTrue(errors.hasErrors());
+	}
+	
+	@Test
+	public void invalidPasswordEmpty() {
+		UserModel user = new UserModel();
+		user.setUsername("username");
+		user.setPassword("       ");
 		BindException errors = new BindException(user, "user");
 		ValidationUtils.invokeValidator(validator, user, errors);
 		assertTrue(errors.hasErrors());
