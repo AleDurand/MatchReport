@@ -37,7 +37,7 @@ public class UserValidator implements Validator {
 			}
 
 			int length = user.getPassword().length();
-			if (length > MINIMUM_PASSWORD_LENGTH || length > MAXIMUM_PASSWORD_LENGTH) {
+			if (length < MINIMUM_PASSWORD_LENGTH || length > MAXIMUM_PASSWORD_LENGTH) {
 				Object[] args = new Object[] { MINIMUM_PASSWORD_LENGTH, MAXIMUM_PASSWORD_LENGTH };
 				errors.rejectValue("password", "user.password.size", args, "{user.password.size}");
 			}

@@ -14,12 +14,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import project.MockApplication;
-
+import project.Application;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { MockApplication.class })
+@SpringBootTest(classes = { Application.class })
 @AutoConfigureMockMvc
 public class ClubControllerTest {
 

@@ -49,13 +49,21 @@ public class UserModel implements UserDetails {
 	}
 
 	@Override
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Override
 	public String getPassword() {
 		return password;
 	}
 
-	@Override
-	public String getUsername() {
-		return username;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
@@ -76,6 +84,10 @@ public class UserModel implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }
