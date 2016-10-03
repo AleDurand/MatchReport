@@ -56,14 +56,13 @@ public class TournamentServiceImp implements TournamentService {
 	}
 
 	@Override
-	public List<RoundModel> getAllMatches(Integer tournamentId, Integer roundId) {
+	public RoundModel addRound(Integer tournamentId, RoundModel round) {
 		if (!tournamentRepository.exists(tournamentId)) {
 			throw new EntityNotFoundException("resource.not_found", null);
 		}
-		if (!roundRepository.exists(roundId)) {
-			throw new EntityNotFoundException("resource.not_found", null);
-		}
-		return roundRepository.findByTournamentId(tournamentId);
+		TournamentModel tournament = tournamentRepository.findOne(tournamentId);
+		round.setTournament(tournament);
+		return roundRepository.save(round);
 	}
 
 }

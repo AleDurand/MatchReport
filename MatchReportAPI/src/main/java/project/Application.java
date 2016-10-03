@@ -40,6 +40,7 @@ public class Application extends SpringBootServletInitializer {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
 		builder.serializationInclusion(Include.NON_NULL);
 		builder.failOnUnknownProperties(false);
+		builder.indentOutput(true);
 		return builder;
 	}
 

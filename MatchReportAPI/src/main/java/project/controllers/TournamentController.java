@@ -52,20 +52,6 @@ public class TournamentController {
 		return new ResponseEntity<>(tournaments, HttpStatus.OK);
 	}
 
-//	@RequestMapping(value = "/{id}/rounds", method = RequestMethod.GET, produces = "application/json")
-//	public ResponseEntity<List<RoundModel>> getAllRounds(@PathVariable("id") Integer tournamentId) {
-//		List<RoundModel> rounds = tournamentService.getAllRounds(tournamentId);
-//		return new ResponseEntity<>(rounds, HttpStatus.OK);
-//	}
-//
-//	@RequestMapping(value = "/{id}/rounds/{idRound}", method = RequestMethod.GET, produces = "application/json")
-//	public ResponseEntity<List<RoundModel>> getAllRounds( 
-//			@PathVariable("id") Integer tournamentId, 
-//			@PathVariable("idRound") Integer roundId) { 
-//		List<RoundModel> rounds = tournamentService.getAllRounds(tournamentId);
-//		return new ResponseEntity<>(rounds, HttpStatus.OK);
-//	}
-
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.setValidator(tournamentValidator);

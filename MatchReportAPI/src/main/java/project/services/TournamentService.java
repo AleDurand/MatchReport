@@ -16,7 +16,7 @@ public interface TournamentService {
 	public List<TournamentModel> getAll();
 
 	public List<RoundModel> getAllRounds(Integer tournamentId);
-
-	public List<RoundModel> getAllMatches(Integer tournamentId, Integer roundId);
+	
+	public RoundModel addRound(Integer tournamentId, RoundModel round);
 
 }

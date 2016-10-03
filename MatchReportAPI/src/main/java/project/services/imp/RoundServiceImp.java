@@ -17,11 +17,6 @@ public class RoundServiceImp implements RoundService {
 	private RoundRepository roundRepository;
 
 	@Override
-	public RoundModel create(RoundModel round) {
-		return roundRepository.save(round);
-	}
-
-	@Override
 	public RoundModel read(Integer id) {
 		if (!roundRepository.exists(id)) {
 			throw new EntityNotFoundException("resource.not_found", null);
