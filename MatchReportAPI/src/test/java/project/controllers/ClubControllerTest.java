@@ -67,13 +67,13 @@ public class ClubControllerTest {
 		when(clubServiceMock.read(1)).thenReturn(expectedClub);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/clubs/{id}", 1)
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.id", is(1)))
-				.andExpect(jsonPath("$.address", is("address")))
-				.andExpect(jsonPath("$.stadium").doesNotExist())
-				.andExpect(jsonPath("$.url", is("url")))
-				.andExpect(content().contentType("application/json;charset=UTF-8"));
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.id", is(1)))
+			.andExpect(jsonPath("$.address", is("address")))
+			.andExpect(jsonPath("$.stadium").doesNotExist())
+			.andExpect(jsonPath("$.url", is("url")))
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
 
@@ -83,9 +83,9 @@ public class ClubControllerTest {
 		when(clubServiceMock.read(1)).thenThrow(new EntityNotFoundException("resource.not_found", null));
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/clubs/{id}", 1)
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isNotFound())
-				.andExpect(content().contentType("application/json;charset=UTF-8"));
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isNotFound())
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
 
@@ -93,8 +93,8 @@ public class ClubControllerTest {
 	public void delete() throws Exception {
 		// @formatter:off
 		mockMvc.perform(MockMvcRequestBuilders.delete("/clubs/{id}", 1)
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isNoContent());
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isNoContent());
 		// @formatter:on
 	}
 
@@ -104,8 +104,8 @@ public class ClubControllerTest {
 		doThrow(new EntityNotFoundException("resource.not_found", null)).when(clubServiceMock).delete(1);
 		
 		mockMvc.perform(MockMvcRequestBuilders.delete("/clubs/{id}", 1)
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isNotFound());
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isNotFound());
 		// @formatter:on
 	}
 
