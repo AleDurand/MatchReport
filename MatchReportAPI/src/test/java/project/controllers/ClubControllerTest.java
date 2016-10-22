@@ -39,7 +39,7 @@ public class ClubControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-	
+
 	@Autowired
 	private GlobalExceptionController controllerAdvice;
 
@@ -52,8 +52,7 @@ public class ClubControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(clubController)
-				.setControllerAdvice(controllerAdvice).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(clubController).setControllerAdvice(controllerAdvice).build();
 	}
 
 	@Test
@@ -89,7 +88,7 @@ public class ClubControllerTest {
 				.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void delete() throws Exception {
 		// @formatter:off
@@ -98,11 +97,11 @@ public class ClubControllerTest {
 				.andExpect(status().isNoContent());
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void deleteNotFound() throws Exception {
 		// @formatter:off
-		doThrow(new EntityNotFoundException("resource.not_found", null));
+		doThrow(new EntityNotFoundException("resource.not_found", null)).when(clubServiceMock).delete(1);
 		
 		mockMvc.perform(MockMvcRequestBuilders.delete("/clubs/{id}", 1)
 				.accept(MediaType.APPLICATION_JSON))
