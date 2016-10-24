@@ -17,11 +17,6 @@ public class MatchServiceImp implements MatchService {
 	private MatchRepository matchRepository;
 
 	@Override
-	public MatchModel create(MatchModel match) {
-		return matchRepository.save(match);
-	}
-
-	@Override
 	public MatchModel read(Integer id) {
 		if (!matchRepository.exists(id)) {
 			throw new EntityNotFoundException("resource.not_found", null);
@@ -41,6 +36,5 @@ public class MatchServiceImp implements MatchService {
 	public List<MatchModel> getAll() {
 		return matchRepository.findAll();
 	}
-
 
 }

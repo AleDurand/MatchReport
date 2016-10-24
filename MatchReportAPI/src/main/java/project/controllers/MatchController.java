@@ -28,12 +28,6 @@ public class MatchController {
 	@Autowired
 	private MatchValidator matchValidator;
 
-	@RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-	public ResponseEntity<MatchModel> create(@Validated @RequestBody MatchModel match) {
-		MatchModel toReturn = matchService.create(match);
-		return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
-	}
-
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<MatchModel> read(@PathVariable("id") Integer id) {
 		MatchModel toReturn = matchService.read(id);
@@ -45,7 +39,7 @@ public class MatchController {
 		matchService.delete(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
+
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<MatchModel>> getAll() {
 		List<MatchModel> matches = matchService.getAll();
@@ -56,5 +50,5 @@ public class MatchController {
 	protected void initBinder(WebDataBinder binder) {
 		binder.setValidator(matchValidator);
 	}
-	
+
 }
