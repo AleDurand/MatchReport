@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
+import project.models.MatchModel;
 import project.models.RoundModel;
+import project.repositories.MatchRepository;
 import project.repositories.RoundRepository;
 import project.services.RoundService;
 
@@ -15,6 +17,9 @@ public class RoundServiceImp implements RoundService {
 
 	@Autowired
 	private RoundRepository roundRepository;
+
+	@Autowired
+	private MatchRepository matchRepository;
 
 	@Override
 	public RoundModel read(Integer id) {
@@ -35,6 +40,20 @@ public class RoundServiceImp implements RoundService {
 	@Override
 	public List<RoundModel> getAll() {
 		return roundRepository.findAll();
+	}
+
+	@Override
+	public List<MatchModel> getAllMatches(Integer roundId) {
+		if (!roundRepository.exists(roundId)) {
+			throw new EntityNotFoundException("resource.not_found", null);
+		}
+		return matchRepository.findByRoundId(roundId);
+	}
+
+	@Override
+	public MatchModel addMatch(Integer roundId, MatchModel match) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
