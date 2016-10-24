@@ -1,9 +1,5 @@
 -- MySQL Workbench Forward Engineering
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-
 -- -----------------------------------------------------
 -- Schema match_report
 -- -----------------------------------------------------
@@ -11,7 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema match_report
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `match_report` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `match_report` ; --DEFAULT CHARACTER SET utf8 ;
 USE `match_report` ;
 
 -- -----------------------------------------------------
@@ -23,8 +19,8 @@ CREATE TABLE IF NOT EXISTS `match_report`.`authority` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB;
+-- -- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -38,8 +34,8 @@ CREATE TABLE IF NOT EXISTS `match_report`.`cancha` (
   `direccion` VARCHAR(45) NOT NULL,
   `foto` CHAR(32) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB;
+-- -- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -59,10 +55,10 @@ CREATE TABLE IF NOT EXISTS `match_report`.`club` (
   CONSTRAINT `fk_club_cancha1`
     FOREIGN KEY (`id_cancha`)
     REFERENCES `match_report`.`cancha` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+    
+    )
+ENGINE = InnoDB;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -75,8 +71,8 @@ CREATE TABLE IF NOT EXISTS `match_report`.`torneo` (
   `fecha_inicio` DATE NOT NULL,
   `fecha_fin` DATE NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -94,10 +90,10 @@ CREATE TABLE IF NOT EXISTS `match_report`.`fecha` (
   CONSTRAINT `fk_fecha_torneo1`
     FOREIGN KEY (`torneo_id`)
     REFERENCES `match_report`.`torneo` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+    
+    ) --)
+ENGINE = InnoDB;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -114,8 +110,8 @@ CREATE TABLE IF NOT EXISTS `match_report`.`jugador` (
   `tipo_documento` VARCHAR(10) NOT NULL,
   `nro_documento` INT NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -134,20 +130,20 @@ CREATE TABLE IF NOT EXISTS `match_report`.`juega_en` (
   CONSTRAINT `fk_juega_en_club1`
     FOREIGN KEY (`id_club`)
     REFERENCES `match_report`.`club` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    
+    ,
   CONSTRAINT `fk_juega_en_jugador`
     FOREIGN KEY (`id_jugador`)
     REFERENCES `match_report`.`jugador` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    
+    ,
   CONSTRAINT `fk_juega_en_torneo1`
     FOREIGN KEY (`id_torneo`)
     REFERENCES `match_report`.`torneo` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+    
+    )
+ENGINE = InnoDB;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -160,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `match_report`.`partido` (
   `fecha` DATE NOT NULL,
   `hora` TIME NOT NULL,
   `id_cancha` INT(11) NOT NULL,
-  `status` ENUM('PENDIENTE', 'EN_CURSO', 'FINALIZADO', 'SUSPENDIDO', 'POSPUESTO') NULL DEFAULT 'PENDIENTE',
+  `status` TINYINT NOT NULL DEFAULT 0,
   `fecha_id` INT(11) NOT NULL,
   `equipo_local` BIGINT(20) NOT NULL,
   `equipo_visitante` BIGINT(20) NOT NULL,
@@ -172,25 +168,25 @@ CREATE TABLE IF NOT EXISTS `match_report`.`partido` (
   CONSTRAINT `fk_partido_cancha1`
     FOREIGN KEY (`id_cancha`)
     REFERENCES `match_report`.`cancha` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    
+    ,
   CONSTRAINT `fk_partido_fecha1`
     FOREIGN KEY (`fecha_id`)
     REFERENCES `match_report`.`fecha` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    
+    ,
   CONSTRAINT `fk_partido_club1`
     FOREIGN KEY (`equipo_local`)
     REFERENCES `match_report`.`club` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    
+    ,
   CONSTRAINT `fk_partido_club2`
     FOREIGN KEY (`equipo_visitante`)
     REFERENCES `match_report`.`club` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+    
+    )
+ENGINE = InnoDB;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -204,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `match_report`.`jugo_partido` (
   `jugador_id` BIGINT(20) NOT NULL,
   `goles` INT(11) NOT NULL DEFAULT 0,
   `amarilla` TINYINT(1) NOT NULL DEFAULT 0,
-  `descalifacion` TINYINT(1) NOT NULL DEFAULT 0,
+  `descalificacion` TINYINT(1) NOT NULL DEFAULT 0,
   `exclusion` INT(11) NOT NULL DEFAULT 0,
   `tarjeta_azul` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`partido_id`, `club_id`, `jugador_id`),
@@ -213,20 +209,20 @@ CREATE TABLE IF NOT EXISTS `match_report`.`jugo_partido` (
   CONSTRAINT `fk_jugo_partido_jugador1`
     FOREIGN KEY (`jugador_id`)
     REFERENCES `match_report`.`jugador` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    
+    ,
   CONSTRAINT `fk_jugo_partido_partido1`
     FOREIGN KEY (`partido_id`)
     REFERENCES `match_report`.`partido` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    
+    ,
   CONSTRAINT `fk_jugo_partido_club1`
     FOREIGN KEY (`club_id`)
     REFERENCES `match_report`.`club` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+    
+    )
+ENGINE = InnoDB;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -243,10 +239,10 @@ CREATE TABLE IF NOT EXISTS `match_report`.`resultado` (
   CONSTRAINT `fk_resultado_partido1`
     FOREIGN KEY (`id_partido`)
     REFERENCES `match_report`.`partido` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+    
+    )
+ENGINE = InnoDB;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -269,15 +265,15 @@ CREATE TABLE IF NOT EXISTS `match_report`.`torneo_club` (
   CONSTRAINT `fk_posiciones_club1`
     FOREIGN KEY (`id_club`)
     REFERENCES `match_report`.`club` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    
+    ,
   CONSTRAINT `fk_posiciones_torneo1`
     FOREIGN KEY (`id_torneo`)
     REFERENCES `match_report`.`torneo` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+    
+    )
+ENGINE = InnoDB;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -290,8 +286,8 @@ CREATE TABLE IF NOT EXISTS `match_report`.`user` (
   `password` VARCHAR(50) NOT NULL,
   `enabled` TINYINT(1) NOT NULL,
   PRIMARY KEY (`username`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -308,41 +304,15 @@ CREATE TABLE IF NOT EXISTS `match_report`.`user_has_authority` (
   CONSTRAINT `fk_users_has_authorities_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `match_report`.`user` (`username`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    
+    ,
   CONSTRAINT `fk_users_has_authorities_authorities1`
     FOREIGN KEY (`authority_id`)
     REFERENCES `match_report`.`authority` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `match_report`.`user_has_authority`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `match_report`.`user_has_authority` ;
-
-CREATE TABLE IF NOT EXISTS `match_report`.`user_has_authority` (
-  `user_id` VARCHAR(50) NOT NULL,
-  `authority_id` INT(11) NOT NULL,
-  PRIMARY KEY (`user_id`, `authority_id`),
-  INDEX `fk_users_has_authorities_authorities1_idx` (`authority_id` ASC),
-  INDEX `fk_users_has_authorities_users1_idx` (`user_id` ASC),
-  CONSTRAINT `fk_users_has_authorities_users1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `match_report`.`user` (`username`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_users_has_authorities_authorities1`
-    FOREIGN KEY (`authority_id`)
-    REFERENCES `match_report`.`authority` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
+    
+    )
+ENGINE = InnoDB;
+-- DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
 -- Table `match_report`.`partido_observacion`
@@ -356,11 +326,7 @@ CREATE TABLE IF NOT EXISTS `match_report`.`partido_observacion` (
   CONSTRAINT `fk_partido_observacion_partido1`
     FOREIGN KEY (`partido_id`)
     REFERENCES `match_report`.`partido` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    
+    )
 ENGINE = InnoDB;
 
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
