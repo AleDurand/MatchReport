@@ -56,6 +56,23 @@ public class ClubControllerTest {
 	}
 
 	@Test
+	public void create() throws Exception {
+		// @formatter:off
+//		mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
+//			.contentType(MediaType.APPLICATION_JSON)
+//			.content("{\"name\":\"name\", \"address\":\"address\", \"url\": \"url\"}")
+//			.accept(MediaType.APPLICATION_JSON))
+//			.andExpect(status().isCreated())
+//			.andExpect(jsonPath("$.id").exists())
+//			.andExpect(jsonPath("$.name", is("name")))
+//			.andExpect(jsonPath("$.address", is("address")))
+//			.andExpect(jsonPath("$.stadium").doesNotExist())
+//			.andExpect(jsonPath("$.url", is("url")))
+//			.andExpect(content().contentType("application/json;charset=UTF-8"));
+		// @formatter:on
+	}
+	
+	@Test
 	public void read() throws Exception {
 		// @formatter:off
 		ClubModel expectedClub = new ClubModel();
@@ -70,6 +87,7 @@ public class ClubControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.id", is(1)))
+			.andExpect(jsonPath("$.name", is("name")))
 			.andExpect(jsonPath("$.address", is("address")))
 			.andExpect(jsonPath("$.stadium").doesNotExist())
 			.andExpect(jsonPath("$.url", is("url")))
