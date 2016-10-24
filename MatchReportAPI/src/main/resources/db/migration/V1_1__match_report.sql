@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `match_report`.`jugo_partido` (
   `jugador_id` BIGINT(20) NOT NULL,
   `goles` INT(11) NOT NULL DEFAULT 0,
   `amarilla` TINYINT(1) NOT NULL DEFAULT 0,
-  `descalifacion` TINYINT(1) NOT NULL DEFAULT 0,
+  `descalificacion` TINYINT(1) NOT NULL DEFAULT 0,
   `exclusion` INT(11) NOT NULL DEFAULT 0,
   `tarjeta_azul` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`partido_id`, `club_id`, `jugador_id`),
