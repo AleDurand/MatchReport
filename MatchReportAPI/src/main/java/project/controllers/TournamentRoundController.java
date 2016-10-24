@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,9 +35,9 @@ public class TournamentRoundController {
 	}
 
 	@RequestMapping(value = "/rounds", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-	public ResponseEntity<RoundModel> addRound(@PathVariable("id") Integer tournamentId, @Validated RoundModel round) {
+	public ResponseEntity<RoundModel> addRound(@PathVariable("id") Integer tournamentId, @Validated @RequestBody RoundModel round) {
 		RoundModel toReturn = tournamentService.addRound(tournamentId, round);
-		return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
+		return new ResponseEntity<>(toReturn, HttpStatus.CREATED);	
 	}
 
 	@InitBinder
