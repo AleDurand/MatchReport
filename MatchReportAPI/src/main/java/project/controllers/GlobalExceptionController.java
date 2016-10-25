@@ -81,7 +81,7 @@ public class GlobalExceptionController {
 	public ResponseEntity<?> handleUnexpectedExceptions(Exception e) {
 		LOGGER.error("EXCEPTION", e);
 		ErrorModel error = new ErrorModel(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
-		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	private ErrorModel getErrorMessage(String code, Object[] args, String field, HttpStatus httpStatus) {
