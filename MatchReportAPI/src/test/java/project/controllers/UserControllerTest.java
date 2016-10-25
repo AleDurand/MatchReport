@@ -2,7 +2,8 @@ package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,14 +29,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import project.Application;
 import project.exceptions.EntityNotFoundException;
-import project.models.ClubModel;
-import project.services.ClubService;
+import project.models.UserModel;
+import project.services.UserService;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
 @AutoConfigureMockMvc
-public class ClubControllerTest {
+public class UserControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -44,55 +45,50 @@ public class ClubControllerTest {
 	private GlobalExceptionController controllerAdvice;
 
 	@InjectMocks
-	private ClubController clubController;
+	private UserController userController;
 
 	@Mock
-	private ClubService clubServiceMock;
+	private UserService userServiceMock;
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(clubController).setControllerAdvice(controllerAdvice).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(userController)
+				.setControllerAdvice(controllerAdvice).build();
 	}
 
 	@Test
 	public void create() throws Exception {
 		// @formatter:off
-//		mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
-//			.contentType(MediaType.APPLICATION_JSON)
-//			.content("{\"name\":\"name\", \"address\":\"address\", \"url\": \"url\"}")
-//			.accept(MediaType.APPLICATION_JSON))
-//			.andExpect(status().isCreated())
-//			.andExpect(jsonPath("$.id").exists())
-//			.andExpect(jsonPath("$.name", is("name")))
-//			.andExpect(jsonPath("$.address", is("address")))
-//			.andExpect(jsonPath("$.stadium").doesNotExist())
-//			.andExpect(jsonPath("$.url", is("url")))
-//			.andExpect(content().contentType("application/json;charset=UTF-8"));
+//			mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
+//				.contentType(MediaType.APPLICATION_JSON)
+//				.content("{\"name\":\"name\", \"address\":\"address\", \"url\": \"url\"}")
+//				.accept(MediaType.APPLICATION_JSON))
+//				.andExpect(status().isCreated())
+//				.andExpect(jsonPath("$.id").exists())
+//				.andExpect(jsonPath("$.name", is("name")))
+//				.andExpect(jsonPath("$.address", is("address")))
+//				.andExpect(jsonPath("$.stadium").doesNotExist())
+//				.andExpect(jsonPath("$.url", is("url")))
+//				.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void read() throws Exception {
 		// @formatter:off
-		ClubModel expectedClub = new ClubModel();
-		expectedClub.setId(1);
-		expectedClub.setName("name");
-		expectedClub.setAddress("address");
-		expectedClub.setStadium(null);
-		expectedClub.setUrl("url");
-		expectedClub.setImage("image");
-		when(clubServiceMock.read(1)).thenReturn(expectedClub);
+		UserModel expectedUser = new UserModel();
+		expectedUser.setUsername("username");
+		expectedUser.setPassword("password");
+		expectedUser.setEnabled(true);
+		when(userServiceMock.loadUserByUsername("username")).thenReturn(expectedUser);
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/clubs/{id}", 1)
+		mockMvc.perform(MockMvcRequestBuilders.get("/users/{id}", "username")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$.id", is(1)))
-			.andExpect(jsonPath("$.name", is("name")))
-			.andExpect(jsonPath("$.address", is("address")))
-			.andExpect(jsonPath("$.stadium").doesNotExist())
-			.andExpect(jsonPath("$.url", is("url")))
-			.andExpect(jsonPath("$.image", is("image")))
+			.andExpect(jsonPath("$.username", is("username")))
+			.andExpect(jsonPath("$.password", is("password")))
+			.andExpect(jsonPath("$.enabled", is(true)))
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
@@ -100,9 +96,9 @@ public class ClubControllerTest {
 	@Test
 	public void readNotFound() throws Exception {
 		// @formatter:off
-		when(clubServiceMock.read(1)).thenThrow(new EntityNotFoundException("resource.not_found", null));
+		when(userServiceMock.loadUserByUsername("username")).thenThrow(new EntityNotFoundException("resource.not_found", null));
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/clubs/{id}", 1)
+		mockMvc.perform(MockMvcRequestBuilders.get("/users/{id}", "username")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isNotFound())
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
@@ -112,7 +108,7 @@ public class ClubControllerTest {
 	@Test
 	public void delete() throws Exception {
 		// @formatter:off
-		mockMvc.perform(MockMvcRequestBuilders.delete("/clubs/{id}", 1)
+		mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", "username")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isNoContent());
 		// @formatter:on
@@ -121,9 +117,9 @@ public class ClubControllerTest {
 	@Test
 	public void deleteNotFound() throws Exception {
 		// @formatter:off
-		doThrow(new EntityNotFoundException("resource.not_found", null)).when(clubServiceMock).delete(1);
+		doThrow(new EntityNotFoundException("resource.not_found", null)).when(userServiceMock).delete("username");
 		
-		mockMvc.perform(MockMvcRequestBuilders.delete("/clubs/{id}", 1)
+		mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", "username")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isNotFound());
 		// @formatter:on
@@ -132,15 +128,14 @@ public class ClubControllerTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<ClubModel> expectedClubs = Arrays.asList(new ClubModel());
-		when(clubServiceMock.getAll()).thenReturn(expectedClubs);
+		List<UserModel> expectedUsers = Arrays.asList(new UserModel());
+		when(userServiceMock.getAll()).thenReturn(expectedUsers);
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/clubs")
+		mockMvc.perform(MockMvcRequestBuilders.get("/users")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(1)))
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
-
 }

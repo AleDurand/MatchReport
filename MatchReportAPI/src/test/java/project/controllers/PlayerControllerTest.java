@@ -2,7 +2,8 @@ package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,14 +29,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import project.Application;
 import project.exceptions.EntityNotFoundException;
-import project.models.ClubModel;
-import project.services.ClubService;
+import project.models.PlayerModel;
+import project.services.PlayerService;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
 @AutoConfigureMockMvc
-public class ClubControllerTest {
+public class PlayerControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -44,55 +45,55 @@ public class ClubControllerTest {
 	private GlobalExceptionController controllerAdvice;
 
 	@InjectMocks
-	private ClubController clubController;
+	private PlayerController playerController;
 
 	@Mock
-	private ClubService clubServiceMock;
+	private PlayerService playerServiceMock;
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(clubController).setControllerAdvice(controllerAdvice).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(playerController).setControllerAdvice(controllerAdvice).build();
 	}
 
 	@Test
 	public void create() throws Exception {
 		// @formatter:off
-//		mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
-//			.contentType(MediaType.APPLICATION_JSON)
-//			.content("{\"name\":\"name\", \"address\":\"address\", \"url\": \"url\"}")
-//			.accept(MediaType.APPLICATION_JSON))
-//			.andExpect(status().isCreated())
-//			.andExpect(jsonPath("$.id").exists())
-//			.andExpect(jsonPath("$.name", is("name")))
-//			.andExpect(jsonPath("$.address", is("address")))
-//			.andExpect(jsonPath("$.stadium").doesNotExist())
-//			.andExpect(jsonPath("$.url", is("url")))
-//			.andExpect(content().contentType("application/json;charset=UTF-8"));
+//			mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
+//				.contentType(MediaType.APPLICATION_JSON)
+//				.content("{\"name\":\"name\", \"address\":\"address\", \"url\": \"url\"}")
+//				.accept(MediaType.APPLICATION_JSON))
+//				.andExpect(status().isCreated())
+//				.andExpect(jsonPath("$.id").exists())
+//				.andExpect(jsonPath("$.name", is("name")))
+//				.andExpect(jsonPath("$.address", is("address")))
+//				.andExpect(jsonPath("$.stadium").doesNotExist())
+//				.andExpect(jsonPath("$.url", is("url")))
+//				.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void read() throws Exception {
 		// @formatter:off
-		ClubModel expectedClub = new ClubModel();
-		expectedClub.setId(1);
-		expectedClub.setName("name");
-		expectedClub.setAddress("address");
-		expectedClub.setStadium(null);
-		expectedClub.setUrl("url");
-		expectedClub.setImage("image");
-		when(clubServiceMock.read(1)).thenReturn(expectedClub);
+		PlayerModel expectedPlayer = new PlayerModel();
+		expectedPlayer.setId(1);
+		expectedPlayer.setFirstname("firstname");
+		expectedPlayer.setLastname("lastname");
+		expectedPlayer.setDocumentType("DNI");
+		expectedPlayer.setDocumentNumber(10000000);
+		expectedPlayer.setStatus(0);
+		when(playerServiceMock.read(1)).thenReturn(expectedPlayer);
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/clubs/{id}", 1)
+		mockMvc.perform(MockMvcRequestBuilders.get("/players/{id}", 1)
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.id", is(1)))
-			.andExpect(jsonPath("$.name", is("name")))
-			.andExpect(jsonPath("$.address", is("address")))
-			.andExpect(jsonPath("$.stadium").doesNotExist())
-			.andExpect(jsonPath("$.url", is("url")))
-			.andExpect(jsonPath("$.image", is("image")))
+			.andExpect(jsonPath("$.firstname", is("firstname")))
+			.andExpect(jsonPath("$.lastname", is("lastname")))
+			.andExpect(jsonPath("$.documentType", is("DNI")))
+			.andExpect(jsonPath("$.documentNumber", is(10000000)))
+			.andExpect(jsonPath("$.status", is(0)))
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
@@ -100,9 +101,9 @@ public class ClubControllerTest {
 	@Test
 	public void readNotFound() throws Exception {
 		// @formatter:off
-		when(clubServiceMock.read(1)).thenThrow(new EntityNotFoundException("resource.not_found", null));
+		when(playerServiceMock.read(1)).thenThrow(new EntityNotFoundException("resource.not_found", null));
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/clubs/{id}", 1)
+		mockMvc.perform(MockMvcRequestBuilders.get("/players/{id}", 1)
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isNotFound())
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
@@ -112,7 +113,7 @@ public class ClubControllerTest {
 	@Test
 	public void delete() throws Exception {
 		// @formatter:off
-		mockMvc.perform(MockMvcRequestBuilders.delete("/clubs/{id}", 1)
+		mockMvc.perform(MockMvcRequestBuilders.delete("/players/{id}", 1)
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isNoContent());
 		// @formatter:on
@@ -121,9 +122,9 @@ public class ClubControllerTest {
 	@Test
 	public void deleteNotFound() throws Exception {
 		// @formatter:off
-		doThrow(new EntityNotFoundException("resource.not_found", null)).when(clubServiceMock).delete(1);
+		doThrow(new EntityNotFoundException("resource.not_found", null)).when(playerServiceMock).delete(1);
 		
-		mockMvc.perform(MockMvcRequestBuilders.delete("/clubs/{id}", 1)
+		mockMvc.perform(MockMvcRequestBuilders.delete("/players/{id}", 1)
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isNotFound());
 		// @formatter:on
@@ -132,10 +133,10 @@ public class ClubControllerTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<ClubModel> expectedClubs = Arrays.asList(new ClubModel());
-		when(clubServiceMock.getAll()).thenReturn(expectedClubs);
+		List<PlayerModel> expectedPlayers = Arrays.asList(new PlayerModel());
+		when(playerServiceMock.getAll()).thenReturn(expectedPlayers);
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/clubs")
+		mockMvc.perform(MockMvcRequestBuilders.get("/players")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(1)))
