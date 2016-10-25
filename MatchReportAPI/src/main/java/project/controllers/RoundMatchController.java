@@ -34,7 +34,7 @@ public class RoundMatchController {
 		return new ResponseEntity<>(matches, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/rounds", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+	@RequestMapping(value = "/matches", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
 	public ResponseEntity<MatchModel> addRound(@PathVariable("id") Integer roundId, @Validated @RequestBody MatchModel match) {
 		MatchModel toReturn = roundService.addMatch(roundId, match);
 		return new ResponseEntity<>(toReturn, HttpStatus.CREATED);	

@@ -1,6 +1,8 @@
 package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -29,6 +31,8 @@ import project.Application;
 import project.models.MatchModel;
 import project.services.RoundService;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -47,6 +51,9 @@ public class RoundMatchControllerTest {
 	@Mock
 	private RoundService roundServiceMock;
 
+	@Autowired
+	private ObjectMapper mapper;
+		
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -57,17 +64,25 @@ public class RoundMatchControllerTest {
 	@Test
 	public void create() throws Exception {
 		// @formatter:off
-//			mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.content("{\"name\":\"name\", \"address\":\"address\", \"url\": \"url\"}")
-//				.accept(MediaType.APPLICATION_JSON))
-//				.andExpect(status().isCreated())
-//				.andExpect(jsonPath("$.id").exists())
-//				.andExpect(jsonPath("$.name", is("name")))
-//				.andExpect(jsonPath("$.address", is("address")))
-//				.andExpect(jsonPath("$.stadium").doesNotExist())
-//				.andExpect(jsonPath("$.url", is("url")))
-//				.andExpect(content().contentType("application/json;charset=UTF-8"));
+		MatchModel match = new MatchModel();	
+		match.setStatus("PENDING");
+		match.setStadium(null);
+		
+		MatchModel expectedMatch = new MatchModel();
+		expectedMatch.setId(1);		
+		expectedMatch.setStatus("PENDING");
+		expectedMatch.setStadium(null);
+		when(roundServiceMock.addMatch(any(), any())).thenReturn(expectedMatch);
+		
+		mockMvc.perform(MockMvcRequestBuilders.post("/rounds/{id}/matches", 1)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(mapper.writeValueAsBytes(match))
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$.id", is(1)))
+			.andExpect(jsonPath("$.status", is("PENDING")))
+			.andExpect(jsonPath("$.stadium").doesNotExist())
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
 

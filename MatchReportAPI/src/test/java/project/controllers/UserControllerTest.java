@@ -2,6 +2,7 @@ package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -32,6 +33,8 @@ import project.exceptions.EntityNotFoundException;
 import project.models.UserModel;
 import project.services.UserService;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -50,6 +53,9 @@ public class UserControllerTest {
 	@Mock
 	private UserService userServiceMock;
 
+	@Autowired
+	private ObjectMapper mapper;
+	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -60,17 +66,26 @@ public class UserControllerTest {
 	@Test
 	public void create() throws Exception {
 		// @formatter:off
-//			mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.content("{\"name\":\"name\", \"address\":\"address\", \"url\": \"url\"}")
-//				.accept(MediaType.APPLICATION_JSON))
-//				.andExpect(status().isCreated())
-//				.andExpect(jsonPath("$.id").exists())
-//				.andExpect(jsonPath("$.name", is("name")))
-//				.andExpect(jsonPath("$.address", is("address")))
-//				.andExpect(jsonPath("$.stadium").doesNotExist())
-//				.andExpect(jsonPath("$.url", is("url")))
-//				.andExpect(content().contentType("application/json;charset=UTF-8"));
+		UserModel user = new UserModel();
+		user.setUsername("username");
+		user.setPassword("password");
+		user.setEnabled(true);
+		
+		UserModel expectedUser = new UserModel();
+		expectedUser.setUsername("username");
+		expectedUser.setPassword("password");
+		expectedUser.setEnabled(true);
+		when(userServiceMock.create(any())).thenReturn(expectedUser);
+		
+		mockMvc.perform(MockMvcRequestBuilders.post("/users")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(mapper.writeValueAsBytes(user))
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$.username", is("username")))
+			.andExpect(jsonPath("$.password", is("password")))
+			.andExpect(jsonPath("$.enabled", is(true)))
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
 

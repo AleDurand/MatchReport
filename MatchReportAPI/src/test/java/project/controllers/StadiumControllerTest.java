@@ -2,6 +2,7 @@ package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -32,6 +33,8 @@ import project.exceptions.EntityNotFoundException;
 import project.models.StadiumModel;
 import project.services.StadiumService;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -50,6 +53,9 @@ public class StadiumControllerTest {
 	@Mock
 	private StadiumService stadiumServiceMock;
 
+	@Autowired
+	private ObjectMapper mapper;
+	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -57,6 +63,34 @@ public class StadiumControllerTest {
 				.setControllerAdvice(controllerAdvice).build();
 	}
 
+	@Test
+	public void create() throws Exception {
+		// @formatter:off
+		StadiumModel stadium = new StadiumModel();
+		stadium.setName("name");
+		stadium.setAddress("address");
+		stadium.setImage("image");
+		
+		StadiumModel expectedStadium = new StadiumModel();
+		expectedStadium.setId(1);
+		expectedStadium.setName("name");
+		expectedStadium.setAddress("address");
+		expectedStadium.setImage("image");
+		when(stadiumServiceMock.create(any())).thenReturn(expectedStadium);
+		
+		mockMvc.perform(MockMvcRequestBuilders.post("/stadiums")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(mapper.writeValueAsBytes(stadium))
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$.id", is(1)))
+			.andExpect(jsonPath("$.name", is("name")))
+			.andExpect(jsonPath("$.address", is("address")))
+			.andExpect(jsonPath("$.image", is("image")))
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
+		// @formatter:on
+	}
+	
 	@Test
 	public void read() throws Exception {
 		// @formatter:off

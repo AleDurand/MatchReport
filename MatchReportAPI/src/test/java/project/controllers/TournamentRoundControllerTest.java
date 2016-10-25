@@ -1,6 +1,8 @@
 package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -29,6 +31,8 @@ import project.Application;
 import project.models.RoundModel;
 import project.services.TournamentService;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -43,10 +47,13 @@ public class TournamentRoundControllerTest {
 
 	@InjectMocks
 	private TournamentRoundController tournamentRoundController;
-
+	
 	@Mock
 	private TournamentService tournamentServiceMock;
 
+	@Autowired
+	private ObjectMapper mapper;
+	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -57,17 +64,29 @@ public class TournamentRoundControllerTest {
 	@Test
 	public void create() throws Exception {
 		// @formatter:off
-//			mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.content("{\"name\":\"name\", \"address\":\"address\", \"url\": \"url\"}")
-//				.accept(MediaType.APPLICATION_JSON))
-//				.andExpect(status().isCreated())
-//				.andExpect(jsonPath("$.id").exists())
-//				.andExpect(jsonPath("$.name", is("name")))
-//				.andExpect(jsonPath("$.address", is("address")))
-//				.andExpect(jsonPath("$.stadium").doesNotExist())
-//				.andExpect(jsonPath("$.url", is("url")))
-//				.andExpect(content().contentType("application/json;charset=UTF-8"));
+		RoundModel round = new RoundModel();	
+		round.setId(1);
+		round.setNumber(1);
+		round.setDescription("description");
+		round.setTournament(null);
+		
+		RoundModel expectedRound = new RoundModel();
+		expectedRound.setId(1);
+		expectedRound.setNumber(1);
+		expectedRound.setDescription("description");
+		expectedRound.setTournament(null);
+		when(tournamentServiceMock.addRound(any(), any())).thenReturn(expectedRound);
+		
+		mockMvc.perform(MockMvcRequestBuilders.post("/tournaments/{id}/rounds", 1)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(mapper.writeValueAsBytes(round))
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$.id", is(1)))
+			.andExpect(jsonPath("$.number", is(1)))
+			.andExpect(jsonPath("$.description", is("description")))
+			.andExpect(jsonPath("$.tournament").doesNotExist())
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
 

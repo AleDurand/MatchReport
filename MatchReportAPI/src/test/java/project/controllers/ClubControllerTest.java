@@ -2,7 +2,9 @@ package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,6 +33,8 @@ import project.exceptions.EntityNotFoundException;
 import project.models.ClubModel;
 import project.services.ClubService;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -49,6 +53,9 @@ public class ClubControllerTest {
 	@Mock
 	private ClubService clubServiceMock;
 
+	@Autowired
+	private ObjectMapper mapper;
+
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -59,17 +66,33 @@ public class ClubControllerTest {
 	@Test
 	public void create() throws Exception {
 		// @formatter:off
-//		mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
-//			.contentType(MediaType.APPLICATION_JSON)
-//			.content("{\"name\":\"name\", \"address\":\"address\", \"url\": \"url\"}")
-//			.accept(MediaType.APPLICATION_JSON))
-//			.andExpect(status().isCreated())
-//			.andExpect(jsonPath("$.id").exists())
-//			.andExpect(jsonPath("$.name", is("name")))
-//			.andExpect(jsonPath("$.address", is("address")))
-//			.andExpect(jsonPath("$.stadium").doesNotExist())
-//			.andExpect(jsonPath("$.url", is("url")))
-//			.andExpect(content().contentType("application/json;charset=UTF-8"));
+		ClubModel club = new ClubModel();
+		club.setName("name");
+		club.setAddress("address");
+		club.setStadium(null);
+		club.setUrl("url");
+		club.setImage("image");
+		
+		ClubModel expectedClub = new ClubModel();
+		expectedClub.setId(1);
+		expectedClub.setName("name");
+		expectedClub.setAddress("address");
+		expectedClub.setStadium(null);
+		expectedClub.setUrl("url");
+		expectedClub.setImage("image");
+		when(clubServiceMock.create(any())).thenReturn(expectedClub);
+		
+		mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(mapper.writeValueAsBytes(club))
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$.id", is(1)))
+			.andExpect(jsonPath("$.name", is("name")))
+			.andExpect(jsonPath("$.address", is("address")))
+			.andExpect(jsonPath("$.stadium").doesNotExist())
+			.andExpect(jsonPath("$.url", is("url")))
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
 

@@ -2,6 +2,7 @@ package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -32,6 +33,8 @@ import project.exceptions.EntityNotFoundException;
 import project.models.PlayerModel;
 import project.services.PlayerService;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -49,6 +52,9 @@ public class PlayerControllerTest {
 
 	@Mock
 	private PlayerService playerServiceMock;
+	
+	@Autowired
+	private ObjectMapper mapper;
 
 	@Before
 	public void setUp() throws Exception {
@@ -60,17 +66,35 @@ public class PlayerControllerTest {
 	@Test
 	public void create() throws Exception {
 		// @formatter:off
-//			mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.content("{\"name\":\"name\", \"address\":\"address\", \"url\": \"url\"}")
-//				.accept(MediaType.APPLICATION_JSON))
-//				.andExpect(status().isCreated())
-//				.andExpect(jsonPath("$.id").exists())
-//				.andExpect(jsonPath("$.name", is("name")))
-//				.andExpect(jsonPath("$.address", is("address")))
-//				.andExpect(jsonPath("$.stadium").doesNotExist())
-//				.andExpect(jsonPath("$.url", is("url")))
-//				.andExpect(content().contentType("application/json;charset=UTF-8"));
+		PlayerModel player = new PlayerModel();
+		player.setId(1);
+		player.setFirstname("firstname");
+		player.setLastname("lastname");
+		player.setDocumentType("DNI");
+		player.setDocumentNumber(10000000);
+		player.setStatus(0);
+		
+		PlayerModel expectedPlayer = new PlayerModel();
+		expectedPlayer.setId(1);
+		expectedPlayer.setFirstname("firstname");
+		expectedPlayer.setLastname("lastname");
+		expectedPlayer.setDocumentType("DNI");
+		expectedPlayer.setDocumentNumber(10000000);
+		expectedPlayer.setStatus(0);
+		when(playerServiceMock.create(any())).thenReturn(expectedPlayer);
+		
+		mockMvc.perform(MockMvcRequestBuilders.post("/players")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(mapper.writeValueAsBytes(player))
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$.id", is(1)))
+			.andExpect(jsonPath("$.firstname", is("firstname")))
+			.andExpect(jsonPath("$.lastname", is("lastname")))
+			.andExpect(jsonPath("$.documentType", is("DNI")))
+			.andExpect(jsonPath("$.documentNumber", is(10000000)))
+			.andExpect(jsonPath("$.status", is(0)))
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
 

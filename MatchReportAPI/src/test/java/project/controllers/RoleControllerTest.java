@@ -2,6 +2,7 @@ package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -32,6 +33,8 @@ import project.exceptions.EntityNotFoundException;
 import project.models.RoleModel;
 import project.services.RoleService;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -50,6 +53,9 @@ public class RoleControllerTest {
 	@Mock
 	private RoleService roleServiceMock;
 
+	@Autowired
+	private ObjectMapper mapper;
+	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -57,6 +63,29 @@ public class RoleControllerTest {
 				.setControllerAdvice(controllerAdvice).build();
 	}
 
+	@Test
+	public void create() throws Exception {
+		// @formatter:off
+		RoleModel role = new RoleModel();
+		role.setId(1);
+		role.setName("name");
+		
+		RoleModel expectedRole = new RoleModel();
+		expectedRole.setId(1);
+		expectedRole.setName("name");
+		when(roleServiceMock.create(any())).thenReturn(expectedRole);
+		
+		mockMvc.perform(MockMvcRequestBuilders.post("/roles")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(mapper.writeValueAsBytes(role))
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$.id", is(1)))
+			.andExpect(jsonPath("$.name", is("name")))
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
+		// @formatter:on
+	}
+	
 	@Test
 	public void read() throws Exception {
 		// @formatter:off

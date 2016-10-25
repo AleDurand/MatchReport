@@ -2,6 +2,7 @@ package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -32,6 +33,8 @@ import project.exceptions.EntityNotFoundException;
 import project.models.TournamentModel;
 import project.services.TournamentService;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -50,6 +53,9 @@ public class TournamentControllerTest {
 	@Mock
 	private TournamentService tournamentServiceMock;
 
+	@Autowired
+	private ObjectMapper mapper;
+	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -60,17 +66,24 @@ public class TournamentControllerTest {
 	@Test
 	public void create() throws Exception {
 		// @formatter:off
-//			mockMvc.perform(MockMvcRequestBuilders.post("/clubs")
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.content("{\"name\":\"name\", \"address\":\"address\", \"url\": \"url\"}")
-//				.accept(MediaType.APPLICATION_JSON))
-//				.andExpect(status().isCreated())
-//				.andExpect(jsonPath("$.id").exists())
-//				.andExpect(jsonPath("$.name", is("name")))
-//				.andExpect(jsonPath("$.address", is("address")))
-//				.andExpect(jsonPath("$.stadium").doesNotExist())
-//				.andExpect(jsonPath("$.url", is("url")))
-//				.andExpect(content().contentType("application/json;charset=UTF-8"));
+		TournamentModel tournament = new TournamentModel();
+		tournament.setId(1);
+		tournament.setInitDate(null);
+		tournament.setEndDate(null);
+		
+		TournamentModel expectedTournament = new TournamentModel();
+		expectedTournament.setId(1);
+		expectedTournament.setInitDate(null);
+		expectedTournament.setEndDate(null);
+		when(tournamentServiceMock.create(any())).thenReturn(expectedTournament);
+		
+		mockMvc.perform(MockMvcRequestBuilders.post("/tournaments")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(mapper.writeValueAsBytes(tournament))
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$.id", is(1)))
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
 
