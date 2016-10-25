@@ -133,6 +133,15 @@ public class RoundServiceImpTest {
 		// @formatter:on
 	}
 
+	@Test(expected = EntityNotFoundException.class)
+	public void createMatchRoundNotFound() throws Exception {
+		// @formatter:off
+		when(roundRepositoryMock.exists(1)).thenReturn(false);
+
+		roundService.addMatch(1, new MatchModel());
+		// @formatter:on
+	}
+
 	@Test
 	public void getAllMatches() throws Exception {
 		// @formatter:off
@@ -144,6 +153,15 @@ public class RoundServiceImpTest {
 
 		assertEquals(expectedMatches.size(), actualMatches.size());
 		assertEquals(expectedMatches, actualMatches);
+		// @formatter:on
+	}
+
+	@Test(expected = EntityNotFoundException.class)
+	public void getAllMatchesRoundNotFound() throws Exception {
+		// @formatter:off
+		when(roundRepositoryMock.exists(1)).thenReturn(false);
+
+		roundService.getAllMatches(1);
 		// @formatter:on
 	}
 }

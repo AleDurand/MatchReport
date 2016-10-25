@@ -19,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import project.Application;
+import project.exceptions.EntityAlreadyExistsException;
 import project.exceptions.EntityNotFoundException;
 import project.models.UserModel;
 import project.repositories.UserRepository;
@@ -56,6 +57,19 @@ public class UserServiceImpTest {
 		assertEquals(expectedUser.getUsername(), actualUser.getUsername());
 		assertEquals(expectedUser.getPassword(), actualUser.getPassword());
 		assertEquals(expectedUser.isEnabled(), actualUser.isEnabled());
+		// @formatter:on
+	}
+
+	@Test(expected = EntityAlreadyExistsException.class)
+	public void createUserAlreadyExists() throws Exception {
+		// @formatter:off
+		UserModel expectedUser = new UserModel();
+		expectedUser.setUsername("username");
+		expectedUser.setPassword("password");
+		expectedUser.setEnabled(true);
+		when(userRepositoryMock.exists("username")).thenReturn(true);
+
+		userService.create(expectedUser);
 		// @formatter:on
 	}
 

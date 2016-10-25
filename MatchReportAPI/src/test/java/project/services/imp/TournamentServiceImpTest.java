@@ -141,6 +141,15 @@ public class TournamentServiceImpTest {
 		// @formatter:on
 	}
 	
+	@Test(expected = EntityNotFoundException.class)
+	public void createRoundTournamentNotFound() throws Exception {
+		// @formatter:off
+		when(tournamentRepositoryMock.exists(1)).thenReturn(false);
+
+		tournamentService.addRound(1, new RoundModel());
+		// @formatter:on
+	}
+	
 	@Test
 	public void getAllRounds() throws Exception {
 		// @formatter:off
@@ -152,6 +161,15 @@ public class TournamentServiceImpTest {
 
 		assertEquals(expectedRounds.size(), actualRounds.size());
 		assertEquals(expectedRounds, actualRounds);
+		// @formatter:on
+	}
+	
+	@Test(expected = EntityNotFoundException.class)
+	public void getAllRoundsTournamentNotFound() throws Exception {
+		// @formatter:off
+		when(tournamentRepositoryMock.exists(1)).thenReturn(false);
+
+		tournamentService.getAllRounds(1);
 		// @formatter:on
 	}
 	
