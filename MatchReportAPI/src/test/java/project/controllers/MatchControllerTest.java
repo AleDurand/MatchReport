@@ -53,7 +53,8 @@ public class MatchControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(matchController).setControllerAdvice(controllerAdvice).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(matchController)
+				.setControllerAdvice(controllerAdvice).build();
 	}
 
 	@Test

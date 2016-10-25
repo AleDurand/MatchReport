@@ -70,7 +70,7 @@ public class TournamentRoundControllerTest {
 //				.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void getAllRounds() throws Exception {
 		// @formatter:off

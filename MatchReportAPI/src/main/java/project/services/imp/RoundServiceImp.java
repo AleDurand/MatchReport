@@ -52,8 +52,12 @@ public class RoundServiceImp implements RoundService {
 
 	@Override
 	public MatchModel addMatch(Integer roundId, MatchModel match) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!roundRepository.exists(roundId)) {
+			throw new EntityNotFoundException("resource.not_found", null);
+		}
+		RoundModel round = roundRepository.findOne(roundId);
+		match.setRound(round);
+		return matchRepository.save(match);
 	}
 
 }

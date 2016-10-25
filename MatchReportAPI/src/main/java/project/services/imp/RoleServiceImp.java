@@ -23,7 +23,7 @@ public class RoleServiceImp implements RoleService {
 
 	@Override
 	public RoleModel read(Integer id) {
-		if (roleRepository.exists(id)) {
+		if (!roleRepository.exists(id)) {
 			throw new EntityNotFoundException("resource.not_found", null);
 		}
 		return roleRepository.findOne(id);
@@ -31,7 +31,7 @@ public class RoleServiceImp implements RoleService {
 
 	@Override
 	public void delete(Integer id) {
-		if (roleRepository.exists(id)) {
+		if (!roleRepository.exists(id)) {
 			throw new EntityNotFoundException("resource.not_found", null);
 		}
 		roleRepository.delete(id);

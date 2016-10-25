@@ -52,7 +52,8 @@ public class ClubControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(clubController).setControllerAdvice(controllerAdvice).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(clubController)
+				.setControllerAdvice(controllerAdvice).build();
 	}
 
 	@Test
@@ -71,7 +72,7 @@ public class ClubControllerTest {
 //			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void read() throws Exception {
 		// @formatter:off

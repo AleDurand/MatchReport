@@ -53,7 +53,8 @@ public class PlayerControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(playerController).setControllerAdvice(controllerAdvice).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(playerController)
+				.setControllerAdvice(controllerAdvice).build();
 	}
 
 	@Test
