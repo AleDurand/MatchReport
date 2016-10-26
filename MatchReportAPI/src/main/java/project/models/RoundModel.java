@@ -18,10 +18,10 @@ public class RoundModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	private int id;
+	private Integer id;
 
 	@Column(name = "numero", nullable = false)
-	private int number;
+	private Integer number;
 
 	@Column(name = "descripcion", unique = true, nullable = false)
 	private String description;
@@ -31,19 +31,19 @@ public class RoundModel {
 	@JoinColumn(name = "torneo_id")
 	private TournamentModel tournament;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getNumber() {
+	public Integer getNumber() {
 		return number;
 	}
 
-	public void setNumber(int number) {
+	public void setNumber(Integer number) {
 		this.number = number;
 	}
 

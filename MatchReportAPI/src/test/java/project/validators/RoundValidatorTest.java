@@ -15,7 +15,7 @@ import org.springframework.validation.ValidationUtils;
 
 import project.Application;
 import project.models.RoundModel;
-
+import project.utils.TestUtil;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
@@ -39,9 +39,61 @@ public class RoundValidatorTest {
 	@Test
 	public void isValid() {
 		RoundModel round = new RoundModel();
+		round.setNumber(1);
+		round.setDescription("description");
 		BindException errors = new BindException(round, "round");
 		ValidationUtils.invokeValidator(validator, round, errors);
 		assertFalse(errors.hasErrors());
+	}
+
+	@Test
+	public void invalidNumberNull() {
+		RoundModel round = new RoundModel();
+		round.setNumber(null);
+		round.setDescription("description");
+		BindException errors = new BindException(round, "round");
+		ValidationUtils.invokeValidator(validator, round, errors);
+		assertTrue(errors.hasErrors());
+	}
+
+	@Test
+	public void invalidNumberLessThanZero() {
+		RoundModel round = new RoundModel();
+		round.setNumber(-1);
+		round.setDescription("description");
+		BindException errors = new BindException(round, "round");
+		ValidationUtils.invokeValidator(validator, round, errors);
+		assertTrue(errors.hasErrors());
+	}
+
+	@Test
+	public void invalidDescriptionNull() {
+		RoundModel round = new RoundModel();
+		round.setNumber(1);
+		round.setDescription(null);
+		BindException errors = new BindException(round, "round");
+		ValidationUtils.invokeValidator(validator, round, errors);
+		assertTrue(errors.hasErrors());
+	}
+
+	@Test
+	public void invalidDescriptionEmpty() {
+		RoundModel round = new RoundModel();
+		round.setNumber(1);
+		round.setDescription(" ");
+		BindException errors = new BindException(round, "round");
+		ValidationUtils.invokeValidator(validator, round, errors);
+		assertTrue(errors.hasErrors());
+	}
+
+	@Test
+	public void invalidDescriptionTooLong() {
+		RoundModel round = new RoundModel();
+		round.setNumber(1);
+		round.setDescription(TestUtil.createStringWithLength(RoundValidator.MAXIMUM_DESCRIPTION_LENGTH + 1));
+		BindException errors = new BindException(round, "round");
+		ValidationUtils.invokeValidator(validator, round, errors);
+		assertTrue(errors.hasErrors());
 	}
 
 }

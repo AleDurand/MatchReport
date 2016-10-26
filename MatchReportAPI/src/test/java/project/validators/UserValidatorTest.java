@@ -15,7 +15,7 @@ import org.springframework.validation.ValidationUtils;
 
 import project.Application;
 import project.models.UserModel;
-
+import project.utils.TestUtil;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
@@ -55,7 +55,7 @@ public class UserValidatorTest {
 		ValidationUtils.invokeValidator(validator, user, errors);
 		assertTrue(errors.hasErrors());
 	}
-	
+
 	@Test
 	public void invalidUsernameEmpty() {
 		UserModel user = new UserModel();
@@ -75,7 +75,7 @@ public class UserValidatorTest {
 		ValidationUtils.invokeValidator(validator, user, errors);
 		assertTrue(errors.hasErrors());
 	}
-	
+
 	@Test
 	public void invalidPasswordEmpty() {
 		UserModel user = new UserModel();
@@ -90,17 +90,17 @@ public class UserValidatorTest {
 	public void invalidPasswordTooShort() {
 		UserModel user = new UserModel();
 		user.setUsername("username");
-		user.setPassword("aaa");
+		user.setPassword(TestUtil.createStringWithLength(UserValidator.MINIMUM_PASSWORD_LENGTH - 1));
 		BindException errors = new BindException(user, "user");
 		ValidationUtils.invokeValidator(validator, user, errors);
 		assertTrue(errors.hasErrors());
 	}
-	
+
 	@Test
 	public void invalidPasswordTooLong() {
 		UserModel user = new UserModel();
 		user.setUsername("username");
-		user.setPassword("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		user.setPassword(TestUtil.createStringWithLength(UserValidator.MAXIMUM_PASSWORD_LENGTH + 1));
 		BindException errors = new BindException(user, "user");
 		ValidationUtils.invokeValidator(validator, user, errors);
 		assertTrue(errors.hasErrors());

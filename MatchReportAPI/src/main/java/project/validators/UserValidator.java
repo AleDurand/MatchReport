@@ -9,8 +9,8 @@ import project.models.UserModel;
 @Component
 public class UserValidator implements Validator {
 
-	private static final int MINIMUM_PASSWORD_LENGTH = 6;
-	private static final int MAXIMUM_PASSWORD_LENGTH = 50;
+	public static final int MINIMUM_PASSWORD_LENGTH = 6;
+	public static final int MAXIMUM_PASSWORD_LENGTH = 50;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
