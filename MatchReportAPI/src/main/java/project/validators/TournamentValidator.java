@@ -32,7 +32,7 @@ public class TournamentValidator implements Validator {
 			errors.rejectValue("endDate", "tournament.end_date.not_null", "{tournament.end_date.not_null}");
 		} else {
 			if (tournament.getEndDate().before(new Date())) {
-				errors.rejectValue("endDate", "tournament.end_date.before_today", "{tournament.end_date.before_today}");
+				errors.rejectValue("endDate", "tournament.end_date.after_today", "{tournament.end_date.after_today}");
 			}
 		}
 
