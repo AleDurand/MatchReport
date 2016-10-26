@@ -61,7 +61,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType("dni");
 		player.setDocumentNumber(10000000);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -74,7 +74,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType("dni");
 		player.setDocumentNumber(10000000);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -87,7 +87,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType("dni");
 		player.setDocumentNumber(10000000);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -100,7 +100,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType("dni");
 		player.setDocumentNumber(10000000);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -113,7 +113,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType("dni");
 		player.setDocumentNumber(10000000);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -126,7 +126,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType("dni");
 		player.setDocumentNumber(10000000);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -139,7 +139,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(null);
 		player.setDocumentType("dni");
 		player.setDocumentNumber(10000000);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -152,7 +152,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() + TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType("dni");
 		player.setDocumentNumber(10000000);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -165,7 +165,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType(null);
 		player.setDocumentNumber(10000000);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -178,7 +178,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType(" ");
 		player.setDocumentNumber(10000000);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -191,7 +191,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType(TestUtil.createStringWithLength(PlayerValidator.MAXIMUM_DOCUMENT_TYPE_LENGTH + 1));
 		player.setDocumentNumber(10000000);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -204,7 +204,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType("dni");
 		player.setDocumentNumber(null);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
@@ -217,7 +217,7 @@ public class PlayerValidatorTest {
 		player.setBirthDate(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)));
 		player.setDocumentType("dni");
 		player.setDocumentNumber(-1);
-		BindException errors = new BindException(player, "club");
+		BindException errors = new BindException(player, "player");
 		ValidationUtils.invokeValidator(validator, player, errors);
 		assertTrue(errors.hasErrors());
 	}
