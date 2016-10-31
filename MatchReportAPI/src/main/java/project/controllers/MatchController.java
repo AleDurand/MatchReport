@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.models.MatchModel;
@@ -39,8 +40,15 @@ public class MatchController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<MatchModel>> getAll() {
-		List<MatchModel> matches = matchService.getAll();
+	public ResponseEntity<List<MatchModel>> getAll( // @formatter:off 
+			@RequestParam(name = "id", required = false) Integer id,
+			@RequestParam(name = "status", required = false) Integer status,
+			@RequestParam(name = "stadium", required = false) Integer idStadium,
+			@RequestParam(name = "local", required = false) Integer idLocal,
+			@RequestParam(name = "visitor", required = false) Integer idVisitor,
+			@RequestParam(name = "round", required = false) Integer idRound
+	) { // @formatter:on
+		List<MatchModel> matches = matchService.getAll(id, status, idStadium, idLocal, idVisitor, idRound);
 		return new ResponseEntity<>(matches, HttpStatus.OK);
 	}
 

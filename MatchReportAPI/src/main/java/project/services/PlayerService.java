@@ -12,6 +12,6 @@ public interface PlayerService {
 
 	public void delete(Integer id);
 	
-	public List<PlayerModel> getAll();
+	public List<PlayerModel> getAll(Integer id, String firstname, String lastname, Integer documentNumber, Integer status);
 
 }

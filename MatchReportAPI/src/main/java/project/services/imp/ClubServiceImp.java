@@ -1,5 +1,6 @@
 package project.services.imp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
 import project.models.ClubModel;
+import project.models.QClubModel;
 import project.repositories.ClubRepository;
 import project.services.ClubService;
+
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 @Service
 public class ClubServiceImp implements ClubService {
@@ -38,8 +42,29 @@ public class ClubServiceImp implements ClubService {
 	}
 
 	@Override
-	public List<ClubModel> getAll() {
-		return clubRepository.findAll();
+	public List<ClubModel> getAll(Integer id, String name, Integer idStadium) {
+		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
+		
+		QClubModel club = QClubModel.clubModel;
+		BooleanExpression expression1 = (id != null) ? club.id.eq(id) : null;
+		expressions.add(expression1);
+		
+		BooleanExpression expression2 = (name != null) ? club.name.contains(name) : null;
+		expressions.add(expression2);
+		
+		BooleanExpression expression3 = (idStadium != null) ? club.stadium.id.eq(idStadium) : null;
+		expressions.add(expression3);
+		
+		BooleanExpression expression = null;
+		for(BooleanExpression ex : expressions){
+			if(expression == null){
+				expression = ex;
+			} else {
+				expression = expression.or(ex);
+			}
+		}
+		 
+		return (List<ClubModel>) clubRepository.findAll(expression);
 	}
 
 }

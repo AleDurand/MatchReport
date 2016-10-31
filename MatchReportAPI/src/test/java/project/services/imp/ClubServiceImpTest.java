@@ -1,6 +1,6 @@
 package project.services.imp;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import project.Application;
 import project.exceptions.EntityNotFoundException;
 import project.models.ClubModel;
+import project.models.QClubModel;
 import project.repositories.ClubRepository;
 import project.services.ClubService;
 
@@ -120,9 +121,10 @@ public class ClubServiceImpTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<ClubModel> expectedClubs = Arrays.asList(new ClubModel());
-		when(clubRepositoryMock.findAll()).thenReturn(expectedClubs);
+		QClubModel club = QClubModel.clubModel;
+		when(clubRepositoryMock.findAll(club.instanceOfAny())).thenReturn(expectedClubs);
 
-		List<ClubModel> actualClubs = clubService.getAll();
+		List<ClubModel> actualClubs = clubService.getAll(null, null, null);
 		
 		assertEquals(expectedClubs.size(), actualClubs.size());
 		assertEquals(expectedClubs, actualClubs);

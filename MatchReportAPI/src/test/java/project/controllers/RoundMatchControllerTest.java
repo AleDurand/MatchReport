@@ -65,12 +65,12 @@ public class RoundMatchControllerTest {
 	public void create() throws Exception {
 		// @formatter:off
 		MatchModel match = new MatchModel();	
-		match.setStatus("PENDING");
+		match.setStatus(0);
 		match.setStadium(null);
 		
 		MatchModel expectedMatch = new MatchModel();
 		expectedMatch.setId(1);		
-		expectedMatch.setStatus("PENDING");
+		expectedMatch.setStatus(0);
 		expectedMatch.setStadium(null);
 		when(roundServiceMock.addMatch(any(), any())).thenReturn(expectedMatch);
 		
@@ -80,7 +80,7 @@ public class RoundMatchControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isCreated())
 			.andExpect(jsonPath("$.id", is(1)))
-			.andExpect(jsonPath("$.status", is("PENDING")))
+			.andExpect(jsonPath("$.status", is(0)))
 			.andExpect(jsonPath("$.stadium").doesNotExist())
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on

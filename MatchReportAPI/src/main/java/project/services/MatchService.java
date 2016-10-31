@@ -10,6 +10,8 @@ public interface MatchService {
 
 	public void delete(Integer id);
 
-	public List<MatchModel> getAll();
+	public List<MatchModel> getAll(Integer id, Integer status,
+			Integer idStadium, Integer idLocal, Integer idVisitor,
+			Integer idRound);
 
 }

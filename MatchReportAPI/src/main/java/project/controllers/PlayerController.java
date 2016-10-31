@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.models.PlayerModel;
@@ -47,8 +48,14 @@ public class PlayerController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<PlayerModel>> getAll() {
-		List<PlayerModel> players = playerService.getAll();
+	public ResponseEntity<List<PlayerModel>> getAll( // @formatter:off
+			@RequestParam(name = "id", required = false) Integer id,
+			@RequestParam(name = "firstname", required = false) String firstname,
+			@RequestParam(name = "lastname", required = false) String lastname,
+			@RequestParam(name = "document-number", required = false) Integer documentNumber,
+			@RequestParam(name = "status", required = false) Integer status
+	) { // @formatter:on
+		List<PlayerModel> players = playerService.getAll(id, firstname, lastname, documentNumber, status);
 		return new ResponseEntity<>(players, HttpStatus.OK);
 	}
 	

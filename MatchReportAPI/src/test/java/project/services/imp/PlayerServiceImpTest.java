@@ -122,7 +122,7 @@ public class PlayerServiceImpTest {
 		List<PlayerModel> expectedPlayers = Arrays.asList(new PlayerModel());
 		when(playerRepositoryMock.findAll()).thenReturn(expectedPlayers);
 
-		List<PlayerModel> actualPlayers = playerService.getAll();
+		List<PlayerModel> actualPlayers = playerService.getAll(null, null, null, null, null);
 
 		assertEquals(expectedPlayers.size(), actualPlayers.size());
 		assertEquals(expectedPlayers, actualPlayers);

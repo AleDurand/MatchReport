@@ -12,5 +12,5 @@ public interface ClubService {
 
 	public void delete(Integer id);
 
-	public List<ClubModel> getAll();
+	public List<ClubModel> getAll(Integer id, String name, Integer idStadium);
 }

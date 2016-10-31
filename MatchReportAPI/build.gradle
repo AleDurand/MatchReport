@@ -7,6 +7,24 @@ apply from: "$rootDir/coverage.gradle"
  
 sourceCompatibility = 1.8
 
+sourceSets {
+    generated {
+        java { srcDirs = ['src/main/generated']}
+    }
+    main {
+        java { srcDir 'src/main/java' }
+        resources { srcDir 'src/main/resources' }
+    }
+    test {
+        java { srcDir 'src/test/java' }
+        resources { srcDir 'src/test/resources' }
+    }
+}
+
+configurations {
+    querydslapt
+}
+
 buildscript {
     ext {
         springBootVersion = "1.4.0.RELEASE"
@@ -34,11 +52,39 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-security")
+    compile("com.querydsl:querydsl-core:4.1.4")
+    compile("com.querydsl:querydsl-jpa:4.1.4")
+    compile("com.querydsl:querydsl-apt:4.1.4")
     compile("mysql:mysql-connector-java:5.1.36")
     compile("log4j:log4j:1.2.17")	
     compile("com.h2database:h2")	
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("junit:junit:4.+")     
+}
+
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "com.querydsl.apt.jpa.JPAAnnotationProcessor"
+    ]
+    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+}
+
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+
+compileGeneratedJava {
+    dependsOn generateQueryDSL
+    options.warnings = false
+    classpath += sourceSets.main.runtimeClasspath
+}
+
+clean {
+    delete sourceSets.generated.java.srcDirs
 }
 
 test {
@@ -48,6 +94,3 @@ test {
 task wrapper(type: Wrapper) {
     gradleVersion = '3.0'
 }
-
-
-

@@ -49,7 +49,7 @@ public class MatchServiceImpTest {
 		expectedMatch.setId(1);
 		expectedMatch.setDate(null);
 		expectedMatch.setHour(null);
-		expectedMatch.setStatus("status");
+		expectedMatch.setStatus(0);
 		expectedMatch.setStadium(null);
 		expectedMatch.setLocal(null);
 		expectedMatch.setVisitor(null);
@@ -101,7 +101,7 @@ public class MatchServiceImpTest {
 		List<MatchModel> expectedMatches = Arrays.asList(new MatchModel());
 		when(matchRepositoryMock.findAll()).thenReturn(expectedMatches);
 
-		List<MatchModel> actualMatches = matchService.getAll();
+		List<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null);
 
 		assertEquals(expectedMatches.size(), actualMatches.size());
 		assertEquals(expectedMatches, actualMatches);

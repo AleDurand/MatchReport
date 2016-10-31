@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.models.ClubModel;
@@ -45,13 +46,17 @@ public class ClubController {
 		clubService.delete(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
+
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<ClubModel>> getAll() {
-		List<ClubModel> clubs = clubService.getAll();
+	public ResponseEntity<List<ClubModel>> getAll( // @formatter:off
+			@RequestParam(name = "id", required = false) Integer id,
+			@RequestParam(name = "name", required = false) String name,
+			@RequestParam(name = "stadium", required = false) Integer idStadium
+	) { // @formatter:on
+		List<ClubModel> clubs = clubService.getAll(id, name, idStadium);
 		return new ResponseEntity<>(clubs, HttpStatus.OK);
 	}
-	
+
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.setValidator(clubValidator);

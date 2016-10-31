@@ -38,7 +38,7 @@ public class PlayerServiceImp implements PlayerService {
 	}
 
 	@Override
-	public List<PlayerModel> getAll() {
+	public List<PlayerModel> getAll(Integer id, String firstname, String lastname, Integer documentNumber, Integer status) {
 		return playerRepository.findAll();
 	}
 

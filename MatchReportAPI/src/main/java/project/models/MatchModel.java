@@ -31,7 +31,7 @@ public class MatchModel {
 	private Date hour;
 
 	@Column(name = "status", nullable = true)
-	private String status;
+	private Integer status;
 
 	@OneToOne
 	@JoinColumn(name = "id_cancha")
@@ -76,11 +76,11 @@ public class MatchModel {
 		this.hour = hour;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

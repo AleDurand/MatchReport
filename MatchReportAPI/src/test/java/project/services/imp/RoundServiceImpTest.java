@@ -114,7 +114,7 @@ public class RoundServiceImpTest {
 		expectedMatch.setId(1);
 		expectedMatch.setDate(null);
 		expectedMatch.setHour(null);
-		expectedMatch.setStatus("status");
+		expectedMatch.setStatus(0);
 		expectedMatch.setStadium(null);
 		expectedMatch.setLocal(null);
 		expectedMatch.setVisitor(null);

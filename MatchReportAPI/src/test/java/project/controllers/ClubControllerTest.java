@@ -157,7 +157,7 @@ public class ClubControllerTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<ClubModel> expectedClubs = Arrays.asList(new ClubModel());
-		when(clubServiceMock.getAll()).thenReturn(expectedClubs);
+		when(clubServiceMock.getAll(null, null, null)).thenReturn(expectedClubs);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/clubs")
 			.accept(MediaType.APPLICATION_JSON))

@@ -62,7 +62,7 @@ public class MatchControllerTest {
 		// @formatter:off
 		MatchModel expectedMatch = new MatchModel();
 		expectedMatch.setId(1);		
-		expectedMatch.setStatus("PENDING");
+		expectedMatch.setStatus(0);
 		expectedMatch.setStadium(null);
 		
 		when(matchServiceMock.read(1)).thenReturn(expectedMatch);
@@ -71,7 +71,7 @@ public class MatchControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.id", is(1)))
-			.andExpect(jsonPath("$.status", is("PENDING")))
+			.andExpect(jsonPath("$.status", is(0)))
 			.andExpect(jsonPath("$.stadium").doesNotExist())
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
@@ -113,7 +113,7 @@ public class MatchControllerTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<MatchModel> expectedMatches = Arrays.asList(new MatchModel());
-		when(matchServiceMock.getAll()).thenReturn(expectedMatches);
+		when(matchServiceMock.getAll(null, null, null, null, null, null)).thenReturn(expectedMatches);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/matches")
 			.accept(MediaType.APPLICATION_JSON))
