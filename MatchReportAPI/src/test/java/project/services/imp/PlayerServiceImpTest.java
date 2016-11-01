@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import project.Application;
 import project.exceptions.EntityNotFoundException;
 import project.models.PlayerModel;
+import project.models.QPlayerModel;
 import project.repositories.PlayerRepository;
 import project.services.PlayerService;
 
@@ -120,9 +121,10 @@ public class PlayerServiceImpTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<PlayerModel> expectedPlayers = Arrays.asList(new PlayerModel());
-		when(playerRepositoryMock.findAll()).thenReturn(expectedPlayers);
+		QPlayerModel player = QPlayerModel.playerModel;
+		when(playerRepositoryMock.findAll(player.instanceOfAny())).thenReturn(expectedPlayers);
 
-		List<PlayerModel> actualPlayers = playerService.getAll(null, null, null, null, null);
+		List<PlayerModel> actualPlayers = playerService.getAll(null, null, null, null, null, null, null);
 
 		assertEquals(expectedPlayers.size(), actualPlayers.size());
 		assertEquals(expectedPlayers, actualPlayers);

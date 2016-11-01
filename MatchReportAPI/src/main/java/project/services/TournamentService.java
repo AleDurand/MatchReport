@@ -1,5 +1,6 @@
 package project.services;
 
+import java.util.Date;
 import java.util.List;
 
 import project.models.RoundModel;
@@ -13,7 +14,7 @@ public interface TournamentService {
 
 	public void delete(Integer id);
 
-	public List<TournamentModel> getAll();
+	public List<TournamentModel> getAll(Integer id, Date initDateBefore, Date initDateAfter, Date endDateBefore, Date endDateAfter);
 
 	public List<RoundModel> getAllRounds(Integer tournamentId);
 	

@@ -159,7 +159,7 @@ public class PlayerControllerTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<PlayerModel> expectedPlayers = Arrays.asList(new PlayerModel());
-		when(playerServiceMock.getAll(null, null, null, null, null)).thenReturn(expectedPlayers);
+		when(playerServiceMock.getAll(null, null, null, null, null, null, null)).thenReturn(expectedPlayers);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/players")
 			.accept(MediaType.APPLICATION_JSON))

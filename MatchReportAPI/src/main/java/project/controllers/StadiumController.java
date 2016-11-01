@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.models.StadiumModel;
@@ -47,8 +48,11 @@ public class StadiumController {
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<StadiumModel>> getAll() {
-		List<StadiumModel> stadiums = stadiumService.getAll();
+	public ResponseEntity<List<StadiumModel>> getAll( // @formatter:off
+			@RequestParam(name = "id", required = false) Integer id,
+			@RequestParam(name = "name", required = false) String name			
+	) { // @formatter:on
+		List<StadiumModel> stadiums = stadiumService.getAll(id, name);
 		return new ResponseEntity<>(stadiums, HttpStatus.OK);
 	}
 	

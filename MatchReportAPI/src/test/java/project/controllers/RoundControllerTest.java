@@ -114,7 +114,7 @@ public class RoundControllerTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<RoundModel> expectedRounds = Arrays.asList(new RoundModel());
-		when(roundServiceMock.getAll()).thenReturn(expectedRounds);
+		when(roundServiceMock.getAll(null, null, null, null)).thenReturn(expectedRounds);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/rounds")
 			.accept(MediaType.APPLICATION_JSON))

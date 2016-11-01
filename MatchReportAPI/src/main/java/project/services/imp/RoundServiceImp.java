@@ -1,5 +1,6 @@
 package project.services.imp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,13 @@ import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
 import project.models.MatchModel;
+import project.models.QRoundModel;
 import project.models.RoundModel;
 import project.repositories.MatchRepository;
 import project.repositories.RoundRepository;
 import project.services.RoundService;
+
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 @Service
 public class RoundServiceImp implements RoundService {
@@ -38,8 +42,31 @@ public class RoundServiceImp implements RoundService {
 	}
 
 	@Override
-	public List<RoundModel> getAll() {
-		return roundRepository.findAll();
+	public List<RoundModel> getAll(Integer id, Integer number, String description, Integer tournament) {
+		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
+		
+		QRoundModel round = QRoundModel.roundModel;
+		BooleanExpression expression1 = (id != null) ? round.id.eq(id) : null;
+		expressions.add(expression1);
+
+		BooleanExpression expression2 = (number != null) ? round.number.eq(number) : null;
+		expressions.add(expression2);
+		
+		BooleanExpression expression3 = (description != null) ? round.description.contains(description) : null;
+		expressions.add(expression3);
+		
+		BooleanExpression expression4 = (tournament != null) ? round.tournament.id.eq(tournament) : null;
+		expressions.add(expression4);
+		
+		BooleanExpression expression = null;
+		for (BooleanExpression ex : expressions) {
+			if (expression == null) {
+				expression = ex;
+			} else {
+				expression = expression.or(ex);
+			}
+		}
+		return (List<RoundModel>) roundRepository.findAll(expression);
 	}
 
 	@Override

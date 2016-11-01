@@ -22,7 +22,6 @@ public class MatchModel {
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "fecha", nullable = false)
 	private Date date;
 

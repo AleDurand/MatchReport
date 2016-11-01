@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Entity
 @Table(name = "jugador")
 public class PlayerModel {
@@ -26,7 +24,6 @@ public class PlayerModel {
 	@Column(name = "apellido", nullable = false)
 	private String lastname;
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "fecha_nacimiento", nullable = false)
 	private Date birthDate;
 

@@ -140,7 +140,7 @@ public class TournamentControllerTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<TournamentModel> expectedTournaments = Arrays.asList(new TournamentModel());
-		when(tournamentServiceMock.getAll()).thenReturn(expectedTournaments);
+		when(tournamentServiceMock.getAll(null, null, null, null, null)).thenReturn(expectedTournaments);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/tournaments")
 			.accept(MediaType.APPLICATION_JSON))

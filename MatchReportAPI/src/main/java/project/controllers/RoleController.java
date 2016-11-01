@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.models.RoleModel;
@@ -47,8 +48,11 @@ public class RoleController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<RoleModel>> getAll() {
-		List<RoleModel> roles = roleService.getAll();
+	public ResponseEntity<List<RoleModel>> getAll( // @formatter:off
+			@RequestParam(name = "id", required = false) Integer id,
+			@RequestParam(name = "name", required = false) String name			
+	) { // @formatter:on
+		List<RoleModel> roles = roleService.getAll(id, name);
 		return new ResponseEntity<>(roles, HttpStatus.OK);
 	}
 

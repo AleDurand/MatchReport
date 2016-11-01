@@ -113,7 +113,7 @@ public class MatchControllerTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<MatchModel> expectedMatches = Arrays.asList(new MatchModel());
-		when(matchServiceMock.getAll(null, null, null, null, null, null)).thenReturn(expectedMatches);
+		when(matchServiceMock.getAll(null, null, null, null, null, null, null, null)).thenReturn(expectedMatches);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/matches")
 			.accept(MediaType.APPLICATION_JSON))

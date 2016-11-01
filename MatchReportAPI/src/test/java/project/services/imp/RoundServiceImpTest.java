@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import project.Application;
 import project.exceptions.EntityNotFoundException;
 import project.models.MatchModel;
+import project.models.QRoundModel;
 import project.models.RoundModel;
 import project.repositories.MatchRepository;
 import project.repositories.RoundRepository;
@@ -98,9 +99,10 @@ public class RoundServiceImpTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<RoundModel> expectedRounds = Arrays.asList(new RoundModel());
-		when(roundRepositoryMock.findAll()).thenReturn(expectedRounds);
+		QRoundModel round = QRoundModel.roundModel;
+		when(roundRepositoryMock.findAll(round.instanceOfAny())).thenReturn(expectedRounds);
 
-		List<RoundModel> actualRounds = roundService.getAll();
+		List<RoundModel> actualRounds = roundService.getAll(null, null, null, null);
 
 		assertEquals(expectedRounds.size(), actualRounds.size());
 		assertEquals(expectedRounds, actualRounds);

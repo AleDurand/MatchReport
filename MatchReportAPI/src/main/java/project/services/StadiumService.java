@@ -12,6 +12,6 @@ public interface StadiumService {
 
 	public void delete(Integer id);
 
-	public List<StadiumModel> getAll();
+	public List<StadiumModel> getAll(Integer id, String name);
 
 }

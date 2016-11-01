@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import project.Application;
 import project.exceptions.EntityNotFoundException;
+import project.models.QStadiumModel;
 import project.models.StadiumModel;
 import project.repositories.StadiumRepository;
 import project.services.StadiumService;
@@ -112,9 +113,10 @@ public class StadiumServiceImpTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<StadiumModel> expectedStadiums = Arrays.asList(new StadiumModel());
-		when(stadiumRepositoryMock.findAll()).thenReturn(expectedStadiums);
+		QStadiumModel stadium = QStadiumModel.stadiumModel;
+		when(stadiumRepositoryMock.findAll(stadium.instanceOfAny())).thenReturn(expectedStadiums);
 
-		List<StadiumModel> actualStadiums = stadiumService.getAll();
+		List<StadiumModel> actualStadiums = stadiumService.getAll(null, null);
 
 		assertEquals(expectedStadiums.size(), actualStadiums.size());
 		assertEquals(expectedStadiums, actualStadiums);

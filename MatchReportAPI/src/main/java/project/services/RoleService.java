@@ -12,6 +12,6 @@ public interface RoleService {
 
 	public void delete(Integer id);
 
-	public List<RoleModel> getAll();
+	public List<RoleModel> getAll(Integer id, String name);
 
 }

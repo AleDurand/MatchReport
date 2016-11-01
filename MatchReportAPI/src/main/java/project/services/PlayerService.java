@@ -1,5 +1,6 @@
 package project.services;
 
+import java.util.Date;
 import java.util.List;
 
 import project.models.PlayerModel;
@@ -12,6 +13,6 @@ public interface PlayerService {
 
 	public void delete(Integer id);
 	
-	public List<PlayerModel> getAll(Integer id, String firstname, String lastname, Integer documentNumber, Integer status);
+	public List<PlayerModel> getAll(Integer id, String firstname, String lastname, Date birthDateBefore, Date birthDateAfter, Integer documentNumber, Integer status);
 
 }

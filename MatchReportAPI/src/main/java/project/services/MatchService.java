@@ -1,5 +1,6 @@
 package project.services;
 
+import java.util.Date;
 import java.util.List;
 
 import project.models.MatchModel;
@@ -10,7 +11,7 @@ public interface MatchService {
 
 	public void delete(Integer id);
 
-	public List<MatchModel> getAll(Integer id, Integer status,
+	public List<MatchModel> getAll(Integer id, Date dateBefore, Date dateAfter, Integer status, 
 			Integer idStadium, Integer idLocal, Integer idVisitor,
 			Integer idRound);
 

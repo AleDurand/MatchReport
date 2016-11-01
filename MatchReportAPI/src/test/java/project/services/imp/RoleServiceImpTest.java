@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import project.Application;
 import project.exceptions.EntityNotFoundException;
+import project.models.QRoleModel;
 import project.models.RoleModel;
 import project.repositories.RoleRepository;
 import project.services.RoleService;
@@ -104,9 +105,10 @@ public class RoleServiceImpTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<RoleModel> expectedRoles = Arrays.asList(new RoleModel());
-		when(roleRepositoryMock.findAll()).thenReturn(expectedRoles);
+		QRoleModel role = QRoleModel.roleModel;
+		when(roleRepositoryMock.findAll(role.instanceOfAny())).thenReturn(expectedRoles);
 
-		List<RoleModel> actualRoles = roleService.getAll();
+		List<RoleModel> actualRoles = roleService.getAll(null, null);
 
 		assertEquals(expectedRoles.size(), actualRoles.size());
 		assertEquals(expectedRoles, actualRoles);

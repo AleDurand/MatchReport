@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import project.Application;
 import project.exceptions.EntityAlreadyExistsException;
 import project.exceptions.EntityNotFoundException;
+import project.models.QUserModel;
 import project.models.UserModel;
 import project.repositories.UserRepository;
 import project.services.UserService;
@@ -122,9 +123,10 @@ public class UserServiceImpTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<UserModel> expectedUsers = Arrays.asList(new UserModel());
-		when(userRepositoryMock.findAll()).thenReturn(expectedUsers);
+		QUserModel user = QUserModel.userModel;
+		when(userRepositoryMock.findAll(user.instanceOfAny())).thenReturn(expectedUsers);
 
-		List<UserModel> actualUsers = userService.getAll();
+		List<UserModel> actualUsers = userService.getAll(null, null, null);
 
 		assertEquals(expectedUsers.size(), actualUsers.size());
 		assertEquals(expectedUsers, actualUsers);

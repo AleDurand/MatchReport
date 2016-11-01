@@ -144,7 +144,7 @@ public class UserControllerTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<UserModel> expectedUsers = Arrays.asList(new UserModel());
-		when(userServiceMock.getAll()).thenReturn(expectedUsers);
+		when(userServiceMock.getAll(null, null, null)).thenReturn(expectedUsers);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/users")
 			.accept(MediaType.APPLICATION_JSON))

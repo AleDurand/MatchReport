@@ -1,8 +1,10 @@
 package project.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
@@ -42,13 +44,17 @@ public class MatchController {
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<MatchModel>> getAll( // @formatter:off 
 			@RequestParam(name = "id", required = false) Integer id,
+			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
+			@RequestParam(name = "date-before", required = false) Date dateBefore,
+			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
+			@RequestParam(name = "date-after", required = false) Date dateAfter,
 			@RequestParam(name = "status", required = false) Integer status,
 			@RequestParam(name = "stadium", required = false) Integer idStadium,
 			@RequestParam(name = "local", required = false) Integer idLocal,
 			@RequestParam(name = "visitor", required = false) Integer idVisitor,
 			@RequestParam(name = "round", required = false) Integer idRound
 	) { // @formatter:on
-		List<MatchModel> matches = matchService.getAll(id, status, idStadium, idLocal, idVisitor, idRound);
+		List<MatchModel> matches = matchService.getAll(id, dateBefore, dateAfter, status, idStadium, idLocal, idVisitor, idRound);
 		return new ResponseEntity<>(matches, HttpStatus.OK);
 	}
 

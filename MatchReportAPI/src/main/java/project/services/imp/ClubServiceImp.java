@@ -56,14 +56,14 @@ public class ClubServiceImp implements ClubService {
 		expressions.add(expression3);
 		
 		BooleanExpression expression = null;
-		for(BooleanExpression ex : expressions){
-			if(expression == null){
+		for (BooleanExpression ex : expressions) {
+			if (expression == null) {
 				expression = ex;
 			} else {
 				expression = expression.or(ex);
 			}
 		}
-		 
+
 		return (List<ClubModel>) clubRepository.findAll(expression);
 	}
 

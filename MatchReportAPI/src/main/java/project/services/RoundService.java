@@ -11,7 +11,7 @@ public interface RoundService {
 
 	public void delete(Integer id);
 
-	public List<RoundModel> getAll();
+	public List<RoundModel> getAll(Integer id, Integer number, String description, Integer tournament);
 
 	public List<MatchModel> getAllMatches(Integer roundId);
 

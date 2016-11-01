@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import project.Application;
 import project.exceptions.EntityNotFoundException;
+import project.models.QTournamentModel;
 import project.models.RoundModel;
 import project.models.TournamentModel;
 import project.repositories.RoundRepository;
@@ -112,9 +113,10 @@ public class TournamentServiceImpTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<TournamentModel> expectedTournaments = Arrays.asList(new TournamentModel());
-		when(tournamentRepositoryMock.findAll()).thenReturn(expectedTournaments);
+		QTournamentModel tournament = QTournamentModel.tournamentModel;
+		when(tournamentRepositoryMock.findAll(tournament.instanceOfAny())).thenReturn(expectedTournaments);
 
-		List<TournamentModel> actualTournaments = tournamentService.getAll();
+		List<TournamentModel> actualTournaments = tournamentService.getAll(null, null, null, null, null);
 
 		assertEquals(expectedTournaments.size(), actualTournaments.size());
 		assertEquals(expectedTournaments, actualTournaments);

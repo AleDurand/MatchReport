@@ -148,7 +148,7 @@ public class StadiumControllerTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<StadiumModel> expectedStadiums = Arrays.asList(new StadiumModel());
-		when(stadiumServiceMock.getAll()).thenReturn(expectedStadiums);
+		when(stadiumServiceMock.getAll(null, null)).thenReturn(expectedStadiums);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/stadiums")
 			.accept(MediaType.APPLICATION_JSON))

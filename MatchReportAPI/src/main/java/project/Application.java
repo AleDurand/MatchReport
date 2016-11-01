@@ -1,5 +1,7 @@
 package project;
 
+import java.text.SimpleDateFormat;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -39,11 +41,12 @@ public class Application extends SpringBootServletInitializer {
 	public Jackson2ObjectMapperBuilder jacksonBuilder() {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
 		builder.serializationInclusion(Include.NON_NULL);
+		builder.dateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"));
 		builder.failOnUnknownProperties(false);
 		builder.indentOutput(true);
 		return builder;
 	}
-
+	
 	@Bean
 	public LocalValidatorFactoryBean validator() {
 		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();

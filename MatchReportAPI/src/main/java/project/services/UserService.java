@@ -15,6 +15,6 @@ public interface UserService extends UserDetailsService {
 
 	public void delete(String username);
 
-	public List<UserModel> getAll();
+	public List<UserModel> getAll(String username, Boolean enabled, Integer role);
 
 }

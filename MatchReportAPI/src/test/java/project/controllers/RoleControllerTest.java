@@ -139,7 +139,7 @@ public class RoleControllerTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<RoleModel> expectedRoles = Arrays.asList(new RoleModel());
-		when(roleServiceMock.getAll()).thenReturn(expectedRoles);
+		when(roleServiceMock.getAll(null, null)).thenReturn(expectedRoles);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/roles")
 			.accept(MediaType.APPLICATION_JSON))

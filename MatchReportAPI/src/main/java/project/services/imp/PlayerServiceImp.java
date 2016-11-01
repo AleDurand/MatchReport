@@ -1,5 +1,7 @@
 package project.services.imp;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +9,11 @@ import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
 import project.models.PlayerModel;
+import project.models.QPlayerModel;
 import project.repositories.PlayerRepository;
 import project.services.PlayerService;
+
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 @Service
 public class PlayerServiceImp implements PlayerService {
@@ -38,8 +43,41 @@ public class PlayerServiceImp implements PlayerService {
 	}
 
 	@Override
-	public List<PlayerModel> getAll(Integer id, String firstname, String lastname, Integer documentNumber, Integer status) {
-		return playerRepository.findAll();
+	public List<PlayerModel> getAll(Integer id, String firstname, String lastname, Date birthDateBefore, Date birthDateAfter, Integer documentNumber, Integer status) {
+		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
+		
+		QPlayerModel player = QPlayerModel.playerModel;
+		BooleanExpression expression1 = (id != null) ? player.id.eq(id) : null;
+		expressions.add(expression1);
+		
+		BooleanExpression expression2 = (firstname != null) ? player.firstname.contains(firstname) : null;
+		expressions.add(expression2);
+		
+		BooleanExpression expression3 = (lastname != null) ? player.lastname.eq(lastname) : null;
+		expressions.add(expression3);
+		
+		BooleanExpression expression4 = (birthDateBefore != null) ? player.birthDate.before(birthDateBefore) : null;
+		expressions.add(expression4);
+		
+		BooleanExpression expression5 = (birthDateAfter != null) ? player.birthDate.after(birthDateAfter) : null;
+		expressions.add(expression5);
+		
+		BooleanExpression expression6 = (documentNumber != null) ? player.documentNumber.eq(documentNumber) : null;
+		expressions.add(expression6);
+		
+		BooleanExpression expression7 = (status != null) ? player.status.eq(status) : null;
+		expressions.add(expression7);
+		
+		BooleanExpression expression = null;
+		for (BooleanExpression ex : expressions) {
+			if (expression == null) {
+				expression = ex;
+			} else {
+				expression = expression.or(ex);
+			}
+		}
+
+		return (List<PlayerModel>) playerRepository.findAll(expression);
 	}
 
 }

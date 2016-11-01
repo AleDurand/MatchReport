@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.models.RoundModel;
@@ -39,8 +40,13 @@ public class RoundController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<RoundModel>> getAll() {
-		List<RoundModel> rounds = RoundService.getAll();
+	public ResponseEntity<List<RoundModel>> getAll( // @formatter:off
+			@RequestParam(name = "id", required = false) Integer id,
+			@RequestParam(name = "number", required = false) Integer number,
+			@RequestParam(name = "description", required = false) String description,
+			@RequestParam(name = "tournament", required = false) Integer tournament
+	) { // @formatter:on
+		List<RoundModel> rounds = RoundService.getAll(id, number, description, tournament);
 		return new ResponseEntity<>(rounds, HttpStatus.OK);
 	}
 

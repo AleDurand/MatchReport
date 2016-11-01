@@ -1,5 +1,6 @@
 package project.services.imp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,12 @@ import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityAlreadyExistsException;
 import project.exceptions.EntityNotFoundException;
+import project.models.QUserModel;
 import project.models.UserModel;
 import project.repositories.UserRepository;
 import project.services.UserService;
+
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -43,8 +47,29 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public List<UserModel> getAll() {
-		return userRepository.findAll();
+	public List<UserModel> getAll(String username, Boolean enabled, Integer role) {
+		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
+		
+		QUserModel user = QUserModel.userModel;
+		BooleanExpression expression1 = (username != null) ? user.username.eq(username) : null;
+		expressions.add(expression1);
+
+		BooleanExpression expression2 = (enabled != null) ? user.enabled.eq(enabled) : null;
+		expressions.add(expression2);
+		
+		BooleanExpression expression3 = (role != null) ? user.authorities.any().id.eq(role) : null;
+		expressions.add(expression3);
+		
+		BooleanExpression expression = null;
+		for (BooleanExpression ex : expressions) {
+			if (expression == null) {
+				expression = ex;
+			} else {
+				expression = expression.or(ex);
+			}
+		}
+		
+		return (List<UserModel>) userRepository.findAll(expression);
 	}
 
 }

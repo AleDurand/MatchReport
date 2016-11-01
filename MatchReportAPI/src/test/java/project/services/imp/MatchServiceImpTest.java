@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import project.Application;
 import project.exceptions.EntityNotFoundException;
 import project.models.MatchModel;
+import project.models.QMatchModel;
 import project.repositories.MatchRepository;
 import project.services.MatchService;
 
@@ -99,9 +100,10 @@ public class MatchServiceImpTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		List<MatchModel> expectedMatches = Arrays.asList(new MatchModel());
-		when(matchRepositoryMock.findAll()).thenReturn(expectedMatches);
+		QMatchModel match = QMatchModel.matchModel;
+		when(matchRepositoryMock.findAll(match.instanceOfAny())).thenReturn(expectedMatches);
 
-		List<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null);
+		List<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, null, null);
 
 		assertEquals(expectedMatches.size(), actualMatches.size());
 		assertEquals(expectedMatches, actualMatches);
