@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
 import project.models.PlayerModel;
+import project.models.PlayerStatus;
 import project.models.QPlayerModel;
 import project.repositories.PlayerRepository;
 import project.services.PlayerService;
@@ -43,7 +44,7 @@ public class PlayerServiceImp implements PlayerService {
 	}
 
 	@Override
-	public List<PlayerModel> getAll(Integer id, String firstname, String lastname, Date birthDateBefore, Date birthDateAfter, Integer documentNumber, Integer status) {
+	public List<PlayerModel> getAll(Integer id, String firstname, String lastname, Date birthDateBefore, Date birthDateAfter, Integer documentNumber, PlayerStatus status) {
 		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
 		
 		QPlayerModel player = QPlayerModel.playerModel;

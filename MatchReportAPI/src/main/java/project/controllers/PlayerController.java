@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.models.PlayerModel;
+import project.models.PlayerStatus;
 import project.services.PlayerService;
 import project.validators.PlayerValidator;
 
@@ -59,7 +60,7 @@ public class PlayerController {
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
 			@RequestParam(name = "birth-date-after", required = false) Date birthDateAfter,
 			@RequestParam(name = "document-number", required = false) Integer documentNumber,
-			@RequestParam(name = "status", required = false) Integer status
+			@RequestParam(name = "status", required = false) PlayerStatus status
 	) { // @formatter:on
 		List<PlayerModel> players = playerService.getAll(id, firstname, lastname, birthDateBefore, birthDateAfter, documentNumber, status);
 		return new ResponseEntity<>(players, HttpStatus.OK);

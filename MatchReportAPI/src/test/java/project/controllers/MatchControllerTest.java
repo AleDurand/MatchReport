@@ -30,6 +30,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.Application;
 import project.exceptions.EntityNotFoundException;
 import project.models.MatchModel;
+import project.models.MatchStatus;
 import project.services.MatchService;
 
 @ActiveProfiles("test")
@@ -62,7 +63,7 @@ public class MatchControllerTest {
 		// @formatter:off
 		MatchModel expectedMatch = new MatchModel();
 		expectedMatch.setId(1);		
-		expectedMatch.setStatus(0);
+		expectedMatch.setStatus(MatchStatus.PENDING);
 		expectedMatch.setStadium(null);
 		
 		when(matchServiceMock.read(1)).thenReturn(expectedMatch);
@@ -71,7 +72,7 @@ public class MatchControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.id", is(1)))
-			.andExpect(jsonPath("$.status", is(0)))
+			.andExpect(jsonPath("$.status", is("PENDING")))
 			.andExpect(jsonPath("$.stadium").doesNotExist())
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on

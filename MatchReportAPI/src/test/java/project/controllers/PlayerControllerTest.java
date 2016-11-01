@@ -31,6 +31,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.Application;
 import project.exceptions.EntityNotFoundException;
 import project.models.PlayerModel;
+import project.models.PlayerStatus;
 import project.services.PlayerService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -72,7 +73,7 @@ public class PlayerControllerTest {
 		player.setLastname("lastname");
 		player.setDocumentType("DNI");
 		player.setDocumentNumber(10000000);
-		player.setStatus(0);
+		player.setStatus(PlayerStatus.ENABLED);
 		
 		PlayerModel expectedPlayer = new PlayerModel();
 		expectedPlayer.setId(1);
@@ -80,7 +81,7 @@ public class PlayerControllerTest {
 		expectedPlayer.setLastname("lastname");
 		expectedPlayer.setDocumentType("DNI");
 		expectedPlayer.setDocumentNumber(10000000);
-		expectedPlayer.setStatus(0);
+		expectedPlayer.setStatus(PlayerStatus.ENABLED);
 		when(playerServiceMock.create(any())).thenReturn(expectedPlayer);
 		
 		mockMvc.perform(MockMvcRequestBuilders.post("/players")
@@ -93,7 +94,7 @@ public class PlayerControllerTest {
 			.andExpect(jsonPath("$.lastname", is("lastname")))
 			.andExpect(jsonPath("$.documentType", is("DNI")))
 			.andExpect(jsonPath("$.documentNumber", is(10000000)))
-			.andExpect(jsonPath("$.status", is(0)))
+			.andExpect(jsonPath("$.status", is("ENABLED")))
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
@@ -107,7 +108,7 @@ public class PlayerControllerTest {
 		expectedPlayer.setLastname("lastname");
 		expectedPlayer.setDocumentType("DNI");
 		expectedPlayer.setDocumentNumber(10000000);
-		expectedPlayer.setStatus(0);
+		expectedPlayer.setStatus(PlayerStatus.ENABLED);
 		when(playerServiceMock.read(1)).thenReturn(expectedPlayer);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/players/{id}", 1)
@@ -118,7 +119,7 @@ public class PlayerControllerTest {
 			.andExpect(jsonPath("$.lastname", is("lastname")))
 			.andExpect(jsonPath("$.documentType", is("DNI")))
 			.andExpect(jsonPath("$.documentNumber", is(10000000)))
-			.andExpect(jsonPath("$.status", is(0)))
+			.andExpect(jsonPath("$.status", is("ENABLED")))
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}

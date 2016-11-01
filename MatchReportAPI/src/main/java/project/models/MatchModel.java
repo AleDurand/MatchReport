@@ -11,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Entity
 @Table(name = "partido")
 public class MatchModel {
@@ -25,12 +23,8 @@ public class MatchModel {
 	@Column(name = "fecha", nullable = false)
 	private Date date;
 
-	@JsonFormat(pattern = "hh:mm")
-	@Column(name = "hora", nullable = false)
-	private Date hour;
-
 	@Column(name = "status", nullable = true)
-	private Integer status;
+	private MatchStatus status;
 
 	@OneToOne
 	@JoinColumn(name = "id_cancha")
@@ -67,19 +61,11 @@ public class MatchModel {
 		this.date = date;
 	}
 
-	public Date getHour() {
-		return hour;
-	}
-
-	public void setHour(Date hour) {
-		this.hour = hour;
-	}
-
-	public Integer getStatus() {
+	public MatchStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(MatchStatus status) {
 		this.status = status;
 	}
 

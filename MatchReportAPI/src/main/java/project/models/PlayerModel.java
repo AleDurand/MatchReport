@@ -34,7 +34,7 @@ public class PlayerModel {
 	private String documentType;
 
 	@Column(name = "status", nullable = true)
-	private Integer status;
+	private PlayerStatus status;
 
 	public PlayerModel() {
 
@@ -88,11 +88,11 @@ public class PlayerModel {
 		this.documentType = documentType;
 	}
 
-	public Integer getStatus() {
+	public PlayerStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(PlayerStatus status) {
 		this.status = status;
 	}
 

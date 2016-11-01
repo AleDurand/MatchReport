@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import project.Application;
 import project.exceptions.EntityNotFoundException;
 import project.models.PlayerModel;
+import project.models.PlayerStatus;
 import project.models.QPlayerModel;
 import project.repositories.PlayerRepository;
 import project.services.PlayerService;
@@ -52,7 +53,7 @@ public class PlayerServiceImpTest {
 		expectedPlayer.setLastname("lastname");
 		expectedPlayer.setDocumentType("DNI");
 		expectedPlayer.setDocumentNumber(10000000);
-		expectedPlayer.setStatus(0);
+		expectedPlayer.setStatus(PlayerStatus.ENABLED);
 		when(playerRepositoryMock.save(expectedPlayer)).thenReturn(expectedPlayer);
 
 		PlayerModel actualPlayer = playerService.create(expectedPlayer);
@@ -75,7 +76,7 @@ public class PlayerServiceImpTest {
 		expectedPlayer.setLastname("lastname");
 		expectedPlayer.setDocumentType("DNI");
 		expectedPlayer.setDocumentNumber(10000000);
-		expectedPlayer.setStatus(0);
+		expectedPlayer.setStatus(PlayerStatus.ENABLED);
 		when(playerRepositoryMock.exists(1)).thenReturn(true);
 		when(playerRepositoryMock.findOne(1)).thenReturn(expectedPlayer);
 

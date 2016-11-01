@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
 import project.models.MatchModel;
+import project.models.MatchStatus;
 import project.models.QMatchModel;
 import project.repositories.MatchRepository;
 import project.services.MatchService;
@@ -38,7 +39,7 @@ public class MatchServiceImp implements MatchService {
 	}
 
 	@Override
-	public List<MatchModel> getAll(Integer id, Date dateBefore, Date dateAfter, Integer status,
+	public List<MatchModel> getAll(Integer id, Date dateBefore, Date dateAfter, MatchStatus status,
 			Integer idStadium, Integer idLocal, Integer idVisitor,
 			Integer idRound) {
 		

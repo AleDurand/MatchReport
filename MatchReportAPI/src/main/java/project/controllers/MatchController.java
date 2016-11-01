@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.models.MatchModel;
+import project.models.MatchStatus;
 import project.services.MatchService;
 import project.validators.MatchValidator;
 
@@ -48,7 +49,7 @@ public class MatchController {
 			@RequestParam(name = "date-before", required = false) Date dateBefore,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
 			@RequestParam(name = "date-after", required = false) Date dateAfter,
-			@RequestParam(name = "status", required = false) Integer status,
+			@RequestParam(name = "status", required = false) MatchStatus status,
 			@RequestParam(name = "stadium", required = false) Integer idStadium,
 			@RequestParam(name = "local", required = false) Integer idLocal,
 			@RequestParam(name = "visitor", required = false) Integer idVisitor,

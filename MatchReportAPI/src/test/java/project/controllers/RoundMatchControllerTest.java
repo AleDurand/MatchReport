@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import project.Application;
 import project.models.MatchModel;
+import project.models.MatchStatus;
 import project.services.RoundService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -65,12 +66,12 @@ public class RoundMatchControllerTest {
 	public void create() throws Exception {
 		// @formatter:off
 		MatchModel match = new MatchModel();	
-		match.setStatus(0);
+		match.setStatus(MatchStatus.IN_PROGRESS);
 		match.setStadium(null);
 		
 		MatchModel expectedMatch = new MatchModel();
 		expectedMatch.setId(1);		
-		expectedMatch.setStatus(0);
+		expectedMatch.setStatus(MatchStatus.IN_PROGRESS);
 		expectedMatch.setStadium(null);
 		when(roundServiceMock.addMatch(any(), any())).thenReturn(expectedMatch);
 		
@@ -80,7 +81,7 @@ public class RoundMatchControllerTest {
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isCreated())
 			.andExpect(jsonPath("$.id", is(1)))
-			.andExpect(jsonPath("$.status", is(0)))
+			.andExpect(jsonPath("$.status", is("IN_PROGRESS")))
 			.andExpect(jsonPath("$.stadium").doesNotExist())
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on

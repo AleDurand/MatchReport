@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import project.Application;
 import project.exceptions.EntityNotFoundException;
 import project.models.MatchModel;
+import project.models.MatchStatus;
 import project.models.QMatchModel;
 import project.repositories.MatchRepository;
 import project.services.MatchService;
@@ -49,8 +50,7 @@ public class MatchServiceImpTest {
 		MatchModel expectedMatch = new MatchModel();
 		expectedMatch.setId(1);
 		expectedMatch.setDate(null);
-		expectedMatch.setHour(null);
-		expectedMatch.setStatus(0);
+		expectedMatch.setStatus(MatchStatus.IN_PROGRESS);
 		expectedMatch.setStadium(null);
 		expectedMatch.setLocal(null);
 		expectedMatch.setVisitor(null);
@@ -61,7 +61,6 @@ public class MatchServiceImpTest {
 
 		assertEquals(expectedMatch.getId(), actualMatch.getId());
 		assertEquals(expectedMatch.getDate(), actualMatch.getDate());
-		assertEquals(expectedMatch.getHour(), actualMatch.getHour());
 		assertEquals(expectedMatch.getStatus(), actualMatch.getStatus());
 		assertEquals(expectedMatch.getStadium(), actualMatch.getStadium());
 		assertEquals(expectedMatch.getLocal(), actualMatch.getLocal());
