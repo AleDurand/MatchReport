@@ -43,7 +43,6 @@ public class Application extends SpringBootServletInitializer {
 		builder.serializationInclusion(Include.NON_NULL);
 		builder.dateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"));
 		builder.failOnUnknownProperties(false);
-		builder.indentOutput(true);
 		return builder;
 	}
 	
