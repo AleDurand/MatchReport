@@ -1,7 +1,7 @@
 package project.services;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -15,6 +15,6 @@ public interface UserService extends UserDetailsService {
 
 	public void delete(String username);
 
-	public List<UserModel> getAll(String username, Boolean enabled, Integer role);
+	public Page<UserModel> getAll(String username, Boolean enabled, Integer role, Pageable pageable);
 
 }

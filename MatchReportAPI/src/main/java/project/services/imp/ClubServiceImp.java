@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
@@ -42,7 +44,7 @@ public class ClubServiceImp implements ClubService {
 	}
 
 	@Override
-	public List<ClubModel> getAll(Integer id, String name, Integer idStadium) {
+	public Page<ClubModel> getAll(Integer id, String name, Integer idStadium, Pageable pageable) {
 		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
 		
 		QClubModel club = QClubModel.clubModel;
@@ -64,7 +66,7 @@ public class ClubServiceImp implements ClubService {
 			}
 		}
 
-		return (List<ClubModel>) clubRepository.findAll(expression);
+		return clubRepository.findAll(expression, pageable);
 	}
 
 }

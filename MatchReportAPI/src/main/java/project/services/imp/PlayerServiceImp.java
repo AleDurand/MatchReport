@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
@@ -44,7 +46,7 @@ public class PlayerServiceImp implements PlayerService {
 	}
 
 	@Override
-	public List<PlayerModel> getAll(Integer id, String firstname, String lastname, Date birthDateBefore, Date birthDateAfter, Integer documentNumber, PlayerStatus status) {
+	public Page<PlayerModel> getAll(Integer id, String firstname, String lastname, Date birthDateBefore, Date birthDateAfter, Integer documentNumber, PlayerStatus status, Pageable pageable) {
 		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
 		
 		QPlayerModel player = QPlayerModel.playerModel;
@@ -78,7 +80,7 @@ public class PlayerServiceImp implements PlayerService {
 			}
 		}
 
-		return (List<PlayerModel>) playerRepository.findAll(expression);
+		return playerRepository.findAll(expression, pageable);
 	}
 
 }

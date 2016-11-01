@@ -1,8 +1,8 @@
 package project.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -48,12 +48,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<UserModel>> getAll( // @formatter:off
+	public ResponseEntity<Page<UserModel>> getAll( // @formatter:off
 			@RequestParam(name = "username", required = false) String username,
 			@RequestParam(name = "enabled", required = false) Boolean enabled,
-			@RequestParam(name = "role", required = false) Integer role	
+			@RequestParam(name = "role", required = false) Integer role,
+			Pageable pageable
 	) { // @formatter:on
-		List<UserModel> users = userService.getAll(username, enabled, role);
+		Page<UserModel> users = userService.getAll(username, enabled, role, pageable);
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +49,7 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public List<UserModel> getAll(String username, Boolean enabled, Integer role) {
+	public Page<UserModel> getAll(String username, Boolean enabled, Integer role, Pageable pageable) {
 		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
 		
 		QUserModel user = QUserModel.userModel;
@@ -69,7 +71,7 @@ public class UserServiceImp implements UserService {
 			}
 		}
 		
-		return (List<UserModel>) userRepository.findAll(expression);
+		return userRepository.findAll(expression, pageable);
 	}
 
 }

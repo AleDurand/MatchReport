@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +20,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -47,6 +49,9 @@ public class ClubControllerTest {
 	@Autowired
 	private GlobalExceptionController controllerAdvice;
 
+	@Autowired
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+	
 	@InjectMocks
 	private ClubController clubController;
 
@@ -60,6 +65,7 @@ public class ClubControllerTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(clubController)
+				.setCustomArgumentResolvers(pageableArgumentResolver)
 				.setControllerAdvice(controllerAdvice).build();
 	}
 
@@ -156,13 +162,13 @@ public class ClubControllerTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<ClubModel> expectedClubs = Arrays.asList(new ClubModel());
-		when(clubServiceMock.getAll(null, null, null)).thenReturn(expectedClubs);
+		Page<ClubModel> expectedClubs = new PageImpl<ClubModel>(Arrays.asList(new ClubModel()));
+		when(clubServiceMock.getAll(any(), any(), any(), any())).thenReturn(expectedClubs);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/clubs")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
-            .andExpect(jsonPath("$", hasSize(1)))
+            .andExpect(jsonPath("$.content", hasSize(1)))
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}

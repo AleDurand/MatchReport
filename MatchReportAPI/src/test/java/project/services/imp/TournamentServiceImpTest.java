@@ -15,6 +15,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -39,7 +43,7 @@ public class TournamentServiceImpTest {
 
 	@Mock
 	private TournamentRepository tournamentRepositoryMock;
-	
+
 	@Mock
 	private RoundRepository roundRepositoryMock;
 
@@ -47,7 +51,7 @@ public class TournamentServiceImpTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 	}
-	
+
 	@Test
 	public void create() throws Exception {
 		// @formatter:off
@@ -112,17 +116,18 @@ public class TournamentServiceImpTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<TournamentModel> expectedTournaments = Arrays.asList(new TournamentModel());
+		Page<TournamentModel> expectedTournaments = new PageImpl<TournamentModel>(Arrays.asList(new TournamentModel()));
+		Pageable pageable = new PageRequest(0, 1000);
 		QTournamentModel tournament = QTournamentModel.tournamentModel;
-		when(tournamentRepositoryMock.findAll(tournament.instanceOfAny())).thenReturn(expectedTournaments);
+		when(tournamentRepositoryMock.findAll(tournament.instanceOfAny(), pageable)).thenReturn(expectedTournaments);
 
-		List<TournamentModel> actualTournaments = tournamentService.getAll(null, null, null, null, null);
+		Page<TournamentModel> actualTournaments = tournamentService.getAll(null, null, null, null, null, pageable);
 
-		assertEquals(expectedTournaments.size(), actualTournaments.size());
+		assertEquals(expectedTournaments.getTotalElements(), actualTournaments.getTotalElements());
 		assertEquals(expectedTournaments, actualTournaments);
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void createRound() throws Exception {
 		// @formatter:off
@@ -142,7 +147,7 @@ public class TournamentServiceImpTest {
 		assertEquals(expectedRound.getTournament(), actualRound.getTournament());
 		// @formatter:on
 	}
-	
+
 	@Test(expected = EntityNotFoundException.class)
 	public void createRoundTournamentNotFound() throws Exception {
 		// @formatter:off
@@ -151,7 +156,7 @@ public class TournamentServiceImpTest {
 		tournamentService.addRound(1, new RoundModel());
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void getAllRounds() throws Exception {
 		// @formatter:off
@@ -165,7 +170,7 @@ public class TournamentServiceImpTest {
 		assertEquals(expectedRounds, actualRounds);
 		// @formatter:on
 	}
-	
+
 	@Test(expected = EntityNotFoundException.class)
 	public void getAllRoundsTournamentNotFound() throws Exception {
 		// @formatter:off
@@ -174,5 +179,5 @@ public class TournamentServiceImpTest {
 		tournamentService.getAllRounds(1);
 		// @formatter:on
 	}
-	
+
 }

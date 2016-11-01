@@ -1,6 +1,7 @@
 package project.services;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import project.models.ClubModel;
 
@@ -12,5 +13,5 @@ public interface ClubService {
 
 	public void delete(Integer id);
 
-	public List<ClubModel> getAll(Integer id, String name, Integer idStadium);
+	public Page<ClubModel> getAll(Integer id, String name, Integer idStadium, Pageable pageable);
 }

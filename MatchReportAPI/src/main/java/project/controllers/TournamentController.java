@@ -1,9 +1,10 @@
 package project.controllers;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +51,7 @@ public class TournamentController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<TournamentModel>> getAll( // @formatter:off
+	public ResponseEntity<Page<TournamentModel>> getAll( // @formatter:off
 			@RequestParam(name = "id", required = false) Integer id,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
 			@RequestParam(name = "init-date-before", required = false) Date initDateBefore,
@@ -59,9 +60,10 @@ public class TournamentController {
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
 			@RequestParam(name = "end-date-before", required = false) Date endDateBefore,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
-			@RequestParam(name = "end-date-after", required = false) Date endDateAfter
+			@RequestParam(name = "end-date-after", required = false) Date endDateAfter,
+			Pageable pageable
 	) { // @formatter:on
-		List<TournamentModel> tournaments = tournamentService.getAll(id, initDateBefore, initDateAfter, endDateBefore, endDateAfter);
+		Page<TournamentModel> tournaments = tournamentService.getAll(id, initDateBefore, initDateAfter, endDateBefore, endDateAfter, pageable);
 		return new ResponseEntity<>(tournaments, HttpStatus.OK);
 	}
 

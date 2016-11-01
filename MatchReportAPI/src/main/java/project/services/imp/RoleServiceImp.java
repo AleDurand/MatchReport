@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
@@ -42,7 +44,7 @@ public class RoleServiceImp implements RoleService {
 	}
 
 	@Override
-	public List<RoleModel> getAll(Integer id, String name) {
+	public Page<RoleModel> getAll(Integer id, String name, Pageable pageable) {
 		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
 		
 		QRoleModel role = QRoleModel.roleModel;
@@ -61,7 +63,7 @@ public class RoleServiceImp implements RoleService {
 			}
 		}
 
-		return (List<RoleModel>) roleRepository.findAll(expression);
+		return roleRepository.findAll(expression, pageable);
 	}
 
 }

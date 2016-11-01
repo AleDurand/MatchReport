@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +14,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -112,13 +115,14 @@ public class StadiumServiceImpTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<StadiumModel> expectedStadiums = Arrays.asList(new StadiumModel());
+		Page<StadiumModel> expectedStadiums = new PageImpl<StadiumModel>(Arrays.asList(new StadiumModel()));
+		Pageable pageable = new PageRequest(0, 1000);
 		QStadiumModel stadium = QStadiumModel.stadiumModel;
-		when(stadiumRepositoryMock.findAll(stadium.instanceOfAny())).thenReturn(expectedStadiums);
+		when(stadiumRepositoryMock.findAll(stadium.instanceOfAny(), pageable)).thenReturn(expectedStadiums);
 
-		List<StadiumModel> actualStadiums = stadiumService.getAll(null, null);
+		Page<StadiumModel> actualStadiums = stadiumService.getAll(null, null, pageable);
 
-		assertEquals(expectedStadiums.size(), actualStadiums.size());
+		assertEquals(expectedStadiums.getTotalElements(), actualStadiums.getTotalElements());
 		assertEquals(expectedStadiums, actualStadiums);
 		// @formatter:on
 	}

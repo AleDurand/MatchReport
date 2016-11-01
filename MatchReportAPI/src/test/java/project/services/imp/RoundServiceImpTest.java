@@ -15,6 +15,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -99,13 +103,14 @@ public class RoundServiceImpTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<RoundModel> expectedRounds = Arrays.asList(new RoundModel());
+		Page<RoundModel> expectedRounds = new PageImpl<RoundModel>(Arrays.asList(new RoundModel()));
+		Pageable pageable = new PageRequest(0, 1000);
 		QRoundModel round = QRoundModel.roundModel;
-		when(roundRepositoryMock.findAll(round.instanceOfAny())).thenReturn(expectedRounds);
+		when(roundRepositoryMock.findAll(round.instanceOfAny(), pageable)).thenReturn(expectedRounds);
 
-		List<RoundModel> actualRounds = roundService.getAll(null, null, null, null);
+		Page<RoundModel> actualRounds = roundService.getAll(null, null, null, null, pageable);
 
-		assertEquals(expectedRounds.size(), actualRounds.size());
+		assertEquals(expectedRounds.getTotalElements(), actualRounds.getTotalElements());
 		assertEquals(expectedRounds, actualRounds);
 		// @formatter:on
 	}

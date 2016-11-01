@@ -1,8 +1,8 @@
 package project.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
@@ -40,13 +40,14 @@ public class RoundController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<RoundModel>> getAll( // @formatter:off
+	public ResponseEntity<Page<RoundModel>> getAll( // @formatter:off
 			@RequestParam(name = "id", required = false) Integer id,
 			@RequestParam(name = "number", required = false) Integer number,
 			@RequestParam(name = "description", required = false) String description,
-			@RequestParam(name = "tournament", required = false) Integer tournament
+			@RequestParam(name = "tournament", required = false) Integer tournament,
+			Pageable pageable
 	) { // @formatter:on
-		List<RoundModel> rounds = RoundService.getAll(id, number, description, tournament);
+		Page<RoundModel> rounds = RoundService.getAll(id, number, description, tournament, pageable);
 		return new ResponseEntity<>(rounds, HttpStatus.OK);
 	}
 

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +14,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -121,13 +124,14 @@ public class PlayerServiceImpTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<PlayerModel> expectedPlayers = Arrays.asList(new PlayerModel());
+		Page<PlayerModel> expectedPlayers = new PageImpl<PlayerModel>(Arrays.asList(new PlayerModel()));
+		Pageable pageable = new PageRequest(0, 1000);
 		QPlayerModel player = QPlayerModel.playerModel;
-		when(playerRepositoryMock.findAll(player.instanceOfAny())).thenReturn(expectedPlayers);
+		when(playerRepositoryMock.findAll(player.instanceOfAny(), pageable)).thenReturn(expectedPlayers);
 
-		List<PlayerModel> actualPlayers = playerService.getAll(null, null, null, null, null, null, null);
+		Page<PlayerModel> actualPlayers = playerService.getAll(null, null, null, null, null, null, null, pageable);
 
-		assertEquals(expectedPlayers.size(), actualPlayers.size());
+		assertEquals(expectedPlayers.getTotalElements(), actualPlayers.getTotalElements());
 		assertEquals(expectedPlayers, actualPlayers);
 		// @formatter:on
 	}

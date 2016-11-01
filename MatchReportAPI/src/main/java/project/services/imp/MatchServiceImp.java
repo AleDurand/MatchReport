@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
@@ -39,9 +41,9 @@ public class MatchServiceImp implements MatchService {
 	}
 
 	@Override
-	public List<MatchModel> getAll(Integer id, Date dateBefore, Date dateAfter, MatchStatus status,
+	public Page<MatchModel> getAll(Integer id, Date dateBefore, Date dateAfter, MatchStatus status,
 			Integer idStadium, Integer idLocal, Integer idVisitor,
-			Integer idRound) {
+			Integer idRound, Pageable pageable) {
 		
 		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
 
@@ -79,7 +81,7 @@ public class MatchServiceImp implements MatchService {
 			}
 		}
 		
-		return (List<MatchModel>) matchRepository.findAll(expression);
+		return matchRepository.findAll(expression, pageable);
 	}
 
 }

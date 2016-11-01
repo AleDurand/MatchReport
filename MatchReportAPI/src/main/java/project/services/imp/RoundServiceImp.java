@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
@@ -42,7 +44,7 @@ public class RoundServiceImp implements RoundService {
 	}
 
 	@Override
-	public List<RoundModel> getAll(Integer id, Integer number, String description, Integer tournament) {
+	public Page<RoundModel> getAll(Integer id, Integer number, String description, Integer tournament, Pageable pageable) {
 		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
 		
 		QRoundModel round = QRoundModel.roundModel;
@@ -66,7 +68,7 @@ public class RoundServiceImp implements RoundService {
 				expression = expression.or(ex);
 			}
 		}
-		return (List<RoundModel>) roundRepository.findAll(expression);
+		return roundRepository.findAll(expression, pageable);
 	}
 
 	@Override

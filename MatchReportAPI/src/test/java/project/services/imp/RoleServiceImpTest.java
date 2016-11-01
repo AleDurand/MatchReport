@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +14,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -104,13 +107,14 @@ public class RoleServiceImpTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<RoleModel> expectedRoles = Arrays.asList(new RoleModel());
+		Page<RoleModel> expectedRoles = new PageImpl<RoleModel>(Arrays.asList(new RoleModel()));
+		Pageable pageable = new PageRequest(0, 1000);
 		QRoleModel role = QRoleModel.roleModel;
-		when(roleRepositoryMock.findAll(role.instanceOfAny())).thenReturn(expectedRoles);
+		when(roleRepositoryMock.findAll(role.instanceOfAny(), pageable)).thenReturn(expectedRoles);
 
-		List<RoleModel> actualRoles = roleService.getAll(null, null);
+		Page<RoleModel> actualRoles = roleService.getAll(null, null, pageable);
 
-		assertEquals(expectedRoles.size(), actualRoles.size());
+		assertEquals(expectedRoles.getTotalElements(), actualRoles.getTotalElements());
 		assertEquals(expectedRoles, actualRoles);
 		// @formatter:on
 	}

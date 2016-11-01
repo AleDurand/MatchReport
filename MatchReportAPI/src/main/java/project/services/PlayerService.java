@@ -1,7 +1,9 @@
 package project.services;
 
 import java.util.Date;
-import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import project.models.PlayerModel;
 import project.models.PlayerStatus;
@@ -14,6 +16,6 @@ public interface PlayerService {
 
 	public void delete(Integer id);
 	
-	public List<PlayerModel> getAll(Integer id, String firstname, String lastname, Date birthDateBefore, Date birthDateAfter, Integer documentNumber, PlayerStatus status);
+	public Page<PlayerModel> getAll(Integer id, String firstname, String lastname, Date birthDateBefore, Date birthDateAfter, Integer documentNumber, PlayerStatus status, Pageable pageable);
 
 }

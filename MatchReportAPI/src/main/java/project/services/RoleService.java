@@ -1,6 +1,7 @@
 package project.services;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import project.models.RoleModel;
 
@@ -12,6 +13,6 @@ public interface RoleService {
 
 	public void delete(Integer id);
 
-	public List<RoleModel> getAll(Integer id, String name);
+	public Page<RoleModel> getAll(Integer id, String name, Pageable pageable);
 
 }

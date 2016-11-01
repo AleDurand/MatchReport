@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +20,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -46,6 +48,9 @@ public class UserControllerTest {
 
 	@Autowired
 	private GlobalExceptionController controllerAdvice;
+	
+	@Autowired
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	@InjectMocks
 	private UserController userController;
@@ -60,6 +65,7 @@ public class UserControllerTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(userController)
+				.setCustomArgumentResolvers(pageableArgumentResolver)
 				.setControllerAdvice(controllerAdvice).build();
 	}
 
@@ -143,13 +149,13 @@ public class UserControllerTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<UserModel> expectedUsers = Arrays.asList(new UserModel());
-		when(userServiceMock.getAll(null, null, null)).thenReturn(expectedUsers);
+		Page<UserModel> expectedUsers = new PageImpl<UserModel>(Arrays.asList(new UserModel()));
+		when(userServiceMock.getAll(any(), any(), any(), any())).thenReturn(expectedUsers);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/users")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
-            .andExpect(jsonPath("$", hasSize(1)))
+            .andExpect(jsonPath("$.content", hasSize(1)))
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}

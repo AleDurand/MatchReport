@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +14,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -98,13 +101,14 @@ public class MatchServiceImpTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<MatchModel> expectedMatches = Arrays.asList(new MatchModel());
-		QMatchModel match = QMatchModel.matchModel;
-		when(matchRepositoryMock.findAll(match.instanceOfAny())).thenReturn(expectedMatches);
+		Page<MatchModel> expectedMatches = new PageImpl<MatchModel>(Arrays.asList(new MatchModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		QMatchModel match = QMatchModel.matchModel;		
+		when(matchRepositoryMock.findAll(match.instanceOfAny(), pageable)).thenReturn(expectedMatches);
 
-		List<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, null, null);
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, null, null, pageable);
 
-		assertEquals(expectedMatches.size(), actualMatches.size());
+		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);
 		// @formatter:on
 	}

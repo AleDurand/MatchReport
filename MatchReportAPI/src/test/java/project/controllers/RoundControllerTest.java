@@ -2,6 +2,7 @@ package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -9,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +20,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -43,6 +46,9 @@ public class RoundControllerTest {
 
 	@Autowired
 	private GlobalExceptionController controllerAdvice;
+	
+	@Autowired
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	@InjectMocks
 	private RoundController roundController;
@@ -54,6 +60,7 @@ public class RoundControllerTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(roundController)
+				.setCustomArgumentResolvers(pageableArgumentResolver)
 				.setControllerAdvice(controllerAdvice).build();
 	}
 
@@ -113,13 +120,13 @@ public class RoundControllerTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<RoundModel> expectedRounds = Arrays.asList(new RoundModel());
-		when(roundServiceMock.getAll(null, null, null, null)).thenReturn(expectedRounds);
+		Page<RoundModel> expectedRounds = new PageImpl<RoundModel>(Arrays.asList(new RoundModel()));
+		when(roundServiceMock.getAll(any(), any(), any(), any(), any())).thenReturn(expectedRounds);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/rounds")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
-            .andExpect(jsonPath("$", hasSize(1)))
+            .andExpect(jsonPath("$.content", hasSize(1)))
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}

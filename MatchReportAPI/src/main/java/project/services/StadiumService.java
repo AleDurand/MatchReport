@@ -1,6 +1,7 @@
 package project.services;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import project.models.StadiumModel;
 
@@ -12,6 +13,6 @@ public interface StadiumService {
 
 	public void delete(Integer id);
 
-	public List<StadiumModel> getAll(Integer id, String name);
+	public Page<StadiumModel> getAll(Integer id, String name, Pageable pageable);
 
 }

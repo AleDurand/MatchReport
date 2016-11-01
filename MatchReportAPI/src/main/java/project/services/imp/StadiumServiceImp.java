@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
@@ -42,7 +44,7 @@ public class StadiumServiceImp implements StadiumService {
 	}
 
 	@Override
-	public List<StadiumModel> getAll(Integer id, String name) {
+	public Page<StadiumModel> getAll(Integer id, String name, Pageable pageable) {
 		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
 		
 		QStadiumModel stadium = QStadiumModel.stadiumModel;
@@ -61,7 +63,7 @@ public class StadiumServiceImp implements StadiumService {
 			}
 		}
 
-		return (List<StadiumModel>) stadiumRepository.findAll(expression);
+		return stadiumRepository.findAll(expression, pageable);
 	}
 
 }

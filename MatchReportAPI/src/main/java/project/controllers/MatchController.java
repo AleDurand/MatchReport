@@ -1,9 +1,10 @@
 package project.controllers;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class MatchController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<MatchModel>> getAll( // @formatter:off 
+	public ResponseEntity<Page<MatchModel>> getAll( // @formatter:off 
 			@RequestParam(name = "id", required = false) Integer id,
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
 			@RequestParam(name = "date-before", required = false) Date dateBefore,
@@ -53,9 +54,10 @@ public class MatchController {
 			@RequestParam(name = "stadium", required = false) Integer idStadium,
 			@RequestParam(name = "local", required = false) Integer idLocal,
 			@RequestParam(name = "visitor", required = false) Integer idVisitor,
-			@RequestParam(name = "round", required = false) Integer idRound
+			@RequestParam(name = "round", required = false) Integer idRound,
+			Pageable pageable
 	) { // @formatter:on
-		List<MatchModel> matches = matchService.getAll(id, dateBefore, dateAfter, status, idStadium, idLocal, idVisitor, idRound);
+		Page<MatchModel> matches = matchService.getAll(id, dateBefore, dateAfter, status, idStadium, idLocal, idVisitor, idRound, pageable);
 		return new ResponseEntity<>(matches, HttpStatus.OK);
 	}
 

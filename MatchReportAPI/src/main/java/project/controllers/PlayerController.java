@@ -1,9 +1,10 @@
 package project.controllers;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,7 @@ public class PlayerController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<PlayerModel>> getAll( // @formatter:off
+	public ResponseEntity<Page<PlayerModel>> getAll( // @formatter:off
 			@RequestParam(name = "id", required = false) Integer id,
 			@RequestParam(name = "firstname", required = false) String firstname,
 			@RequestParam(name = "lastname", required = false) String lastname,
@@ -60,9 +61,10 @@ public class PlayerController {
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) 
 			@RequestParam(name = "birth-date-after", required = false) Date birthDateAfter,
 			@RequestParam(name = "document-number", required = false) Integer documentNumber,
-			@RequestParam(name = "status", required = false) PlayerStatus status
+			@RequestParam(name = "status", required = false) PlayerStatus status,
+			Pageable pageable
 	) { // @formatter:on
-		List<PlayerModel> players = playerService.getAll(id, firstname, lastname, birthDateBefore, birthDateAfter, documentNumber, status);
+		Page<PlayerModel> players = playerService.getAll(id, firstname, lastname, birthDateBefore, birthDateAfter, documentNumber, status, pageable);
 		return new ResponseEntity<>(players, HttpStatus.OK);
 	}
 	

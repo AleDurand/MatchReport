@@ -1,8 +1,8 @@
 package project.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -48,11 +48,12 @@ public class StadiumController {
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<StadiumModel>> getAll( // @formatter:off
+	public ResponseEntity<Page<StadiumModel>> getAll( // @formatter:off
 			@RequestParam(name = "id", required = false) Integer id,
-			@RequestParam(name = "name", required = false) String name			
+			@RequestParam(name = "name", required = false) String name,
+			Pageable pageable
 	) { // @formatter:on
-		List<StadiumModel> stadiums = stadiumService.getAll(id, name);
+		Page<StadiumModel> stadiums = stadiumService.getAll(id, name, pageable);
 		return new ResponseEntity<>(stadiums, HttpStatus.OK);
 	}
 	

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
@@ -48,7 +50,7 @@ public class TournamentServiceImp implements TournamentService {
 	}
 
 	@Override
-	public List<TournamentModel> getAll(Integer id, Date initDateBefore, Date initDateAfter, Date endDateBefore, Date endDateAfter) {
+	public Page<TournamentModel> getAll(Integer id, Date initDateBefore, Date initDateAfter, Date endDateBefore, Date endDateAfter, Pageable pageable) {
 		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
 
 		QTournamentModel tournament = QTournamentModel.tournamentModel;
@@ -76,7 +78,7 @@ public class TournamentServiceImp implements TournamentService {
 			}
 		}
 		
-		return (List<TournamentModel>) tournamentRepository.findAll(expression);
+		return tournamentRepository.findAll(expression, pageable);
 	}
 
 	@Override

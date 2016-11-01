@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +20,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -49,6 +51,9 @@ public class TournamentControllerTest {
 
 	@InjectMocks
 	private TournamentController tournamentController;
+	
+	@Autowired
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	@Mock
 	private TournamentService tournamentServiceMock;
@@ -60,6 +65,7 @@ public class TournamentControllerTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(tournamentController)
+				.setCustomArgumentResolvers(pageableArgumentResolver)
 				.setControllerAdvice(controllerAdvice).build();
 	}
 
@@ -139,13 +145,13 @@ public class TournamentControllerTest {
 	@Test
 	public void getAll() throws Exception {
 		// @formatter:off
-		List<TournamentModel> expectedTournaments = Arrays.asList(new TournamentModel());
-		when(tournamentServiceMock.getAll(null, null, null, null, null)).thenReturn(expectedTournaments);
+		Page<TournamentModel> expectedTournaments = new PageImpl<TournamentModel>(Arrays.asList(new TournamentModel()));
+		when(tournamentServiceMock.getAll(any(), any(), any(), any(), any(), any())).thenReturn(expectedTournaments);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/tournaments")
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
-            .andExpect(jsonPath("$", hasSize(1)))
+            .andExpect(jsonPath("$.content", hasSize(1)))
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}

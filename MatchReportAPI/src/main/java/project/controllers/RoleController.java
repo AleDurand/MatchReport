@@ -1,8 +1,8 @@
 package project.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -48,11 +48,12 @@ public class RoleController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<RoleModel>> getAll( // @formatter:off
+	public ResponseEntity<Page<RoleModel>> getAll( // @formatter:off
 			@RequestParam(name = "id", required = false) Integer id,
-			@RequestParam(name = "name", required = false) String name			
+			@RequestParam(name = "name", required = false) String name,
+			Pageable pageable
 	) { // @formatter:on
-		List<RoleModel> roles = roleService.getAll(id, name);
+		Page<RoleModel> roles = roleService.getAll(id, name, pageable);
 		return new ResponseEntity<>(roles, HttpStatus.OK);
 	}
 
