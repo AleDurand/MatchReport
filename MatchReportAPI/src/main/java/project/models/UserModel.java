@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -31,9 +32,9 @@ public class UserModel implements UserDetails {
 	@Column(name = "enabled")
 	private boolean enabled;
 
-	@ManyToMany
-	@JoinTable( //@formatter:off
-		name = "user_has_authority", 
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(//@formatter:off
+		name = "user_has_authority",
 		joinColumns = {	@JoinColumn(name = "user_id", referencedColumnName = "username") }, 
 		inverseJoinColumns = { @JoinColumn(name = "authority_id", referencedColumnName = "id") }
 	) //@formatter:on

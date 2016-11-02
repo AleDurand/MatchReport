@@ -5,7 +5,7 @@ INSERT INTO match_report.user (username, password, enabled) VALUES ('username1',
 INSERT INTO match_report.user (username, password, enabled) VALUES ('username2', 'password', 0);
 
 -- AUTHORITY --
-INSERT INTO match_report.authority (id, name) VALUES (1, 'Administrador');
+INSERT INTO match_report.authority (id, name) VALUES (1, 'Administrator');
 INSERT INTO match_report.authority (id, name) VALUES (2, 'User');
 
 -- USER HAS AUTHORITY --
