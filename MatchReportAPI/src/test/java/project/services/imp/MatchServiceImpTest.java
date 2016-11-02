@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,8 @@ import project.models.MatchStatus;
 import project.models.QMatchModel;
 import project.repositories.MatchRepository;
 import project.services.MatchService;
+
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
@@ -108,6 +111,136 @@ public class MatchServiceImpTest {
 
 		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, null, null, pageable);
 
+		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
+		assertEquals(expectedMatches, actualMatches);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredById() throws Exception {
+		// @formatter:off
+		Page<MatchModel> expectedMatches = new PageImpl<MatchModel>(Arrays.asList(new MatchModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QMatchModel.matchModel.id.eq(1);	
+			
+		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
+
+		Page<MatchModel> actualMatches = matchService.getAll(1, null, null, null, null, null, null, null, pageable);
+		
+		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
+		assertEquals(expectedMatches, actualMatches);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByDateBefore() throws Exception {
+		// @formatter:off
+		Page<MatchModel> expectedMatches = new PageImpl<MatchModel>(Arrays.asList(new MatchModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		Date date = new Date();
+		BooleanExpression expression = QMatchModel.matchModel.date.before(date);	
+			
+		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
+
+		Page<MatchModel> actualMatches = matchService.getAll(null, date, null, null, null, null, null, null, pageable);
+		
+		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
+		assertEquals(expectedMatches, actualMatches);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByDateAfter() throws Exception {
+		// @formatter:off
+		Page<MatchModel> expectedMatches = new PageImpl<MatchModel>(Arrays.asList(new MatchModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		Date date = new Date();
+		BooleanExpression expression = QMatchModel.matchModel.date.after(date);	
+			
+		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
+
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, date, null, null, null, null, null, pageable);
+		
+		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
+		assertEquals(expectedMatches, actualMatches);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByStatus() throws Exception {
+		// @formatter:off
+		Page<MatchModel> expectedMatches = new PageImpl<MatchModel>(Arrays.asList(new MatchModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QMatchModel.matchModel.status.eq(MatchStatus.IN_PROGRESS);	
+			
+		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
+
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, MatchStatus.IN_PROGRESS, null, null, null, null, pageable);
+		
+		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
+		assertEquals(expectedMatches, actualMatches);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByIdStadium() throws Exception {
+		// @formatter:off
+		Page<MatchModel> expectedMatches = new PageImpl<MatchModel>(Arrays.asList(new MatchModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QMatchModel.matchModel.stadium.id.eq(1);	
+			
+		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
+
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, 1, null, null, null, pageable);
+		
+		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
+		assertEquals(expectedMatches, actualMatches);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByIdLocal() throws Exception {
+		// @formatter:off
+		Page<MatchModel> expectedMatches = new PageImpl<MatchModel>(Arrays.asList(new MatchModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QMatchModel.matchModel.local.id.eq(1);	
+			
+		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
+
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, 1, null, null, pageable);
+		
+		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
+		assertEquals(expectedMatches, actualMatches);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByIdVisitor() throws Exception {
+		// @formatter:off
+		Page<MatchModel> expectedMatches = new PageImpl<MatchModel>(Arrays.asList(new MatchModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QMatchModel.matchModel.visitor.id.eq(1);	
+			
+		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
+
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, 1, null, pageable);
+		
+		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
+		assertEquals(expectedMatches, actualMatches);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByIdRound() throws Exception {
+		// @formatter:off
+		Page<MatchModel> expectedMatches = new PageImpl<MatchModel>(Arrays.asList(new MatchModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QMatchModel.matchModel.round.id.eq(1);	
+			
+		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
+
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, null, 1, pageable);
+		
 		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);
 		// @formatter:on

@@ -32,6 +32,8 @@ import project.repositories.MatchRepository;
 import project.repositories.RoundRepository;
 import project.services.RoundService;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -110,6 +112,70 @@ public class RoundServiceImpTest {
 
 		Page<RoundModel> actualRounds = roundService.getAll(null, null, null, null, pageable);
 
+		assertEquals(expectedRounds.getTotalElements(), actualRounds.getTotalElements());
+		assertEquals(expectedRounds, actualRounds);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredById() throws Exception {
+		// @formatter:off
+		Page<RoundModel> expectedRounds = new PageImpl<RoundModel>(Arrays.asList(new RoundModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QRoundModel.roundModel.id.eq(1);	
+			
+		when(roundRepositoryMock.findAll(expression, pageable)).thenReturn(expectedRounds);
+
+		Page<RoundModel> actualRounds = roundService.getAll(1, null, null, null, pageable);
+		
+		assertEquals(expectedRounds.getTotalElements(), actualRounds.getTotalElements());
+		assertEquals(expectedRounds, actualRounds);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByNumber() throws Exception {
+		// @formatter:off
+		Page<RoundModel> expectedRounds = new PageImpl<RoundModel>(Arrays.asList(new RoundModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QRoundModel.roundModel.number.eq(1);	
+			
+		when(roundRepositoryMock.findAll(expression, pageable)).thenReturn(expectedRounds);
+
+		Page<RoundModel> actualRounds = roundService.getAll(null, 1, null, null, pageable);
+		
+		assertEquals(expectedRounds.getTotalElements(), actualRounds.getTotalElements());
+		assertEquals(expectedRounds, actualRounds);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByDescription() throws Exception {
+		// @formatter:off
+		Page<RoundModel> expectedRounds = new PageImpl<RoundModel>(Arrays.asList(new RoundModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QRoundModel.roundModel.description.contains("description");	
+			
+		when(roundRepositoryMock.findAll(expression, pageable)).thenReturn(expectedRounds);
+
+		Page<RoundModel> actualRounds = roundService.getAll(null, null, "description", null, pageable);
+		
+		assertEquals(expectedRounds.getTotalElements(), actualRounds.getTotalElements());
+		assertEquals(expectedRounds, actualRounds);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByIdTournament() throws Exception {
+		// @formatter:off
+		Page<RoundModel> expectedRounds = new PageImpl<RoundModel>(Arrays.asList(new RoundModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QRoundModel.roundModel.tournament.id.eq(1);	
+			
+		when(roundRepositoryMock.findAll(expression, pageable)).thenReturn(expectedRounds);
+
+		Page<RoundModel> actualRounds = roundService.getAll(null, null, null, 1, pageable);
+		
 		assertEquals(expectedRounds.getTotalElements(), actualRounds.getTotalElements());
 		assertEquals(expectedRounds, actualRounds);
 		// @formatter:on

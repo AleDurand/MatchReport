@@ -56,7 +56,7 @@ public class PlayerServiceImp implements PlayerService {
 		BooleanExpression expression2 = (firstname != null) ? player.firstname.contains(firstname) : null;
 		expressions.add(expression2);
 		
-		BooleanExpression expression3 = (lastname != null) ? player.lastname.eq(lastname) : null;
+		BooleanExpression expression3 = (lastname != null) ? player.lastname.contains(lastname) : null;
 		expressions.add(expression3);
 		
 		BooleanExpression expression4 = (birthDateBefore != null) ? player.birthDate.before(birthDateBefore) : null;

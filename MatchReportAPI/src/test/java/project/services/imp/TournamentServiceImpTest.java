@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -30,6 +31,8 @@ import project.models.TournamentModel;
 import project.repositories.RoundRepository;
 import project.repositories.TournamentRepository;
 import project.services.TournamentService;
+
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
@@ -123,6 +126,90 @@ public class TournamentServiceImpTest {
 
 		Page<TournamentModel> actualTournaments = tournamentService.getAll(null, null, null, null, null, pageable);
 
+		assertEquals(expectedTournaments.getTotalElements(), actualTournaments.getTotalElements());
+		assertEquals(expectedTournaments, actualTournaments);
+		// @formatter:on
+	}
+
+	@Test
+	public void getAllFilteredById() throws Exception {
+		// @formatter:off
+		Page<TournamentModel> expectedTournaments = new PageImpl<TournamentModel>(Arrays.asList(new TournamentModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QTournamentModel.tournamentModel.id.eq(1);	
+			
+		when(tournamentRepositoryMock.findAll(expression, pageable)).thenReturn(expectedTournaments);
+
+		Page<TournamentModel> actualTournaments = tournamentService.getAll(1,  null, null, null, null, pageable);
+		
+		assertEquals(expectedTournaments.getTotalElements(), actualTournaments.getTotalElements());
+		assertEquals(expectedTournaments, actualTournaments);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByInitDateBefore() throws Exception {
+		// @formatter:off
+		Page<TournamentModel> expectedTournaments = new PageImpl<TournamentModel>(Arrays.asList(new TournamentModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		Date date = new Date();
+		BooleanExpression expression = QTournamentModel.tournamentModel.initDate.before(date);	
+			
+		when(tournamentRepositoryMock.findAll(expression, pageable)).thenReturn(expectedTournaments);
+
+		Page<TournamentModel> actualTournaments = tournamentService.getAll(null,  date, null, null, null, pageable);
+		
+		assertEquals(expectedTournaments.getTotalElements(), actualTournaments.getTotalElements());
+		assertEquals(expectedTournaments, actualTournaments);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByInitDateAfter() throws Exception {
+		// @formatter:off
+		Page<TournamentModel> expectedTournaments = new PageImpl<TournamentModel>(Arrays.asList(new TournamentModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		Date date = new Date();
+		BooleanExpression expression = QTournamentModel.tournamentModel.initDate.after(date);	
+			
+		when(tournamentRepositoryMock.findAll(expression, pageable)).thenReturn(expectedTournaments);
+
+		Page<TournamentModel> actualTournaments = tournamentService.getAll(null,  null, date, null, null, pageable);
+		
+		assertEquals(expectedTournaments.getTotalElements(), actualTournaments.getTotalElements());
+		assertEquals(expectedTournaments, actualTournaments);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByEndDateBefore() throws Exception {
+		// @formatter:off
+		Page<TournamentModel> expectedTournaments = new PageImpl<TournamentModel>(Arrays.asList(new TournamentModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		Date date = new Date();
+		BooleanExpression expression = QTournamentModel.tournamentModel.endDate.before(date);	
+			
+		when(tournamentRepositoryMock.findAll(expression, pageable)).thenReturn(expectedTournaments);
+
+		Page<TournamentModel> actualTournaments = tournamentService.getAll(null,  null, null, date, null, pageable);
+		
+		assertEquals(expectedTournaments.getTotalElements(), actualTournaments.getTotalElements());
+		assertEquals(expectedTournaments, actualTournaments);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByEndDateAfter() throws Exception {
+		// @formatter:off
+		Page<TournamentModel> expectedTournaments = new PageImpl<TournamentModel>(Arrays.asList(new TournamentModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		Date date = new Date();
+		BooleanExpression expression = QTournamentModel.tournamentModel.endDate.after(date);	
+			
+		when(tournamentRepositoryMock.findAll(expression, pageable)).thenReturn(expectedTournaments);
+
+		Page<TournamentModel> actualTournaments = tournamentService.getAll(null,  null, null, null, date, pageable);
+		
 		assertEquals(expectedTournaments.getTotalElements(), actualTournaments.getTotalElements());
 		assertEquals(expectedTournaments, actualTournaments);
 		// @formatter:on

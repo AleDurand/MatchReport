@@ -21,6 +21,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+
 import project.Application;
 import project.exceptions.EntityNotFoundException;
 import project.models.ClubModel;
@@ -129,6 +131,54 @@ public class ClubServiceImpTest {
 		when(clubRepositoryMock.findAll(club.instanceOfAny(), pageable)).thenReturn(expectedClubs);
 
 		Page<ClubModel> actualClubs = clubService.getAll(null, null, null, pageable);
+		
+		assertEquals(expectedClubs.getTotalElements(), actualClubs.getTotalElements());
+		assertEquals(expectedClubs, actualClubs);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredById() throws Exception {
+		// @formatter:off
+		Page<ClubModel> expectedClubs = new PageImpl<ClubModel>(Arrays.asList(new ClubModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QClubModel.clubModel.id.eq(1);	
+			
+		when(clubRepositoryMock.findAll(expression, pageable)).thenReturn(expectedClubs);
+
+		Page<ClubModel> actualClubs = clubService.getAll(1, null, null, pageable);
+		
+		assertEquals(expectedClubs.getTotalElements(), actualClubs.getTotalElements());
+		assertEquals(expectedClubs, actualClubs);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByName() throws Exception {
+		// @formatter:off
+		Page<ClubModel> expectedClubs = new PageImpl<ClubModel>(Arrays.asList(new ClubModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QClubModel.clubModel.name.contains("name");	
+			
+		when(clubRepositoryMock.findAll(expression, pageable)).thenReturn(expectedClubs);
+
+		Page<ClubModel> actualClubs = clubService.getAll(null, "name", null, pageable);
+		
+		assertEquals(expectedClubs.getTotalElements(), actualClubs.getTotalElements());
+		assertEquals(expectedClubs, actualClubs);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByIdStadium() throws Exception {
+		// @formatter:off
+		Page<ClubModel> expectedClubs = new PageImpl<ClubModel>(Arrays.asList(new ClubModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QClubModel.clubModel.stadium.id.eq(1);	
+			
+		when(clubRepositoryMock.findAll(expression, pageable)).thenReturn(expectedClubs);
+
+		Page<ClubModel> actualClubs = clubService.getAll(null, null, 1, pageable);
 		
 		assertEquals(expectedClubs.getTotalElements(), actualClubs.getTotalElements());
 		assertEquals(expectedClubs, actualClubs);

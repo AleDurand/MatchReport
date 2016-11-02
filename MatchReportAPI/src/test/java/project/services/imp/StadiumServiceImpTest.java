@@ -28,6 +28,8 @@ import project.models.StadiumModel;
 import project.repositories.StadiumRepository;
 import project.services.StadiumService;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -122,6 +124,38 @@ public class StadiumServiceImpTest {
 
 		Page<StadiumModel> actualStadiums = stadiumService.getAll(null, null, pageable);
 
+		assertEquals(expectedStadiums.getTotalElements(), actualStadiums.getTotalElements());
+		assertEquals(expectedStadiums, actualStadiums);
+		// @formatter:on
+	}
+
+	@Test
+	public void getAllFilteredById() throws Exception {
+		// @formatter:off
+		Page<StadiumModel> expectedStadiums = new PageImpl<StadiumModel>(Arrays.asList(new StadiumModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QStadiumModel.stadiumModel.id.eq(1);	
+			
+		when(stadiumRepositoryMock.findAll(expression, pageable)).thenReturn(expectedStadiums);
+
+		Page<StadiumModel> actualStadiums = stadiumService.getAll(1,  null, pageable);
+		
+		assertEquals(expectedStadiums.getTotalElements(), actualStadiums.getTotalElements());
+		assertEquals(expectedStadiums, actualStadiums);
+		// @formatter:on
+	}
+
+	@Test
+	public void getAllFilteredByName() throws Exception {
+		// @formatter:off
+		Page<StadiumModel> expectedStadiums = new PageImpl<StadiumModel>(Arrays.asList(new StadiumModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QStadiumModel.stadiumModel.name.contains("name");	
+			
+		when(stadiumRepositoryMock.findAll(expression, pageable)).thenReturn(expectedStadiums);
+
+		Page<StadiumModel> actualStadiums = stadiumService.getAll(null, "name", pageable);
+		
 		assertEquals(expectedStadiums.getTotalElements(), actualStadiums.getTotalElements());
 		assertEquals(expectedStadiums, actualStadiums);
 		// @formatter:on

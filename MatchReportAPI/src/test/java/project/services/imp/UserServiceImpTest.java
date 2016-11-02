@@ -29,6 +29,8 @@ import project.models.UserModel;
 import project.repositories.UserRepository;
 import project.services.UserService;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -136,5 +138,53 @@ public class UserServiceImpTest {
 		assertEquals(expectedUsers, actualUsers);
 		// @formatter:on
 	}
+	
+	@Test
+	public void getAllFilteredByUsername() throws Exception {
+		// @formatter:off
+		Page<UserModel> expectedUsers = new PageImpl<UserModel>(Arrays.asList(new UserModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QUserModel.userModel.username.eq("username");	
+			
+		when(userRepositoryMock.findAll(expression, pageable)).thenReturn(expectedUsers);
 
+		Page<UserModel> actualUsers = userService.getAll("username", null, null, pageable);
+		
+		assertEquals(expectedUsers.getTotalElements(), actualUsers.getTotalElements());
+		assertEquals(expectedUsers, actualUsers);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByStatus() throws Exception {
+		// @formatter:off
+		Page<UserModel> expectedUsers = new PageImpl<UserModel>(Arrays.asList(new UserModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QUserModel.userModel.enabled.eq(true);	
+			
+		when(userRepositoryMock.findAll(expression, pageable)).thenReturn(expectedUsers);
+
+		Page<UserModel> actualUsers = userService.getAll(null, true, null, pageable);
+		
+		assertEquals(expectedUsers.getTotalElements(), actualUsers.getTotalElements());
+		assertEquals(expectedUsers, actualUsers);
+		// @formatter:on
+	}
+
+	@Test
+	public void getAllFilteredByIdRole() throws Exception {
+		// @formatter:off
+		Page<UserModel> expectedUsers = new PageImpl<UserModel>(Arrays.asList(new UserModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QUserModel.userModel.authorities.any().id.eq(1);	
+			
+		when(userRepositoryMock.findAll(expression, pageable)).thenReturn(expectedUsers);
+
+		Page<UserModel> actualUsers = userService.getAll(null, null, 1, pageable);
+		
+		assertEquals(expectedUsers.getTotalElements(), actualUsers.getTotalElements());
+		assertEquals(expectedUsers, actualUsers);
+		// @formatter:on
+	}
+	
 }

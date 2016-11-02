@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,8 @@ import project.models.PlayerStatus;
 import project.models.QPlayerModel;
 import project.repositories.PlayerRepository;
 import project.services.PlayerService;
+
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
@@ -135,4 +138,119 @@ public class PlayerServiceImpTest {
 		assertEquals(expectedPlayers, actualPlayers);
 		// @formatter:on
 	}
+	
+	@Test
+	public void getAllFilteredById() throws Exception {
+		// @formatter:off
+		Page<PlayerModel> expectedPlayers = new PageImpl<PlayerModel>(Arrays.asList(new PlayerModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QPlayerModel.playerModel.id.eq(1);	
+			
+		when(playerRepositoryMock.findAll(expression, pageable)).thenReturn(expectedPlayers);
+
+		Page<PlayerModel> actualPlayers = playerService.getAll(1, null, null, null, null, null, null, pageable);
+		
+		assertEquals(expectedPlayers.getTotalElements(), actualPlayers.getTotalElements());
+		assertEquals(expectedPlayers, actualPlayers);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByFirstname() throws Exception {
+		// @formatter:off
+		Page<PlayerModel> expectedPlayers = new PageImpl<PlayerModel>(Arrays.asList(new PlayerModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QPlayerModel.playerModel.firstname.contains("firstname");	
+			
+		when(playerRepositoryMock.findAll(expression, pageable)).thenReturn(expectedPlayers);
+
+		Page<PlayerModel> actualPlayers = playerService.getAll(null, "firstname", null, null, null, null, null, pageable);
+		
+		assertEquals(expectedPlayers.getTotalElements(), actualPlayers.getTotalElements());
+		assertEquals(expectedPlayers, actualPlayers);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByLastname() throws Exception {
+		// @formatter:off
+		Page<PlayerModel> expectedPlayers = new PageImpl<PlayerModel>(Arrays.asList(new PlayerModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QPlayerModel.playerModel.lastname.contains("lastname");	
+			
+		when(playerRepositoryMock.findAll(expression, pageable)).thenReturn(expectedPlayers);
+
+		Page<PlayerModel> actualPlayers = playerService.getAll(null, null, "lastname", null, null, null, null, pageable);
+		
+		assertEquals(expectedPlayers.getTotalElements(), actualPlayers.getTotalElements());
+		assertEquals(expectedPlayers, actualPlayers);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByBirthDateBefore() throws Exception {
+		// @formatter:off
+		Page<PlayerModel> expectedPlayers = new PageImpl<PlayerModel>(Arrays.asList(new PlayerModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		Date date = new Date();
+		BooleanExpression expression = QPlayerModel.playerModel.birthDate.before(date);	
+			
+		when(playerRepositoryMock.findAll(expression, pageable)).thenReturn(expectedPlayers);
+
+		Page<PlayerModel> actualPlayers = playerService.getAll(null, null, null, date, null, null, null, pageable);
+		
+		assertEquals(expectedPlayers.getTotalElements(), actualPlayers.getTotalElements());
+		assertEquals(expectedPlayers, actualPlayers);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByBirthDateAfter() throws Exception {
+		// @formatter:off
+		Page<PlayerModel> expectedPlayers = new PageImpl<PlayerModel>(Arrays.asList(new PlayerModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		Date date = new Date();
+		BooleanExpression expression = QPlayerModel.playerModel.birthDate.after(date);	
+			
+		when(playerRepositoryMock.findAll(expression, pageable)).thenReturn(expectedPlayers);
+
+		Page<PlayerModel> actualPlayers = playerService.getAll(null, null, null, null, date, null, null, pageable);
+		
+		assertEquals(expectedPlayers.getTotalElements(), actualPlayers.getTotalElements());
+		assertEquals(expectedPlayers, actualPlayers);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByDocumentNumber() throws Exception {
+		// @formatter:off
+		Page<PlayerModel> expectedPlayers = new PageImpl<PlayerModel>(Arrays.asList(new PlayerModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QPlayerModel.playerModel.documentNumber.eq(1);	
+			
+		when(playerRepositoryMock.findAll(expression, pageable)).thenReturn(expectedPlayers);
+
+		Page<PlayerModel> actualPlayers = playerService.getAll(null, null, null, null, null, 1, null, pageable);
+		
+		assertEquals(expectedPlayers.getTotalElements(), actualPlayers.getTotalElements());
+		assertEquals(expectedPlayers, actualPlayers);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByStatus() throws Exception {
+		// @formatter:off
+		Page<PlayerModel> expectedPlayers = new PageImpl<PlayerModel>(Arrays.asList(new PlayerModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QPlayerModel.playerModel.status.eq(PlayerStatus.ENABLED);	
+			
+		when(playerRepositoryMock.findAll(expression, pageable)).thenReturn(expectedPlayers);
+
+		Page<PlayerModel> actualPlayers = playerService.getAll(null, null, null, null, null, null, PlayerStatus.ENABLED, pageable);
+		
+		assertEquals(expectedPlayers.getTotalElements(), actualPlayers.getTotalElements());
+		assertEquals(expectedPlayers, actualPlayers);
+		// @formatter:on
+	}
+	
 }

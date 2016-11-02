@@ -28,6 +28,8 @@ import project.models.RoleModel;
 import project.repositories.RoleRepository;
 import project.services.RoleService;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
@@ -114,6 +116,38 @@ public class RoleServiceImpTest {
 
 		Page<RoleModel> actualRoles = roleService.getAll(null, null, pageable);
 
+		assertEquals(expectedRoles.getTotalElements(), actualRoles.getTotalElements());
+		assertEquals(expectedRoles, actualRoles);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredById() throws Exception {
+		// @formatter:off
+		Page<RoleModel> expectedRoles = new PageImpl<RoleModel>(Arrays.asList(new RoleModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QRoleModel.roleModel.id.eq(1);	
+			
+		when(roleRepositoryMock.findAll(expression, pageable)).thenReturn(expectedRoles);
+
+		Page<RoleModel> actualRoles = roleService.getAll(1, null, pageable);
+		
+		assertEquals(expectedRoles.getTotalElements(), actualRoles.getTotalElements());
+		assertEquals(expectedRoles, actualRoles);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllFilteredByName() throws Exception {
+		// @formatter:off
+		Page<RoleModel> expectedRoles = new PageImpl<RoleModel>(Arrays.asList(new RoleModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QRoleModel.roleModel.name.contains("role");	
+			
+		when(roleRepositoryMock.findAll(expression, pageable)).thenReturn(expectedRoles);
+
+		Page<RoleModel> actualRoles = roleService.getAll(null, "role", pageable);
+		
 		assertEquals(expectedRoles.getTotalElements(), actualRoles.getTotalElements());
 		assertEquals(expectedRoles, actualRoles);
 		// @formatter:on
