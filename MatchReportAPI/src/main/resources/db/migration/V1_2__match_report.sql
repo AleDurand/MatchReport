@@ -826,3 +826,11 @@ INSERT INTO match_report.torneo_club (id_torneo, id_club, partidos_jugados, part
 INSERT INTO match_report.torneo_club (id_torneo, id_club, partidos_jugados, partidos_ganados, partidos_empatados, partidos_perdidos, goles_a_favor, goles_en_contra) VALUES (2, 2, 6, 0, 6, 0, 0, 0);
 INSERT INTO match_report.torneo_club (id_torneo, id_club, partidos_jugados, partidos_ganados, partidos_empatados, partidos_perdidos, goles_a_favor, goles_en_contra) VALUES (2, 3, 6, 0, 6, 0, 0, 0);
 INSERT INTO match_report.torneo_club (id_torneo, id_club, partidos_jugados, partidos_ganados, partidos_empatados, partidos_perdidos, goles_a_favor, goles_en_contra) VALUES (2, 4, 6, 0, 6, 0, 0, 0);
+
+INSERT INTO match_report.evento (id, discriminador, partido_id, tipo, minuto, minuto_extra, periodo, jugador_id, club_id, jugador_in_id, jugador_out_id) VALUES (1, 'EVENT', 1, 10, 0, NULL, 1, NULL, NULL, NULL, NULL);
+INSERT INTO match_report.evento (id, discriminador, partido_id, tipo, minuto, minuto_extra, periodo, jugador_id, club_id, jugador_in_id, jugador_out_id) VALUES (2, 'EVENT', 1, 12, 10, NULL, 1, NULL, NULL, NULL, NULL);
+INSERT INTO match_report.evento (id, discriminador, partido_id, tipo, minuto, minuto_extra, periodo, jugador_id, club_id, jugador_in_id, jugador_out_id) VALUES (3, 'EVENT', 1, 13, 10, NULL, 1, NULL, NULL, NULL, NULL);
+INSERT INTO match_report.evento (id, discriminador, partido_id, tipo, minuto, minuto_extra, periodo, jugador_id, club_id, jugador_in_id, jugador_out_id) VALUES (4, 'EVENT', 1, 11, 45, NULL, 1, NULL, NULL, NULL, NULL);
+INSERT INTO match_report.evento (id, discriminador, partido_id, tipo, minuto, minuto_extra, periodo, jugador_id, club_id, jugador_in_id, jugador_out_id) VALUES (5, 'EVENT', 1, 10, 45, NULL, 2, NULL, NULL, NULL, NULL);
+INSERT INTO match_report.evento (id, discriminador, partido_id, tipo, minuto, minuto_extra, periodo, jugador_id, club_id, jugador_in_id, jugador_out_id) VALUES (6, 'PLAYER_EVENT', 1, 1, 60, NULL, 2, 2, NULL, NULL, NULL);
+INSERT INTO match_report.evento (id, discriminador, partido_id, tipo, minuto, minuto_extra, periodo, jugador_id, club_id, jugador_in_id, jugador_out_id) VALUES (7, 'EVENT', 1, 11, 90, 3, 2, NULL, NULL, NULL, NULL);
