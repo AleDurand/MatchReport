@@ -361,6 +361,56 @@ CREATE TABLE IF NOT EXISTS `match_report`.`partido_observacion` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `match_report`.`evento`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `match_report`.`evento` ;
+
+CREATE TABLE IF NOT EXISTS `match_report`.`evento` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `partido_id` BIGINT(20) NOT NULL,
+  `tipo` VARCHAR(45) NOT NULL,
+  `minuto` VARCHAR(45) NOT NULL,
+  `minuto_extra` VARCHAR(45) NULL,
+  `periodo` VARCHAR(45) NULL,
+  `jugador_id` BIGINT(20) NOT NULL,
+  `club_id` BIGINT(20) NOT NULL,
+  `jugador_in_id` BIGINT(20) NOT NULL,
+  `jugador_out_id` BIGINT(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_evento_jugador1_idx` (`jugador_id` ASC),
+  INDEX `fk_evento_partido1_idx` (`partido_id` ASC),
+  INDEX `fk_evento_club1_idx` (`club_id` ASC),
+  INDEX `fk_evento_jugador2_idx` (`jugador_in_id` ASC),
+  INDEX `fk_evento_jugador3_idx` (`jugador_out_id` ASC),
+  CONSTRAINT `fk_evento_jugador1`
+    FOREIGN KEY (`jugador_id`)
+    REFERENCES `match_report`.`jugador` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_evento_partido1`
+    FOREIGN KEY (`partido_id`)
+    REFERENCES `match_report`.`partido` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_evento_club1`
+    FOREIGN KEY (`club_id`)
+    REFERENCES `match_report`.`club` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_evento_jugador2`
+    FOREIGN KEY (`jugador_in_id`)
+    REFERENCES `match_report`.`jugador` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_evento_jugador3`
+    FOREIGN KEY (`jugador_out_id`)
+    REFERENCES `match_report`.`jugador` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

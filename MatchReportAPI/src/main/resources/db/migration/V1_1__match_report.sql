@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `match_report`.`authority` (
   `name` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
--- -- DEFAULT CHARACTER SET = utf8;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `match_report`.`cancha` (
   `foto` CHAR(32) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
--- -- DEFAULT CHARACTER SET = utf8;
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `match_report`.`fecha` (
     FOREIGN KEY (`torneo_id`)
     REFERENCES `match_report`.`torneo` (`id`)
     
-    ) --)
+    )
 ENGINE = InnoDB;
 -- DEFAULT CHARACTER SET = utf8;
 
@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `match_report`.`partido` (
   `fecha` DATE NOT NULL,
   `hora` TIME NOT NULL,
   `id_cancha` INT(11) NOT NULL,
-  `status` TINYINT NOT NULL DEFAULT 0,
+  `status` TINYINT NULL DEFAULT 0,
   `fecha_id` INT(11) NOT NULL,
   `equipo_local` BIGINT(20) NOT NULL,
   `equipo_visitante` BIGINT(20) NOT NULL,
@@ -330,3 +330,52 @@ CREATE TABLE IF NOT EXISTS `match_report`.`partido_observacion` (
     )
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `match_report`.`evento`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `match_report`.`evento` ;
+
+CREATE TABLE IF NOT EXISTS `match_report`.`evento` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `partido_id` BIGINT(20) NOT NULL,
+  `tipo` VARCHAR(45) NOT NULL,
+  `minuto` VARCHAR(45) NOT NULL,
+  `minuto_extra` VARCHAR(45) NULL,
+  `periodo` VARCHAR(45) NULL,
+  `jugador_id` BIGINT(20) NOT NULL,
+  `club_id` BIGINT(20) NOT NULL,
+  `jugador_in_id` BIGINT(20) NOT NULL,
+  `jugador_out_id` BIGINT(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_evento_jugador1_idx` (`jugador_id` ASC),
+  INDEX `fk_evento_partido1_idx` (`partido_id` ASC),
+  INDEX `fk_evento_club1_idx` (`club_id` ASC),
+  INDEX `fk_evento_jugador2_idx` (`jugador_in_id` ASC),
+  INDEX `fk_evento_jugador3_idx` (`jugador_out_id` ASC),
+  CONSTRAINT `fk_evento_jugador1`
+    FOREIGN KEY (`jugador_id`)
+    REFERENCES `match_report`.`jugador` (`id`)
+    
+    ,
+  CONSTRAINT `fk_evento_partido1`
+    FOREIGN KEY (`partido_id`)
+    REFERENCES `match_report`.`partido` (`id`)
+    
+    ,
+  CONSTRAINT `fk_evento_club1`
+    FOREIGN KEY (`club_id`)
+    REFERENCES `match_report`.`club` (`id`)
+    
+    ,
+  CONSTRAINT `fk_evento_jugador2`
+    FOREIGN KEY (`jugador_in_id`)
+    REFERENCES `match_report`.`jugador` (`id`)
+    
+    ,
+  CONSTRAINT `fk_evento_jugador3`
+    FOREIGN KEY (`jugador_out_id`)
+    REFERENCES `match_report`.`jugador` (`id`)
+    
+    )
+ENGINE = InnoDB;
