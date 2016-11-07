@@ -10,9 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import project.exceptions.EntityNotFoundException;
+import project.models.EventModel;
 import project.models.MatchModel;
 import project.models.MatchStatus;
 import project.models.QMatchModel;
+import project.repositories.EventRepository;
 import project.repositories.MatchRepository;
 import project.services.MatchService;
 
@@ -23,6 +25,9 @@ public class MatchServiceImp implements MatchService {
 
 	@Autowired
 	private MatchRepository matchRepository;
+	
+	@Autowired
+	private EventRepository eventRepository;
 
 	@Override
 	public MatchModel read(Integer id) {
@@ -82,6 +87,14 @@ public class MatchServiceImp implements MatchService {
 		}
 		
 		return matchRepository.findAll(expression, pageable);
+	}
+
+	@Override
+	public List<EventModel> getAllEvents(Integer matchId) {
+		if (!matchRepository.exists(matchId)) {
+			throw new EntityNotFoundException("resource.not_found", null);
+		}
+		return eventRepository.findByMatchId(matchId);
 	}
 
 }

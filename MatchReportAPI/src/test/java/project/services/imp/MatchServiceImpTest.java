@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +25,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import project.Application;
 import project.exceptions.EntityNotFoundException;
+import project.models.EventModel;
 import project.models.MatchModel;
 import project.models.MatchStatus;
 import project.models.QMatchModel;
+import project.repositories.EventRepository;
 import project.repositories.MatchRepository;
 import project.services.MatchService;
 
@@ -44,6 +47,9 @@ public class MatchServiceImpTest {
 
 	@Mock
 	private MatchRepository matchRepositoryMock;
+	
+	@Mock
+	private EventRepository eventRepositoryMock;
 
 	@Before
 	public void setUp() throws Exception {
@@ -243,6 +249,29 @@ public class MatchServiceImpTest {
 		
 		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllMatches() throws Exception {
+		// @formatter:off
+		List<EventModel> expectedEvents = Arrays.asList(new EventModel());
+		when(matchRepositoryMock.exists(1)).thenReturn(true);
+		when(eventRepositoryMock.findByMatchId(1)).thenReturn(expectedEvents);
+
+		List<EventModel> actualEvents = matchService.getAllEvents(1);
+
+		assertEquals(expectedEvents.size(), actualEvents.size());
+		assertEquals(expectedEvents, actualEvents);
+		// @formatter:on
+	}
+
+	@Test(expected = EntityNotFoundException.class)
+	public void getAllMatchesRoundNotFound() throws Exception {
+		// @formatter:off
+		when(matchRepositoryMock.exists(1)).thenReturn(false);
+
+		matchService.getAllEvents(1);
 		// @formatter:on
 	}
 }

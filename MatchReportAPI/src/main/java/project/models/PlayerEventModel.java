@@ -7,13 +7,13 @@ import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("PLAYER_EVENT")
-public class PlayerEvent extends TeamEventModel {
+public class PlayerEventModel extends TeamEventModel {
 
 	@OneToOne
 	@JoinColumn(name = "jugador_id")
 	private PlayerModel player;
 
-	public PlayerEvent() {
+	public PlayerEventModel() {
 		super();
 	}
 
