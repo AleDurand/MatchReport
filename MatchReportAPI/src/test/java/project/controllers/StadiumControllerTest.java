@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,6 +25,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -48,9 +51,12 @@ public class StadiumControllerTest {
 
 	@Autowired
 	private GlobalExceptionController controllerAdvice;
-	
+
 	@Autowired
 	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
+	@Autowired
+	private FilterChainProxy springSecurityFilterChain;
 
 	@InjectMocks
 	private StadiumController stadiumController;
@@ -60,16 +66,18 @@ public class StadiumControllerTest {
 
 	@Autowired
 	private ObjectMapper mapper;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(stadiumController)
 				.setCustomArgumentResolvers(pageableArgumentResolver)
-				.setControllerAdvice(controllerAdvice).build();
+				.setControllerAdvice(controllerAdvice)
+				.apply(springSecurity(springSecurityFilterChain)).build();
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void create() throws Exception {
 		// @formatter:off
 		StadiumModel stadium = new StadiumModel();
@@ -96,7 +104,7 @@ public class StadiumControllerTest {
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void read() throws Exception {
 		// @formatter:off
@@ -131,6 +139,7 @@ public class StadiumControllerTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void delete() throws Exception {
 		// @formatter:off
 		mockMvc.perform(MockMvcRequestBuilders.delete("/stadiums/{id}", 1)
@@ -140,6 +149,7 @@ public class StadiumControllerTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void deleteNotFound() throws Exception {
 		// @formatter:off
 		doThrow(new EntityNotFoundException("resource.not_found", null)).when(stadiumServiceMock).delete(1);

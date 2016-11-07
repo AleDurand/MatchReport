@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,6 +25,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -46,9 +49,12 @@ public class RoundControllerTest {
 
 	@Autowired
 	private GlobalExceptionController controllerAdvice;
-	
+
 	@Autowired
 	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
+	@Autowired
+	private FilterChainProxy springSecurityFilterChain;
 
 	@InjectMocks
 	private RoundController roundController;
@@ -61,7 +67,8 @@ public class RoundControllerTest {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(roundController)
 				.setCustomArgumentResolvers(pageableArgumentResolver)
-				.setControllerAdvice(controllerAdvice).build();
+				.setControllerAdvice(controllerAdvice)
+				.apply(springSecurity(springSecurityFilterChain)).build();
 	}
 
 	@Test
@@ -98,6 +105,7 @@ public class RoundControllerTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void delete() throws Exception {
 		// @formatter:off
 		mockMvc.perform(MockMvcRequestBuilders.delete("/rounds/{id}", 1)
@@ -107,6 +115,7 @@ public class RoundControllerTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void deleteNotFound() throws Exception {
 		// @formatter:off
 		doThrow(new EntityNotFoundException("resource.not_found", null)).when(roundServiceMock).delete(1);

@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,6 +25,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -48,9 +51,12 @@ public class UserControllerTest {
 
 	@Autowired
 	private GlobalExceptionController controllerAdvice;
-	
+
 	@Autowired
 	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
+	@Autowired
+	private FilterChainProxy springSecurityFilterChain;
 
 	@InjectMocks
 	private UserController userController;
@@ -60,16 +66,18 @@ public class UserControllerTest {
 
 	@Autowired
 	private ObjectMapper mapper;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(userController)
 				.setCustomArgumentResolvers(pageableArgumentResolver)
-				.setControllerAdvice(controllerAdvice).build();
+				.setControllerAdvice(controllerAdvice)
+				.apply(springSecurity(springSecurityFilterChain)).build();
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void create() throws Exception {
 		// @formatter:off
 		UserModel user = new UserModel();
@@ -96,6 +104,7 @@ public class UserControllerTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void read() throws Exception {
 		// @formatter:off
 		UserModel expectedUser = new UserModel();
@@ -115,6 +124,7 @@ public class UserControllerTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void readNotFound() throws Exception {
 		// @formatter:off
 		when(userServiceMock.loadUserByUsername("username")).thenThrow(new EntityNotFoundException("resource.not_found", null));
@@ -127,6 +137,7 @@ public class UserControllerTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void delete() throws Exception {
 		// @formatter:off
 		mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", "username")
@@ -136,6 +147,7 @@ public class UserControllerTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void deleteNotFound() throws Exception {
 		// @formatter:off
 		doThrow(new EntityNotFoundException("resource.not_found", null)).when(userServiceMock).delete("username");
@@ -147,6 +159,7 @@ public class UserControllerTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void getAll() throws Exception {
 		// @formatter:off
 		Page<UserModel> expectedUsers = new PageImpl<UserModel>(Arrays.asList(new UserModel()));

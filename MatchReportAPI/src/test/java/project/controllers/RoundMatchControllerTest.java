@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -46,6 +49,9 @@ public class RoundMatchControllerTest {
 	@Autowired
 	private GlobalExceptionController controllerAdvice;
 
+	@Autowired
+	private FilterChainProxy springSecurityFilterChain;
+
 	@InjectMocks
 	private RoundMatchController roundMatchController;
 
@@ -54,15 +60,17 @@ public class RoundMatchControllerTest {
 
 	@Autowired
 	private ObjectMapper mapper;
-		
+
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(roundMatchController)
-				.setControllerAdvice(controllerAdvice).build();
+				.setControllerAdvice(controllerAdvice)
+				.apply(springSecurity(springSecurityFilterChain)).build();
 	}
 
 	@Test
+	@WithMockUser(authorities = { "Administrator" })
 	public void create() throws Exception {
 		// @formatter:off
 		MatchModel match = new MatchModel();	
