@@ -26,6 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import project.Application;
 import project.exceptions.EntityNotFoundException;
 import project.models.EventModel;
+import project.models.EventType;
 import project.models.MatchModel;
 import project.models.MatchStatus;
 import project.models.QMatchModel;
@@ -47,7 +48,7 @@ public class MatchServiceImpTest {
 
 	@Mock
 	private MatchRepository matchRepositoryMock;
-	
+
 	@Mock
 	private EventRepository eventRepositoryMock;
 
@@ -121,7 +122,7 @@ public class MatchServiceImpTest {
 		assertEquals(expectedMatches, actualMatches);
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void getAllFilteredById() throws Exception {
 		// @formatter:off
@@ -137,7 +138,7 @@ public class MatchServiceImpTest {
 		assertEquals(expectedMatches, actualMatches);
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void getAllFilteredByDateBefore() throws Exception {
 		// @formatter:off
@@ -154,7 +155,7 @@ public class MatchServiceImpTest {
 		assertEquals(expectedMatches, actualMatches);
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void getAllFilteredByDateAfter() throws Exception {
 		// @formatter:off
@@ -171,7 +172,7 @@ public class MatchServiceImpTest {
 		assertEquals(expectedMatches, actualMatches);
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void getAllFilteredByStatus() throws Exception {
 		// @formatter:off
@@ -187,7 +188,7 @@ public class MatchServiceImpTest {
 		assertEquals(expectedMatches, actualMatches);
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void getAllFilteredByIdStadium() throws Exception {
 		// @formatter:off
@@ -203,7 +204,7 @@ public class MatchServiceImpTest {
 		assertEquals(expectedMatches, actualMatches);
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void getAllFilteredByIdLocal() throws Exception {
 		// @formatter:off
@@ -219,7 +220,7 @@ public class MatchServiceImpTest {
 		assertEquals(expectedMatches, actualMatches);
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void getAllFilteredByIdVisitor() throws Exception {
 		// @formatter:off
@@ -235,7 +236,7 @@ public class MatchServiceImpTest {
 		assertEquals(expectedMatches, actualMatches);
 		// @formatter:on
 	}
-	
+
 	@Test
 	public void getAllFilteredByIdRound() throws Exception {
 		// @formatter:off
@@ -251,9 +252,40 @@ public class MatchServiceImpTest {
 		assertEquals(expectedMatches, actualMatches);
 		// @formatter:on
 	}
-	
+
 	@Test
-	public void getAllMatches() throws Exception {
+	public void createEvent() throws Exception {
+		// @formatter:off
+		EventModel expectedEvent = new EventModel();
+		expectedEvent.setId(1);
+		expectedEvent.setMinute(1);
+		expectedEvent.setExtraMinute(null);
+		expectedEvent.setType(EventType.START_PERIOD);
+		expectedEvent.setMatch(new MatchModel());
+		when(matchRepositoryMock.exists(1)).thenReturn(true);
+		when(eventRepositoryMock.save(expectedEvent)).thenReturn(expectedEvent);
+
+		EventModel actualEvent = matchService.addEvent(1, expectedEvent);
+
+		assertEquals(expectedEvent.getId(), actualEvent.getId());
+		assertEquals(expectedEvent.getMinute(), actualEvent.getMinute());
+		assertEquals(expectedEvent.getExtraMinute(), actualEvent.getExtraMinute());
+		assertEquals(expectedEvent.getType(), actualEvent.getType());
+		assertEquals(expectedEvent.getMatch(), actualEvent.getMatch());
+		// @formatter:on
+	}
+
+	@Test(expected = EntityNotFoundException.class)
+	public void createEventMatchNotFound() throws Exception {
+		// @formatter:off
+		when(matchRepositoryMock.exists(1)).thenReturn(false);
+
+		matchService.addEvent(1, new EventModel());
+		// @formatter:on
+	}
+
+	@Test
+	public void getAllEvents() throws Exception {
 		// @formatter:off
 		List<EventModel> expectedEvents = Arrays.asList(new EventModel());
 		when(matchRepositoryMock.exists(1)).thenReturn(true);
@@ -267,7 +299,7 @@ public class MatchServiceImpTest {
 	}
 
 	@Test(expected = EntityNotFoundException.class)
-	public void getAllMatchesRoundNotFound() throws Exception {
+	public void getAllEventsRoundNotFound() throws Exception {
 		// @formatter:off
 		when(matchRepositoryMock.exists(1)).thenReturn(false);
 

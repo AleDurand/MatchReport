@@ -22,4 +22,6 @@ public interface MatchService {
 
 	public List<EventModel> getAllEvents(Integer matchId);
 
+	public EventModel addEvent(Integer matchId, EventModel event);
+
 }

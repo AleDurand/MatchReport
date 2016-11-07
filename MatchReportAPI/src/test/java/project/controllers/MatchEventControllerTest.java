@@ -1,6 +1,8 @@
 package project.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -20,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -29,6 +32,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import project.Application;
 import project.models.EventModel;
+import project.models.EventType;
+import project.models.MatchModel;
 import project.services.MatchService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,7 +71,38 @@ public class MatchEventControllerTest {
 	}
 
 	@Test
-	public void getAllMatches() throws Exception {
+	@WithMockUser(authorities = { "Administrator" })
+	public void create() throws Exception {
+		// @formatter:off
+		EventModel event = new EventModel();	
+		event.setMinute(1);
+		event.setExtraMinute(null);
+		event.setType(EventType.START_PERIOD);
+		event.setMatch(new MatchModel());
+		
+		EventModel expectedEvent = new EventModel();
+		expectedEvent.setId(1);
+		expectedEvent.setMinute(1);
+		expectedEvent.setExtraMinute(null);
+		expectedEvent.setType(EventType.START_PERIOD);
+		expectedEvent.setMatch(new MatchModel());
+		when(matchServiceMock.addEvent(any(), any())).thenReturn(expectedEvent);
+		
+		mockMvc.perform(MockMvcRequestBuilders.post("/matches/{id}/events", 1)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(mapper.writeValueAsBytes(event))
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$.id", is(1)))
+			.andExpect(jsonPath("$.minute", is(1)))
+			.andExpect(jsonPath("$.extraMinute").doesNotExist())
+			.andExpect(jsonPath("$.type", is("START_PERIOD")))
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
+		// @formatter:on
+	}
+	
+	@Test
+	public void getAllEvents() throws Exception {
 		// @formatter:off
 		List<EventModel> expectedEvents = Arrays.asList(new EventModel());
 		when(matchServiceMock.getAllEvents(1)).thenReturn(expectedEvents);

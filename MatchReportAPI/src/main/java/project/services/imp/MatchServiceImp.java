@@ -97,4 +97,14 @@ public class MatchServiceImp implements MatchService {
 		return eventRepository.findByMatchId(matchId);
 	}
 
+	@Override
+	public EventModel addEvent(Integer matchId, EventModel event) {
+		if (!matchRepository.exists(matchId)) {
+			throw new EntityNotFoundException("resource.not_found", null);
+		}
+		MatchModel match = matchRepository.findOne(matchId);
+		event.setMatch(match);
+		return eventRepository.save(event);
+	}
+
 }
