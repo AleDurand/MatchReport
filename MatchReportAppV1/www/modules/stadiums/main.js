@@ -11,4 +11,13 @@ angular.module('stadium', [])
                 }
             }
         })
+        .state('tab.stadium-detail', {
+            url: '/stadiums/:stadiumId',
+            views: {
+                'tab-stadiums': {
+                    templateUrl: 'modules/stadiums/views/stadium-detail.html',
+                    controller: 'StadiumDetailCtrl'
+                }
+            }
+        })
 });
