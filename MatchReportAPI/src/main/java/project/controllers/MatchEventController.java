@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,7 +51,7 @@ public class MatchEventController {
 	}
 	
 	@RequestMapping(value = "/events", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-	public ResponseEntity<EventModel> addEvent(@PathVariable("id") Integer matchId, @RequestBody EventModel event) {
+	public ResponseEntity<EventModel> addEvent(@PathVariable("id") Integer matchId, @Validated @RequestBody EventModel event) {
 		EventModel toReturn = matchService.addEvent(matchId, event);
 		return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
 	}

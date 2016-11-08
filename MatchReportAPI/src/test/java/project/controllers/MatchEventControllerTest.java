@@ -35,6 +35,7 @@ import project.models.EventModel;
 import project.models.EventType;
 import project.models.MatchModel;
 import project.services.MatchService;
+import project.validators.CompositeValidator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -58,6 +59,9 @@ public class MatchEventControllerTest {
 
 	@Mock
 	private MatchService matchServiceMock;
+	
+	@Mock
+	private CompositeValidator compositeValidatorMock;
 
 	@Autowired
 	private ObjectMapper mapper;
@@ -86,6 +90,7 @@ public class MatchEventControllerTest {
 		expectedEvent.setExtraMinute(null);
 		expectedEvent.setType(EventType.START_PERIOD);
 		expectedEvent.setMatch(new MatchModel());
+		when(compositeValidatorMock.supports(any())).thenReturn(true);
 		when(matchServiceMock.addEvent(any(), any())).thenReturn(expectedEvent);
 		
 		mockMvc.perform(MockMvcRequestBuilders.post("/matches/{id}/events", 1)
