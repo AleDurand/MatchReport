@@ -21,10 +21,10 @@ INSERT INTO match_report.cancha (id, nombre, direccion, foto) VALUES (3, 'Nuevo 
 INSERT INTO match_report.cancha (id, nombre, direccion, foto) VALUES (4, 'Cilindro de avellaneda', 'Barrio Avellaneda', 'http://i298.photobucket.com/albums/mm280/ahivalabalatajala/cilindrodeavellaneda3al.jpg');
 
 -- CLUB --
-INSERT INTO match_report.club (id, nombre, direccion, escudo, pagina_web, id_cancha) VALUES (1, 'Boca Juniors', 'Barrio La Boca', NULL, 'www.bj.com.ar', 1);
-INSERT INTO match_report.club (id, nombre, direccion, escudo, pagina_web, id_cancha) VALUES (2, 'River Plate', 'Barrio Nuñez', NULL, 'www.rp.com.ar', 2);
-INSERT INTO match_report.club (id, nombre, direccion, escudo, pagina_web, id_cancha) VALUES (3, 'San Lorenzo', 'Barrio Bajo Flores', NULL, 'www.sl.com.ar', 3);
-INSERT INTO match_report.club (id, nombre, direccion, escudo, pagina_web, id_cancha) VALUES (4, 'Racing Club', 'Barrio Avellaneda', NULL, 'www.rc.com.ar', 4);
+INSERT INTO match_report.club (id, nombre, direccion, escudo, pagina_web, id_cancha) VALUES (1, 'Boca Juniors', 'Barrio La Boca', 'http://www.caratulasylogos.com/sites/default/files/boca_juniors.gif', 'www.bj.com.ar', 1);
+INSERT INTO match_report.club (id, nombre, direccion, escudo, pagina_web, id_cancha) VALUES (2, 'River Plate', 'Barrio Nuñez', 'https://http2.mlstatic.com/escudos-futbol-argentino-ideal-souvenir-D_NQ_NP_778101-MLA20270250624_032015-O.jpg', 'www.rp.com.ar', 2);
+INSERT INTO match_report.club (id, nombre, direccion, escudo, pagina_web, id_cancha) VALUES (3, 'San Lorenzo', 'Barrio Bajo Flores', 'https://http2.mlstatic.com/escudos-futbol-argentino-ideal-souvenir-D_NQ_NP_260201-MLA20270249449_032015-O.jpg', 'www.sl.com.ar', 3);
+INSERT INTO match_report.club (id, nombre, direccion, escudo, pagina_web, id_cancha) VALUES (4, 'Racing Club', 'Barrio Avellaneda', 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTicOu0aGYqWxQIM06pS3YrJcq428-WbrTy2V-Szzsgj9A9kAXNA94TWg', 'www.rc.com.ar', 4);
 
 -- TORNEO --
 INSERT INTO match_report.torneo (id, fecha_inicio, fecha_fin) VALUES (1, '2016-01-01', '2016-06-30');

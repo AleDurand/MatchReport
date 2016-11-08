@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `match_report`.`club` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `direccion` VARCHAR(45) NOT NULL,
-  `escudo` CHAR(32) NULL DEFAULT NULL,
+  `escudo` CHAR(250) NULL DEFAULT NULL,
   `pagina_web` VARCHAR(45) NULL DEFAULT NULL,
   `id_cancha` INT(11) NULL,
   PRIMARY KEY (`id`),
