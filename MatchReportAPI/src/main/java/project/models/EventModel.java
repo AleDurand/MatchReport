@@ -14,11 +14,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 @Entity
 @Table(name = "evento")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "discriminador", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("EVENT")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "discriminator")
+@JsonSubTypes({ // @formatter:off
+	@Type(name = "EVENT", value = EventModel.class),
+	@Type(name = "PLAYER_EVENT", value = PlayerEventModel.class),
+	@Type(name = "TEAM_EVENT", value = TeamEventModel.class) 
+}) // @formatter:on
 public class EventModel {
 
 	@Id
@@ -28,7 +38,7 @@ public class EventModel {
 
 	@Column(name = "discriminador", insertable = false, updatable = false, nullable = false)
 	private String discriminator;
-	
+
 	@OneToOne
 	@JoinColumn(name = "partido_id", nullable = false)
 	private MatchModel match;
@@ -53,7 +63,7 @@ public class EventModel {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getDiscriminator() {
 		return discriminator;
 	}
