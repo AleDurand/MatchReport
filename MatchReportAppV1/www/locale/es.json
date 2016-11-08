@@ -1,0 +1,12 @@
+{
+    "dashboard_title": "Dashboard",
+    "dashboard_text_title": "Bienvenido a Ionic",
+    "chats_title": "Chats",
+    "chats_delete": "Eliminar",
+    "settings_title": "Configuraciones",
+    "settings_language": "Idioma",
+    "settings_lang_en": "Ingles",
+    "settings_lang_es": "Español",
+    "settings_enable_friends": "Habilitar amigos",
+    "stadiums_title": "Estadios"
+}

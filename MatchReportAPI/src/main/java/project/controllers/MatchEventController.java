@@ -1,11 +1,14 @@
 package project.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import project.models.EventModel;
 import project.services.MatchService;
+import project.validators.CompositeValidator;
 import project.validators.EventValidator;
 import project.validators.PlayerEventValidator;
 import project.validators.TeamEventValidator;
@@ -35,6 +39,9 @@ public class MatchEventController {
 	
 	@Autowired
 	private TeamEventValidator teamEventValidator;
+	
+	@Autowired
+	private CompositeValidator compositeValidator;
 
 	@RequestMapping(value = "/events", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<EventModel>> getAllEvents(@PathVariable("id") Integer matchId) {
@@ -43,13 +50,18 @@ public class MatchEventController {
 	}
 	
 	@RequestMapping(value = "/events", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-	public ResponseEntity<EventModel> addRound(@PathVariable("id") Integer matchId, @Validated @RequestBody EventModel event) {
+	public ResponseEntity<EventModel> addEvent(@PathVariable("id") Integer matchId, @RequestBody EventModel event) {
 		EventModel toReturn = matchService.addEvent(matchId, event);
 		return new ResponseEntity<>(toReturn, HttpStatus.CREATED);
 	}
 	
 	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-		binder.addValidators(eventValidator, playerEventValidator, teamEventValidator);
+	protected void initBinder(WebDataBinder binder, HttpServletRequest request) {
+		List<Validator> validators = new ArrayList<Validator>();
+		validators.add(eventValidator);
+		validators.add(teamEventValidator);
+		validators.add(playerEventValidator);
+		compositeValidator.setValidators(validators);
+		binder.setValidator(compositeValidator);
 	}
 }

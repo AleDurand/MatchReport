@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `match_report`.`cancha` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `direccion` VARCHAR(45) NOT NULL,
-  `foto` CHAR(32) NULL DEFAULT NULL,
+  `foto` CHAR(250) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 -- DEFAULT CHARACTER SET = utf8;

@@ -15,10 +15,10 @@ INSERT INTO match_report.user_has_authority (user_id, authority_id) VALUES ('use
 INSERT INTO match_report.user_has_authority (user_id, authority_id) VALUES ('username2', 2);
 
 -- CANCHA --
-INSERT INTO match_report.cancha (id, nombre, direccion, foto) VALUES (1, 'Bombonera', 'Barrio La Boca', NULL);
-INSERT INTO match_report.cancha (id, nombre, direccion, foto) VALUES (2, 'Monumental', 'Barrio Nuñez', NULL);
-INSERT INTO match_report.cancha (id, nombre, direccion, foto) VALUES (3, 'Nuevo gasometro', 'Barrio Bajo Flores', NULL);
-INSERT INTO match_report.cancha (id, nombre, direccion, foto) VALUES (4, 'Cilindro de avellaneda', 'Barrio Avellaneda', NULL);
+INSERT INTO match_report.cancha (id, nombre, direccion, foto) VALUES (1, 'Bombonera', 'Barrio La Boca', 'http://i1137.photobucket.com/albums/n510/pablo11896/LaBombonera-1.png');
+INSERT INTO match_report.cancha (id, nombre, direccion, foto) VALUES (2, 'Monumental', 'Barrio Nuñez', 'https://ugc.kn3.net/i/origin/http://fotos.starmedia.com/imagenes/2011/11/river-plate-estadio-monumental.jpg');
+INSERT INTO match_report.cancha (id, nombre, direccion, foto) VALUES (3, 'Nuevo gasometro', 'Barrio Bajo Flores', 'http://www.ciclondeboedo.com/news/1211.jpg');
+INSERT INTO match_report.cancha (id, nombre, direccion, foto) VALUES (4, 'Cilindro de avellaneda', 'Barrio Avellaneda', 'http://i298.photobucket.com/albums/mm280/ahivalabalatajala/cilindrodeavellaneda3al.jpg');
 
 -- CLUB --
 INSERT INTO match_report.club (id, nombre, direccion, escudo, pagina_web, id_cancha) VALUES (1, 'Boca Juniors', 'Barrio La Boca', NULL, 'www.bj.com.ar', 1);

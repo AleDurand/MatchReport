@@ -26,6 +26,9 @@ public class EventModel {
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 
+	@Column(name = "discriminador", insertable = false, updatable = false, nullable = false)
+	private String discriminator;
+	
 	@OneToOne
 	@JoinColumn(name = "partido_id", nullable = false)
 	private MatchModel match;
@@ -49,6 +52,14 @@ public class EventModel {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public String getDiscriminator() {
+		return discriminator;
+	}
+
+	public void setDiscriminator(String discriminator) {
+		this.discriminator = discriminator;
 	}
 
 	public MatchModel getMatch() {
