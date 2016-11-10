@@ -59,7 +59,7 @@ public class RoleServiceImp implements RoleService {
 			if (expression == null) {
 				expression = ex;
 			} else {
-				expression = expression.or(ex);
+				expression = expression.and(ex);
 			}
 		}
 

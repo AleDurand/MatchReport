@@ -54,10 +54,11 @@ public class MatchController {
 			@RequestParam(name = "stadium", required = false) Integer idStadium,
 			@RequestParam(name = "local", required = false) Integer idLocal,
 			@RequestParam(name = "visitor", required = false) Integer idVisitor,
+			@RequestParam(name = "club", required = false) Integer idClub,
 			@RequestParam(name = "round", required = false) Integer idRound,
 			Pageable pageable
 	) { // @formatter:on
-		Page<MatchModel> matches = matchService.getAll(id, dateBefore, dateAfter, status, idStadium, idLocal, idVisitor, idRound, pageable);
+		Page<MatchModel> matches = matchService.getAll(id, dateBefore, dateAfter, status, idStadium, idLocal, idVisitor, idClub, idRound, pageable);
 		return new ResponseEntity<>(matches, HttpStatus.OK);
 	}
 

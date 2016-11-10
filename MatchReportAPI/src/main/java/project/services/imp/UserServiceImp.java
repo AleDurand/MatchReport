@@ -67,7 +67,7 @@ public class UserServiceImp implements UserService {
 			if (expression == null) {
 				expression = ex;
 			} else {
-				expression = expression.or(ex);
+				expression = expression.and(ex);
 			}
 		}
 		

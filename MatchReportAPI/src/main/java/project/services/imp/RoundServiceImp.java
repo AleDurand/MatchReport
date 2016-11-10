@@ -65,7 +65,7 @@ public class RoundServiceImp implements RoundService {
 			if (expression == null) {
 				expression = ex;
 			} else {
-				expression = expression.or(ex);
+				expression = expression.and(ex);
 			}
 		}
 		return roundRepository.findAll(expression, pageable);

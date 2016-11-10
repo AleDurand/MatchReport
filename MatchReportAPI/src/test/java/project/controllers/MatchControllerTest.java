@@ -130,7 +130,7 @@ public class MatchControllerTest {
 	public void getAll() throws Exception {
 		// @formatter:off
 		Page<MatchModel> expectedMatches = new PageImpl<MatchModel>(Arrays.asList(new MatchModel()));
-		when(matchServiceMock.getAll(any(), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(expectedMatches);
+		when(matchServiceMock.getAll(any(), any(), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(expectedMatches);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/matches")
 			.accept(MediaType.APPLICATION_JSON))

@@ -47,7 +47,7 @@ public class MatchServiceImp implements MatchService {
 
 	@Override
 	public Page<MatchModel> getAll(Integer id, Date dateBefore, Date dateAfter, MatchStatus status,
-			Integer idStadium, Integer idLocal, Integer idVisitor,
+			Integer idStadium, Integer idLocal, Integer idVisitor, Integer idClub, 
 			Integer idRound, Pageable pageable) {
 		
 		List<BooleanExpression> expressions = new ArrayList<BooleanExpression>();
@@ -74,15 +74,18 @@ public class MatchServiceImp implements MatchService {
 		BooleanExpression expression7 = (idVisitor != null) ? match.visitor.id.eq(idVisitor) : null;
 		expressions.add(expression7);
 		
-		BooleanExpression expression8 = (idRound != null) ? match.round.id.eq(idRound) : null;
+		BooleanExpression expression8 = (idClub != null) ? match.local.id.eq(idClub).or(match.visitor.id.eq(idClub)) : null;
 		expressions.add(expression8);
+				
+		BooleanExpression expression9 = (idRound != null) ? match.round.id.eq(idRound) : null;
+		expressions.add(expression9);
 		
 		BooleanExpression expression = null;
 		for (BooleanExpression ex : expressions) {
 			if (expression == null) {
 				expression = ex;
 			} else {
-				expression = expression.or(ex);
+				expression = expression.and(ex);
 			}
 		}
 		

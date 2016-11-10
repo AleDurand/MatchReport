@@ -116,7 +116,7 @@ public class MatchServiceImpTest {
 		QMatchModel match = QMatchModel.matchModel;		
 		when(matchRepositoryMock.findAll(match.instanceOfAny(), pageable)).thenReturn(expectedMatches);
 
-		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, null, null, pageable);
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, null, null, null, pageable);
 
 		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);
@@ -132,7 +132,7 @@ public class MatchServiceImpTest {
 			
 		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
 
-		Page<MatchModel> actualMatches = matchService.getAll(1, null, null, null, null, null, null, null, pageable);
+		Page<MatchModel> actualMatches = matchService.getAll(1, null, null, null, null, null, null, null, null, pageable);
 		
 		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);
@@ -149,7 +149,7 @@ public class MatchServiceImpTest {
 			
 		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
 
-		Page<MatchModel> actualMatches = matchService.getAll(null, date, null, null, null, null, null, null, pageable);
+		Page<MatchModel> actualMatches = matchService.getAll(null, date, null, null, null, null, null, null, null, pageable);
 		
 		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);
@@ -166,7 +166,7 @@ public class MatchServiceImpTest {
 			
 		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
 
-		Page<MatchModel> actualMatches = matchService.getAll(null, null, date, null, null, null, null, null, pageable);
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, date, null, null, null, null, null, null, pageable);
 		
 		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);
@@ -182,7 +182,7 @@ public class MatchServiceImpTest {
 			
 		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
 
-		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, MatchStatus.IN_PROGRESS, null, null, null, null, pageable);
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, MatchStatus.IN_PROGRESS, null, null, null, null, null, pageable);
 		
 		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);
@@ -198,7 +198,7 @@ public class MatchServiceImpTest {
 			
 		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
 
-		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, 1, null, null, null, pageable);
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, 1, null, null, null, null, pageable);
 		
 		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);
@@ -214,7 +214,7 @@ public class MatchServiceImpTest {
 			
 		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
 
-		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, 1, null, null, pageable);
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, 1, null, null, null, pageable);
 		
 		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);
@@ -230,7 +230,23 @@ public class MatchServiceImpTest {
 			
 		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
 
-		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, 1, null, pageable);
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, 1, null, null, pageable);
+		
+		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
+		assertEquals(expectedMatches, actualMatches);
+		// @formatter:on
+	}
+
+	@Test
+	public void getAllFilteredByIdClub() throws Exception {
+		// @formatter:off
+		Page<MatchModel> expectedMatches = new PageImpl<MatchModel>(Arrays.asList(new MatchModel()));
+		Pageable pageable = new PageRequest(0, 1000);
+		BooleanExpression expression = QMatchModel.matchModel.local.id.eq(1).or(QMatchModel.matchModel.visitor.id.eq(1));
+			
+		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
+
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, null, 1, null, pageable);
 		
 		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);
@@ -246,7 +262,7 @@ public class MatchServiceImpTest {
 			
 		when(matchRepositoryMock.findAll(expression, pageable)).thenReturn(expectedMatches);
 
-		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, null, 1, pageable);
+		Page<MatchModel> actualMatches = matchService.getAll(null, null, null, null, null, null, null, null, 1, pageable);
 		
 		assertEquals(expectedMatches.getTotalElements(), actualMatches.getTotalElements());
 		assertEquals(expectedMatches, actualMatches);

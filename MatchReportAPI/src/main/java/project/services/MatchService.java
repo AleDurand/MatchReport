@@ -17,7 +17,7 @@ public interface MatchService {
 	public void delete(Integer id);
 
 	public Page<MatchModel> getAll(Integer id, Date dateBefore, Date dateAfter, MatchStatus status, 
-			Integer idStadium, Integer idLocal, Integer idVisitor,
+			Integer idStadium, Integer idLocal, Integer idVisitor, Integer idClub,
 			Integer idRound, Pageable pageable);
 
 	public List<EventModel> getAllEvents(Integer matchId);

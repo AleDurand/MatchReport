@@ -74,7 +74,7 @@ public class TournamentServiceImp implements TournamentService {
 			if (expression == null) {
 				expression = ex;
 			} else {
-				expression = expression.or(ex);
+				expression = expression.and(ex);
 			}
 		}
 		
