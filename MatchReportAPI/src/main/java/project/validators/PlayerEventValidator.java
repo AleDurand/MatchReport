@@ -16,7 +16,15 @@ public class PlayerEventValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		// TODO Auto-generated method stub
+		PlayerEventModel playerEvent = (PlayerEventModel) target;
+		
+		if (playerEvent.getPlayer() == null) {
+			errors.rejectValue("player", "player_event.player.not_null", "{player_event.player.not_null}");
+		} else {
+			if (playerEvent.getPlayer().getId() == null) {
+				errors.rejectValue("player.id", "player_event.player.id_not_null", "{player_event.player.id_not_null}");
+			}
+		}
 	}
 
 }

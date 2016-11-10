@@ -6,9 +6,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -28,12 +28,8 @@ import project.models.StadiumModel;
 @AutoConfigureMockMvc
 public class MatchValidatorTest {
 
+	@Autowired
 	private MatchValidator validator;
-
-	@Before
-	public void setUp() {
-		validator = new MatchValidator();
-	}
 
 	@Test
 	public void supports() {

@@ -25,10 +25,10 @@ import project.models.PlayerModel;
 @SpringBootTest(classes = { Application.class })
 @AutoConfigureMockMvc
 public class PlayerEventValidatorTest {
-	
+
 	@Autowired
 	private PlayerEventValidator validator;
-	
+
 	@Test
 	public void supports() {
 		assertTrue(validator.supports(PlayerEventModel.class));
@@ -39,15 +39,54 @@ public class PlayerEventValidatorTest {
 	public void isValid() {
 		PlayerEventModel playerEvent = new PlayerEventModel();
 		playerEvent.setId(1);
+		playerEvent.setDiscriminator("PLAYER_EVENT");
 		playerEvent.setMinute(1);
 		playerEvent.setExtraMinute(null);
 		playerEvent.setType(EventType.START_PERIOD);
 		playerEvent.setMatch(new MatchModel());
-		playerEvent.setPlayer(new PlayerModel());
+		PlayerModel player = new PlayerModel();
+		player.setId(1);
+		playerEvent.setPlayer(player);
 		playerEvent.setTeam(new ClubModel());
 		BindException errors = new BindException(playerEvent, "playerEvent");
 		ValidationUtils.invokeValidator(validator, playerEvent, errors);
 		assertFalse(errors.hasErrors());
+	}
+
+	@Test
+	public void invalidPlayerNull() {
+		PlayerEventModel playerEvent = new PlayerEventModel();
+		playerEvent.setId(1);
+		playerEvent.setDiscriminator("PLAYER_EVENT");
+		playerEvent.setMinute(1);
+		playerEvent.setExtraMinute(null);
+		playerEvent.setType(EventType.START_PERIOD);
+		playerEvent.setMatch(new MatchModel());
+		ClubModel club = new ClubModel();
+		club.setId(1);
+		playerEvent.setTeam(club);
+		playerEvent.setPlayer(null);
+		BindException errors = new BindException(playerEvent, "playerEvent");
+		ValidationUtils.invokeValidator(validator, playerEvent, errors);
+		assertTrue(errors.hasErrors());
+	}
+
+	@Test
+	public void invalidPlayerIdNull() {
+		PlayerEventModel playerEvent = new PlayerEventModel();
+		playerEvent.setId(1);
+		playerEvent.setDiscriminator("PLAYER_EVENT");
+		playerEvent.setMinute(1);
+		playerEvent.setExtraMinute(null);
+		playerEvent.setType(EventType.START_PERIOD);
+		playerEvent.setMatch(new MatchModel());
+		ClubModel club = new ClubModel();
+		club.setId(1);
+		playerEvent.setTeam(club);
+		playerEvent.setPlayer(new PlayerModel());
+		BindException errors = new BindException(playerEvent, "playerEvent");
+		ValidationUtils.invokeValidator(validator, playerEvent, errors);
+		assertTrue(errors.hasErrors());
 	}
 
 }

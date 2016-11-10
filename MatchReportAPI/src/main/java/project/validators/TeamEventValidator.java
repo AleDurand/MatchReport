@@ -16,7 +16,15 @@ public class TeamEventValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		// TODO Auto-generated method stub
+		TeamEventModel teamEvent = (TeamEventModel) target;
+		
+		if (teamEvent.getTeam() == null) {
+			errors.rejectValue("team", "team_event.team.not_null", "{team_event.team.not_null}");
+		} else {
+			if (teamEvent.getTeam().getId() == null) {
+				errors.rejectValue("team.id", "team_event.team.id_not_null", "{team_event.team.id_not_null}");
+			}
+		}
 	}
 
 }

@@ -3,9 +3,9 @@ package project.validators;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,19 +17,14 @@ import project.Application;
 import project.models.ClubModel;
 import project.utils.TestUtil;
 
-
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
 @AutoConfigureMockMvc
 public class ClubValidatorTest {
 
+	@Autowired
 	private ClubValidator validator;
-
-	@Before
-	public void setUp() {
-		validator = new ClubValidator();
-	}
 
 	@Test
 	public void supports() {
@@ -46,7 +41,7 @@ public class ClubValidatorTest {
 		ValidationUtils.invokeValidator(validator, club, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	@Test
 	public void invalidNameNull() {
 		ClubModel club = new ClubModel();
@@ -70,13 +65,14 @@ public class ClubValidatorTest {
 	@Test
 	public void invalidNameTooLong() {
 		ClubModel club = new ClubModel();
-		club.setName(TestUtil.createStringWithLength(ClubValidator.MAXIMUM_NAME_LENGTH + 1));
+		club.setName(TestUtil
+				.createStringWithLength(ClubValidator.MAXIMUM_NAME_LENGTH + 1));
 		club.setAddress("address");
 		BindException errors = new BindException(club, "club");
 		ValidationUtils.invokeValidator(validator, club, errors);
 		assertTrue(errors.hasErrors());
 	}
-	
+
 	@Test
 	public void invalidAddressNull() {
 		ClubModel club = new ClubModel();

@@ -42,6 +42,7 @@ public class EventValidatorTest {
 	public void isValid() {
 		EventModel event = new EventModel();
 		event.setId(1);
+		event.setDiscriminator("EVENT");
 		event.setMinute(1);
 		event.setExtraMinute(null);
 		event.setType(EventType.START_PERIOD);
@@ -49,6 +50,76 @@ public class EventValidatorTest {
 		BindException errors = new BindException(event, "event");
 		ValidationUtils.invokeValidator(validator, event, errors);
 		assertFalse(errors.hasErrors());
+	}
+	
+	@Test
+	public void invalidDiscriminatorNull() {
+		EventModel event = new EventModel();
+		event.setId(1);
+		event.setDiscriminator(null);
+		event.setMinute(1);
+		event.setExtraMinute(null);
+		event.setType(EventType.START_PERIOD);
+		event.setMatch(new MatchModel());
+		BindException errors = new BindException(event, "event");
+		ValidationUtils.invokeValidator(validator, event, errors);
+		assertTrue(errors.hasErrors());
+	}
+	
+	@Test
+	public void invalidTypeNull() {
+		EventModel event = new EventModel();
+		event.setId(1);
+		event.setDiscriminator("EVENT");
+		event.setMinute(1);
+		event.setExtraMinute(null);
+		event.setType(null);
+		event.setMatch(new MatchModel());
+		BindException errors = new BindException(event, "event");
+		ValidationUtils.invokeValidator(validator, event, errors);
+		assertTrue(errors.hasErrors());
+	}
+	
+	@Test
+	public void invalidMinuteNull() {
+		EventModel event = new EventModel();
+		event.setId(1);
+		event.setDiscriminator("EVENT");
+		event.setMinute(null);
+		event.setExtraMinute(null);
+		event.setType(EventType.START_PERIOD);
+		event.setMatch(new MatchModel());
+		BindException errors = new BindException(event, "event");
+		ValidationUtils.invokeValidator(validator, event, errors);
+		assertTrue(errors.hasErrors());
+	}
+	
+	@Test
+	public void invalidMinuteNonPositive() {
+		EventModel event = new EventModel();
+		event.setId(1);
+		event.setDiscriminator("EVENT");
+		event.setMinute(-1);
+		event.setExtraMinute(null);
+		event.setType(EventType.START_PERIOD);
+		event.setMatch(new MatchModel());
+		BindException errors = new BindException(event, "event");
+		ValidationUtils.invokeValidator(validator, event, errors);
+		assertTrue(errors.hasErrors());
+	}
+	
+	@Test
+	public void invalidExtraMinuteNonPositive() {
+		EventModel event = new EventModel();
+		event.setId(1);
+		event.setDiscriminator("EVENT");
+		event.setMinute(1);
+		event.setExtraMinute(-1);
+		event.setType(EventType.START_PERIOD);
+		event.setMatch(new MatchModel());
+		BindException errors = new BindException(event, "event");
+		ValidationUtils.invokeValidator(validator, event, errors);
+		assertTrue(errors.hasErrors());
 	}
 
 }

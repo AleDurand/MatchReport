@@ -3,9 +3,9 @@ package project.validators;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -24,12 +24,8 @@ import project.utils.TestUtil;
 @AutoConfigureMockMvc
 public class StadiumValidatorTest {
 
+	@Autowired
 	private StadiumValidator validator;
-
-	@Before
-	public void setUp() {
-		validator = new StadiumValidator();
-	}
 
 	@Test
 	public void supports() {

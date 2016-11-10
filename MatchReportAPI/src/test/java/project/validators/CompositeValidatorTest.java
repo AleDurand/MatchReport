@@ -3,6 +3,10 @@ package project.validators;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +16,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 
 import project.Application;
 import project.models.ClubModel;
+import project.models.EventModel;
 import project.models.EventType;
 import project.models.MatchModel;
 import project.models.PlayerEventModel;
@@ -24,13 +30,28 @@ import project.models.TeamEventModel;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
 @AutoConfigureMockMvc
-public class TeamEventValidatorTest {
+public class CompositeValidatorTest {
 
 	@Autowired
-	private TeamEventValidator validator;
+	private CompositeValidator validator;
+
+	@Autowired
+	private EventValidator eventValidator;
+
+	@Autowired
+	private TeamEventValidator teamEventValidator;
+
+	@Before
+	public void setUp() {
+		List<Validator> validators = new ArrayList<Validator>();
+		validators.add(eventValidator);
+		validators.add(teamEventValidator);
+		validator.setValidators(validators);
+	}
 
 	@Test
 	public void supports() {
+		assertTrue(validator.supports(EventModel.class));
 		assertTrue(validator.supports(TeamEventModel.class));
 		assertTrue(validator.supports(PlayerEventModel.class));
 		assertFalse(validator.supports(Object.class));
@@ -52,36 +73,5 @@ public class TeamEventValidatorTest {
 		ValidationUtils.invokeValidator(validator, teamEvent, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
-	@Test
-	public void invalidTeamNull() {
-		TeamEventModel teamEvent = new TeamEventModel();
-		teamEvent.setId(1);
-		teamEvent.setDiscriminator("TEAM_EVENT");
-		teamEvent.setMinute(1);
-		teamEvent.setExtraMinute(null);
-		teamEvent.setType(EventType.START_PERIOD);
-		teamEvent.setMatch(new MatchModel());
-		teamEvent.setTeam(null);
-		BindException errors = new BindException(teamEvent, "teamEvent");
-		ValidationUtils.invokeValidator(validator, teamEvent, errors);
-		assertTrue(errors.hasErrors());
-	}
 
-	@Test
-	public void invalidTeamIdNull() {
-		TeamEventModel teamEvent = new TeamEventModel();
-		teamEvent.setId(1);
-		teamEvent.setDiscriminator("TEAM_EVENT");
-		teamEvent.setMinute(1);
-		teamEvent.setExtraMinute(null);
-		teamEvent.setType(EventType.START_PERIOD);
-		teamEvent.setMatch(new MatchModel());
-		ClubModel club = new ClubModel();
-		teamEvent.setTeam(club);
-		BindException errors = new BindException(teamEvent, "teamEvent");
-		ValidationUtils.invokeValidator(validator, teamEvent, errors);
-		assertTrue(errors.hasErrors());
-	}
-	
 }
