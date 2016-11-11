@@ -3,12 +3,12 @@
         <ion-list>
             <ion-item class="item-remove-animate item-avatar" ng-repeat="match in matches" type="item-text-wrap">
                 <div class="row">
-                    <div class="col col-35">
-                        <img class="right" ng-src="{{match.local.image}}" height="50" style="max-width: 50px">
+                    <div class="col col-33">
+                        <img class="left" ng-src="{{match.local.image}}" height="50" style="max-width: 50px">
                     </div>
-                    <div class="col col-30"></div>
-                    <div class="col col-35 center">
-                        <img class="left" ng-src="{{match.visitor.image}}" height="50" style="max-width: 50px">        
+                    <div class="col col-33 text-center">-</div>
+                    <div class="col col-33">
+                        <img class="right" ng-src="{{match.visitor.image}}" height="50" style="max-width: 50px">        
                     </div>
                 </div>             
             </ion-item>

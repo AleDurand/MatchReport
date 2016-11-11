@@ -1,1 +1,3 @@
-/* Empty. Add your own CSS if you like */
+.tab-item:not(.tab-item-active) .tab-title {
+    color: #f8f8f8;
+}

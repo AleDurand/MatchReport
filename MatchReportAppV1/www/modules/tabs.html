@@ -3,24 +3,24 @@ Create tabs with an icon and label, using the tabs-positive style.
 Each tab's child <ion-nav-view> directive will have its own
 navigation history that also transitions its views in and out.
 -->
-<ion-tabs class="tabs-icon-top tabs-color-active-positive">
+<ion-tabs class="tabs-dark tabs-icon-top tabs-color-active-balanced">
     <!-- Dashboard Tab -->
-    <ion-tab title="{{ 'dashboard_title' | translate }}" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/dash">
+    <ion-tab title="{{ 'dashboard_title' | translate }}" icon-off="ion-ios-pulse stable" icon-on="ion-ios-pulse-strong" href="#/tab/dash">
         <ion-nav-view name="tab-dash"></ion-nav-view>
     </ion-tab>
 
     <!-- Matches Tab -->
-    <ion-tab title="{{ 'matches_title' | translate }}" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/matches">
+    <ion-tab title="{{ 'matches_title' | translate }}" icon-off="ion-ios-chatboxes-outline stable" icon-on="ion-ios-chatboxes" href="#/tab/matches">
         <ion-nav-view name="tab-matches"></ion-nav-view>
     </ion-tab>
 
     <!-- Stadiums Tab -->
-    <ion-tab title="{{ 'stadiums_title' | translate }}" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" ui-sref="tab.stadiums">
+    <ion-tab title="{{ 'stadiums_title' | translate }}" icon-off="ion-ios-gear-outline stable" icon-on="ion-ios-gear" ui-sref="tab.stadiums">
         <ion-nav-view name="tab-stadiums"></ion-nav-view>
     </ion-tab>
 
     <!-- Settings Tab -->
-    <ion-tab title="{{ 'settings_title' | translate }}" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" ui-sref="tab.settings">
+    <ion-tab title="{{ 'settings_title' | translate }}" icon-off="ion-ios-gear-outline stable" icon-on="ion-ios-gear" ui-sref="tab.settings">
         <ion-nav-view name="tab-settings"></ion-nav-view>
     </ion-tab>
 
