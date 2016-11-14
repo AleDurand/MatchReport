@@ -1,14 +1,14 @@
 <ion-view view-title="{{ 'matches_title' | translate }}">
     <ion-content>
         <ion-list>
-            <ion-item class="item-remove-animate item-avatar" ng-repeat="match in matches" type="item-text-wrap">
+            <ion-item class="item-remove-animate item-avatar no-padding" ng-repeat="match in matches" type="item-text-wrap">
                 <div class="row">
                     <div class="col col-33">
-                        <img class="left" ng-src="{{match.local.image}}" height="50" style="max-width: 50px">
+                        <img class="avatar-image-left" ng-src="{{match.local.image}}">
                     </div>
-                    <div class="col col-33 text-center">-</div>
+                    <div class="col col-33 text-align-center">-</div>
                     <div class="col col-33">
-                        <img class="right" ng-src="{{match.visitor.image}}" height="50" style="max-width: 50px">        
+                        <img class="avatar-image-right" ng-src="{{match.visitor.image}}">        
                     </div>
                 </div>             
             </ion-item>
