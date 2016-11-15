@@ -3,17 +3,6 @@
 @import "ionic.globals";
 
 
-// Shared Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass variables found in Ionic's source scss files.
-// To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
-
-$text-color:        #3d3c3a;
-$headings-font-weight: 300;
-
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -31,12 +20,19 @@ $colors: (
   favorite:   #69BB7B
 );
 
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+
+$text-color:        color($colors, dark);
+$headings-font-weight: 300;
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-
-// Text
-$text-ios-color:                           color($colors, dark);
 
 // Toolbar
 $toolbar-ios-background:                   color($colors, dark);
@@ -47,6 +43,9 @@ $toolbar-ios-inactive-color:               color($colors, light);
 $tabs-ios-background:                      color($colors, dark);
 $tabs-ios-tab-color-active:                color($colors, primary);
 $tabs-ios-tab-color:                       color($colors, light);  
+$tabs-ios-tab-min-height: 49px;
+$tabs-ios-tab-padding: 0 2px;
+$tabs-ios-tab-font-size: 10px;
 
 // Change the color of the segment button text
 $segment-button-ios-text-color-activated:  color($colors, dark);
@@ -57,9 +56,6 @@ $segment-button-ios-text-color-activated:  color($colors, dark);
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-// Text 
-$text-md-color:                           color($colors, dark);
-
 // Toolbar
 $toolbar-md-background:                   color($colors, dark);
 $toolbar-md-active-color:                 color($colors, dark);
@@ -69,6 +65,13 @@ $toolbar-md-inactive-color:               color($colors, light);
 $tabs-md-background:                      color($colors, dark);
 $tabs-md-tab-color-active:                color($colors, primary);
 $tabs-md-tab-color:                       color($colors, light);
+$tabs-md-tab-min-height: 49px;
+$tabs-md-tab-padding: 0 0px 0px 0;
+$tabs-md-tab-padding-active: 0 0px 0px 0;
+$tabs-md-tab-text-margin: 0px 0;
+$tabs-md-tab-text-margin-active: 0px 0;
+$tabs-md-tab-font-size: 10px;
+$tabs-md-tab-font-size-active: 10px;
 
 // Change the color of the segment button text
 $segment-button-md-text-color-activated:  color($colors, dark);
@@ -77,9 +80,6 @@ $segment-button-md-text-color-activated:  color($colors, dark);
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-
-// Text
-$text-wp-color:                           color($colors, dark);
 
 // Toolbar
 $toolbar-wp-background:                   color($colors, dark);
@@ -90,6 +90,10 @@ $toolbar-wp-inactive-color:               color($colors, light);
 $tabs-wp-background:                      color($colors, dark);
 $tabs-wp-tab-color-active:                color($colors, primary);
 $tabs-wp-tab-color:                       color($colors, light);  
+$tabs-wp-tab-min-height: 49px;
+$tabs-wp-tab-padding: 0 2px 0px 0;
+$tabs-wp-tab-font-size: 10px;
+$tabs-wp-tab-font-size-active: 10px;
 
 // Change the color of the segment button text
 $segment-button-wp-text-color-activated:  color($colors, dark);
