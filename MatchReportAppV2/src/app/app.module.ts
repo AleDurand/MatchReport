@@ -15,7 +15,7 @@ import { TabsPage } from '../pages/tabs/tabs';
     TabsPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, { tabsPlacement: 'bottom' })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

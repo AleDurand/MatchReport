@@ -24,7 +24,7 @@ export class MyApp {
     appPages: PageInterface[] = [
     { title: 'Home', component: TabsPage, icon: 'calendar' },
     { title: 'Contact', component: TabsPage, index: 1, icon: 'contacts' },
-    { title: 'About', component: TabsPage, index: 2, icon: 'information-circle' },
+    { title: 'About', component: TabsPage, index: 2, icon: 'information-circle' }
     ];
     
     rootPage = TabsPage;
