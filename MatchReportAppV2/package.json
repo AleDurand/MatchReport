@@ -11,8 +11,6 @@
     "deploy:before": "build",
     "build:before": "build",
     "run:before": "build"
-
-
   },
   "dependencies": {
     "@angular/common": "2.1.1",
