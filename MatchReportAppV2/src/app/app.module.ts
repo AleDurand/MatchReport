@@ -1,30 +1,32 @@
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { AboutPage } from '../pages/about/about';
+import { TeamsPage } from '../pages/teams/teams';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { Configuration } from './app.constants';
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
+    TeamsPage,
     ContactPage,
     HomePage,
     TabsPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp, { tabsPlacement: 'bottom' })
+    IonicModule.forRoot(MyApp, { tabsPlacement: 'bottom' }), HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
+    TeamsPage,
     ContactPage,
     HomePage,
     TabsPage
   ],
-  providers: []
+  providers: [Configuration]
 })
 export class AppModule {}

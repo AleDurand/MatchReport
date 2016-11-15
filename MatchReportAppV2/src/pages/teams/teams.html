@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Teams
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-card *ngFor="let team of teams">
+            <img [src]="team.image">
+            <ion-card-content>
+                <ion-card-title>{{ team.name }}</ion-card-title>
+                <p>{{ team.address }}</p>
+            </ion-card-content>
+        </ion-card>
+    </ion-list>
+</ion-content>
+
