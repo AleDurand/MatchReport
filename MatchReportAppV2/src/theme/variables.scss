@@ -17,7 +17,10 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  favorite:   #69BB7B
+  favorite:   #69BB7B,
+  success:    #32db64,
+  warning:    #f0ff5e,
+  error:      #f53d3d
 );
 
 // Shared Variables
@@ -47,10 +50,11 @@ $tabs-ios-tab-min-height: 49px;
 $tabs-ios-tab-padding: 0 2px;
 $tabs-ios-tab-font-size: 10px;
 
+// Toast
+$toast-ios-background:                     color($colors, primary);
+
 // Change the color of the segment button text
 $segment-button-ios-text-color-activated:  color($colors, dark);
-
-
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -72,6 +76,9 @@ $tabs-md-tab-text-margin: 0px 0;
 $tabs-md-tab-text-margin-active: 0px 0;
 $tabs-md-tab-font-size: 10px;
 $tabs-md-tab-font-size-active: 10px;
+
+// Toast
+$toast-md-background:                     color($colors, primary);
 
 // Change the color of the segment button text
 $segment-button-md-text-color-activated:  color($colors, dark);
@@ -95,9 +102,11 @@ $tabs-wp-tab-padding: 0 2px 0px 0;
 $tabs-wp-tab-font-size: 10px;
 $tabs-wp-tab-font-size-active: 10px;
 
+// Toast
+$toast-wp-background:                     color($colors, primary);
+
 // Change the color of the segment button text
 $segment-button-wp-text-color-activated:  color($colors, dark);
-
 
 // App Theme
 // --------------------------------------------------
