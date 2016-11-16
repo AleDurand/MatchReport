@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
-import {TeamService} from '../../services/teams';
+import { TeamService } from '../../services/team.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'page-teams',
   templateUrl: 'teams.html',
-  providers: [TeamService]
+  providers: [TeamService, ToastService]
 })
 export class TeamsPage {
 
   public teams;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, private teamService: TeamService) {
+  constructor(public navCtrl: NavController, private toast: ToastService, private teamService: TeamService) {
     this.teams = this.getTeams();
   }
 
@@ -23,21 +24,11 @@ export class TeamsPage {
         this.teams = data.json().content;
       },
       err => {
-        if(err.status === 0) this.error('Error al comunicarse con el server.');
-        else this.error(err);
+        if(err.status === 0) this.toast.error('Error al comunicarse con el server.');
+        else this.toast.error(err);
       },
       () => console.log('getRepos completed')
     );
-  }
-
-  error(message) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000,
-      cssClass: 'toast-error',
-      showCloseButton: true
-    });
-    toast.present();
   }
 
 }
