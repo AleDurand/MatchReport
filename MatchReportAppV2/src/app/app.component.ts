@@ -2,54 +2,35 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { TabsPage } from '../pages/tabs/tabs';
+import { ClubsPage } from '../pages/clubs/clubs';
 
-export interface PageInterface {
-  title: string;
-  component: any;
-  icon: string;
-  logsOut?: boolean;
-  index?: number;
-}
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+  @ViewChild(Nav) nav: Nav;
 
-    // the root nav is a child of the root app component
-    // @ViewChild(Nav) gets a reference to the app's root nav
-    @ViewChild(Nav) nav: Nav;
+  rootPage: any = ClubsPage;
 
-    appPages: PageInterface[] = [
-    { title: 'Home', component: TabsPage, icon: 'calendar' },
-    { title: 'Teams', component: TabsPage, index: 1, icon: 'contacts' },
-    { title: 'Contact', component: TabsPage, index: 2, icon: 'information-circle' }
+  pages: Array<{title: string, component: any}>;
+
+  constructor(public platform: Platform) {
+    this.initializeApp();
+    this.pages = [
+      { title: 'Clubs', component: ClubsPage },
     ];
-    
-    rootPage = TabsPage;
 
-    constructor(platform: Platform) {
-      platform.ready().then(() => {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            StatusBar.styleDefault();
-            Splashscreen.hide();
-          });
-    }
+  }
 
-    openPage(page: PageInterface) {
-        // the nav component was found using @ViewChild(Nav)
-        // reset the nav to remove previous pages and only have this page
-        // we wouldn't want the back button to show in this scenario
-        if (page.index) {
-          this.nav.setRoot(page.component, {tabIndex: page.index});
-        } else {
-          this.nav.setRoot(page.component);
-        }
+  initializeApp() {
+    this.platform.ready().then(() => {
+      StatusBar.styleDefault();
+      Splashscreen.hide();
+    });
+  }
 
-        if (page.logsOut === true) {
-          
-        }
-      }
-    }
+  openPage(page) {
+    this.nav.setRoot(page.component);
+  }
+}

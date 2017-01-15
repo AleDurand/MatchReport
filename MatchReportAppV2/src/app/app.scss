@@ -20,33 +20,33 @@
         background:   color($colors, success);
     }
     .toast-message {
-        color:  color($colors, dark);
-    }
-    .toast-button {
-        color:  color($colors, dark);
-    }
+         color:  color($colors, dark);
+     }
+     .toast-button {
+         color:  color($colors, dark);
+     }
 }
 
 .toast-warning {
-    .toast-wrapper {
-        background-color:   color($colors, warning);    
-    }
-    .toast-message {
-        color:  color($colors, dark);
-    }
-    .toast-button {
-        color:  color($colors, dark);
-    }
+     .toast-wrapper {
+         background-color:   color($colors, warning);
+     }
+     .toast-message {
+         color:  color($colors, dark);
+     }
+     .toast-button {
+         color:  color($colors, dark);
+     }
 }
 
 .toast-error {
-    .toast-wrapper {
-        background-color:   color($colors, danger);        
-    }
-    .toast-message {
-        color:  color($colors, dark);
-    }
-    .toast-button {
-        color:  color($colors, dark);
-    }
+     .toast-wrapper {
+         background-color:   color($colors, danger);
+     }
+     .toast-message {
+         color:  color($colors, dark);
+     }
+     .toast-button {
+         color:  color($colors, dark);
+     }
 }

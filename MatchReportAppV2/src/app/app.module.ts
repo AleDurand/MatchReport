@@ -1,35 +1,27 @@
-import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { IonicApp, IonicModule } from 'ionic-angular';
-import { MyApp } from './app.component';
-import { TeamsPage } from '../pages/teams/teams';
-import { TeamDetailsPage } from '../pages/teams/team-details/team-details';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Configuration } from './app.constants';
+
+import { MyApp } from './app.component';
+import { ToastService } from '../services/toast.service';
+import { ClubsPage } from '../pages/clubs/clubs';
+import { ClubDetailsPage } from '../pages/club-details/club-details';
 
 @NgModule({
   declarations: [
     MyApp,
-    TeamsPage,
-    TeamDetailsPage,
-    ContactPage,
-    HomePage,
-    TabsPage
+    ClubsPage,
+    ClubDetailsPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp, { tabsPlacement: 'bottom' }), HttpModule
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    TeamsPage,
-    TeamDetailsPage,
-    ContactPage,
-    HomePage,
-    TabsPage
+    ClubsPage,
+    ClubDetailsPage
   ],
-  providers: [Configuration]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ToastService, Configuration]
 })
 export class AppModule {}
