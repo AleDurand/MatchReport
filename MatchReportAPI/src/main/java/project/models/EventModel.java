@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "discriminador", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("EVENT")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "discriminator", visible = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "discriminator", visible = true, defaultImpl = EventModel.class)
 @JsonSubTypes({ // @formatter:off
 	@Type(name = "EVENT", value = EventModel.class),
 	@Type(name = "PLAYER_EVENT", value = PlayerEventModel.class),
