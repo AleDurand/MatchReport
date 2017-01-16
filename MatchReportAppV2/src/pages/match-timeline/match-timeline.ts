@@ -22,7 +22,6 @@ export class MatchTimelinePage {
   getAll() {
   	this.EventService.getAll().subscribe((events) => {
   		this.events = events;
-  		console.log(events)
   	})
   }
   
