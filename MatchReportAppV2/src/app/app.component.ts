@@ -19,7 +19,7 @@ export class MyApp {
     this.initializeApp();
     this.pages = [
       { title: 'Clubs', component: ClubsPage },
-      { title: 'LiveMatch', component: MatchTimelinePage },
+      { title: 'Live Match', component: MatchTimelinePage },
     ];
 
   }
