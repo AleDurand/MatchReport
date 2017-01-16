@@ -3,7 +3,7 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { ClubsPage } from '../pages/clubs/clubs';
-
+import { MatchTimelinePage } from '../pages/match-timeline/match-timeline';
 
 @Component({
   templateUrl: 'app.html'
@@ -19,6 +19,7 @@ export class MyApp {
     this.initializeApp();
     this.pages = [
       { title: 'Clubs', component: ClubsPage },
+      { title: 'LiveMatch', component: MatchTimelinePage },
     ];
 
   }

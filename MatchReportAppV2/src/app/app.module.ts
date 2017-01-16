@@ -6,12 +6,14 @@ import { MyApp } from './app.component';
 import { ToastService } from '../services/toast.service';
 import { ClubsPage } from '../pages/clubs/clubs';
 import { ClubDetailsPage } from '../pages/club-details/club-details';
+import { MatchTimelinePage } from  '../pages/match-timeline/match-timeline';
 
 @NgModule({
   declarations: [
     MyApp,
     ClubsPage,
-    ClubDetailsPage
+    ClubDetailsPage,
+    MatchTimelinePage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -20,7 +22,8 @@ import { ClubDetailsPage } from '../pages/club-details/club-details';
   entryComponents: [
     MyApp,
     ClubsPage,
-    ClubDetailsPage
+    ClubDetailsPage,
+    MatchTimelinePage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ToastService, Configuration]
 })
