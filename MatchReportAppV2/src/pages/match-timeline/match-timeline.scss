@@ -86,7 +86,7 @@ page-match-timeline {
       top: 0;
       left: 18px;
       height: 100%;
-      width: 4px;
+      width: 8px;
       background: #d7e4ed;
     }
   }
@@ -282,7 +282,7 @@ page-match-timeline {
   .no-touch .cd-timeline-content .cd-read-more:hover {
     background-color: #bac4cb;
   }
-
+        //VER ACA
   .cd-timeline-content {
     .cd-date {
       float: left;
@@ -345,8 +345,8 @@ page-match-timeline {
       float: right;
       &::before {
         top: 24px;
-        left: auto;
         right: 100%;
+        left: auto;
         border-color: transparent;
         border-right-color: white;
       }

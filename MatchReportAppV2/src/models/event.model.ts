@@ -1,6 +1,8 @@
 export class Event {
 	id: number;
 	name: string;
+	team: string;
+	desc: string;
 	minute: number;
 	extraMinute: number;
 	type:string;
