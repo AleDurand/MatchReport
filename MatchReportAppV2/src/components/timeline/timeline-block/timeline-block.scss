@@ -1,0 +1,20 @@
+timeline-block {
+
+	.cd-timeline-block {
+		position: relative;
+  	margin: 4em 0;
+		
+  	&:first-child {
+  		margin-top: 0;
+  	}
+
+		&:after {
+	  	content: "";
+	  	display: table;
+	  	clear: both;
+		}
+		
+	}
+
+}
+
