@@ -10,8 +10,8 @@ export class TimelineContent {
 	public align: string;
 
   constructor() {
-  	if(this.align != 'right') {
-  		this.align = null;
+  	if(this.align !== 'right') {
+  		this.align = 'left';
   	}
   }
 
