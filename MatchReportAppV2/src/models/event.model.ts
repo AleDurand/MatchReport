@@ -5,7 +5,7 @@ export class Event {
 	desc: string;
 	minute: number;
 	extraMinute: number;
-	type:string;
+	type: string;
 
 	constructor(args: any = null) {
 		for (var key in args) {

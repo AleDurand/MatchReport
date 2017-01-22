@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Event} from '../../models/event.model';
+
 import { EventService } from  '../../services/event.service'; 
 
+import { Event } from '../../models/event.model';
 
 @Component({
   selector: 'page-match-timeline',
@@ -14,6 +15,7 @@ export class MatchTimelinePage {
 	public events : Array<Event>;
 
   constructor(public navCtrl: NavController, private EventService: EventService) {}
+  
   ionViewWillEnter() {
   	this.getAll();
 

@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 
 import { ClubDetailsPage } from '../club-details/club-details';
 import { ClubService } from  '../../services/club.service'; 
+
 import { Club } from '../../models/club.model';
 
 @Component({
