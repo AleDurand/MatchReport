@@ -16,7 +16,10 @@
       <timeline-img>
         <img src="https://codyhouse.co/demo/vertical-timeline/img/cd-icon-picture.svg"/>
       </timeline-img>
-      <timeline-content align="right">
+      <timeline-content *ngIf="i % 2 !== 0">
+        <h2>{{event.name}}</h2>
+      </timeline-content>
+      <timeline-content *ngIf="i % 2 === 0" align="right">
         <h2>{{event.name}}</h2>
       </timeline-content>
     </timeline-block>      
