@@ -32,13 +32,13 @@
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
+    "cordova-plugin-whitelist",
+    "cordova-plugin-console",
     "cordova-plugin-statusbar",
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
-    "cordova-plugin-whitelist",
-    "cordova-plugin-console",
     "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [],
-  "description": ": An Ionic project"
+  "description": "MatchReportAppV2: An Ionic project"
 }
