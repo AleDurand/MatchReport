@@ -25,25 +25,22 @@
     <!--</ion-col>-->
   <!--</ion-row>-->
 <!--</ion-grid>-->
+  
+  <ion-grid>
+    <ion-row>
+      <ion-col width-50 text-left>LOCAL</ion-col>
+      <ion-col width-50 text-right>VISITANTE</ion-col>
+    </ion-row>
+  </ion-grid>
   <timeline>
-    <timeline-block>
+    <timeline-block *ngFor="let event of events; let i = index; ">
       <timeline-img>
         <img src="https://codyhouse.co/demo/vertical-timeline/img/cd-icon-picture.svg"/>
       </timeline-img>
-      <timeline-content>
-        <h2>Sdasdasd</h2>
-        <p>p</p>
+      <timeline-content align="right">
+        <h2>{{event.name}}</h2>
       </timeline-content>
-    </timeline-block>
-
-    <timeline-block>
-      <timeline-img>
-        <img src="https://codyhouse.co/demo/vertical-timeline/img/cd-icon-picture.svg"/>
-      </timeline-img>
-      <timeline-content>
-        <h2>Sdasdasd</h2>
-      </timeline-content>
-    </timeline-block>
+    </timeline-block>      
   </timeline>
 </ion-content>
 

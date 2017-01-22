@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'timeline-content',
@@ -6,7 +6,13 @@ import { Component } from '@angular/core';
 })
 export class TimelineContent {
 
+	@Input()
+	public align: string;
+
   constructor() {
+  	if(this.align != 'right') {
+  		this.align = null;
+  	}
   }
 
 }
