@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import { EventDetailsPage } from '../event-details/event-details';
 import { EventService } from  '../../services/event.service'; 
 
 import { Event } from '../../models/event.model';
@@ -12,7 +13,8 @@ import { Event } from '../../models/event.model';
 
 })
 export class MatchTimelinePage {
-	public events : Array<Event>;
+	
+  public events : Array<Event>;
 
   constructor(public navCtrl: NavController, private EventService: EventService) {}
   
@@ -26,6 +28,9 @@ export class MatchTimelinePage {
   		this.events = events;
   	})
   }
-  
+
+  openEvent(event: Event) {
+    this.navCtrl.push(EventDetailsPage, { index: event.id });
+  }  
  
 }

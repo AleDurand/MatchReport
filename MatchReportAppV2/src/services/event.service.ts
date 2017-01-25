@@ -12,6 +12,19 @@ export class EventService {
         this.actionUrl = configuration.ServerWithApiUrl + '/events/';
     }
 
+    getById(index: number) {
+      return Observable.create(observer => {
+            let toReturn = null;
+            event.forEach((event) => {
+                if(event.id === index){
+                    toReturn = event;
+                }
+            })
+            observer.next(toReturn);
+            observer.complete();
+        });
+    }
+
     getAll() {
       return Observable.create(observer => {
             observer.next(event);

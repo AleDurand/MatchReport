@@ -12,7 +12,7 @@
     </ion-row>
   </ion-grid>
   <timeline>
-    <timeline-block *ngFor="let event of events; let i = index; ">
+    <timeline-block *ngFor="let event of events; let i = index; " (click)="openEvent(event)">
       <timeline-img>
         <img src="https://codyhouse.co/demo/vertical-timeline/img/cd-icon-picture.svg"/>
       </timeline-img>
