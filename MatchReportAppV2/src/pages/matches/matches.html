@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+  	<button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Matches</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-grid>
+		<ion-row *ngFor="let match of matches; " (click)="openMatch(match)">
+			<ion-col width-30 center>
+				<img src="https://pbs.twimg.com/media/CTBCoeeWUAElfE-.png" />
+				<ion-label text-right>{{ match.localTeam }}</ion-label>
+			</ion-col>
+			<ion-col width-20 center>
+				<ion-label text-center>0 - 0</ion-label>
+			</ion-col>
+			<ion-col width-30 center>
+				<ion-label text-left>{{ match.localTeam }}</ion-label>
+				<img src="https://pbs.twimg.com/media/CTBCoeeWUAElfE-.png" />
+			</ion-col>
+			<ion-col width-20 center>
+				<div *ngIf="match.status === 'IN_PROGRESS'">
+					<ion-badge text-center color="danger">LIVE</ion-badge>
+				</div>
+				<div *ngIf="match.status === 'FINALIZED'">
+					<ion-badge text-center color="secondary">FINALIZED</ion-badge>
+				</div>
+				<div *ngIf="match.status === 'PENDING'">
+					<ion-badge text-center color="warning">PENDING</ion-badge>
+				</div>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

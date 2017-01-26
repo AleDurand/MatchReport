@@ -38,8 +38,8 @@ export class MatchService {
 }
 
 let matches = [
-	new Match({ id: 1, date: new Date(), stadium: 'Bombonera', localTeam: 'Boca', visitorTeam: 'Riber', status: MatchStatus.IN_PROGRESS }),
+	new Match({ id: 1, date: new Date(), stadium: 'Bombonera', localTeam: 'Boca', visitorTeam: 'Riber', status: MatchStatus.PENDING }),
 	new Match({ id: 2, date: new Date(), stadium: 'Monumental', localTeam: 'San Lorenzo', visitorTeam: 'Riber', status: MatchStatus.IN_PROGRESS }),
 	new Match({ id: 3, date: new Date(), stadium: 'Cilindro de Avellaneda', localTeam: 'San Lorenzo', visitorTeam: 'Racing', status: MatchStatus.IN_PROGRESS }),
-	new Match({ id: 4, date: new Date(), stadium: 'Casanova', localTeam: 'Olimpo', visitorTeam: 'Independiente', status: MatchStatus.IN_PROGRESS })
+	new Match({ id: 4, date: new Date(), stadium: 'Casanova', localTeam: 'Olimpo', visitorTeam: 'Independiente', status: MatchStatus.FINALIZED })
 ]

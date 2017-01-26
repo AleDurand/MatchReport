@@ -9,6 +9,7 @@ import { ClubDetailsPage } from '../pages/club-details/club-details';
 import { EventDetailsPage } from  '../pages/event-details/event-details';
 import { LiveMatchesPage } from  '../pages/live-matches/live-matches';
 import { LoginPage } from '../pages/login/login';
+import { MatchesPage } from '../pages/matches/matches';
 import { MatchTimelinePage } from  '../pages/match-timeline/match-timeline';
 import { SettingsPage } from  '../pages/settings/settings';
 
@@ -25,6 +26,7 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     EventDetailsPage,
     LiveMatchesPage,
     LoginPage,
+    MatchesPage,
     MatchTimelinePage,
     SettingsPage,
     Timeline, TimelineBlock, TimelineContent, TimelineImg
@@ -40,6 +42,7 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     EventDetailsPage,
     LiveMatchesPage,
     LoginPage,
+    MatchesPage,
     MatchTimelinePage,
     SettingsPage
   ],

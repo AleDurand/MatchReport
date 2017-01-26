@@ -1,0 +1,21 @@
+page-matches {
+
+	ion-col {
+		display: inline-flex;
+	}
+
+	ion-col[center] div {
+		margin: 0 auto;	
+	}
+
+	ion-row img {		 
+		width: 30px;
+		height: 30px;
+	}
+
+	.label-ios, .label-md, .label-wp {
+		margin-left: 8px;
+		margin-right: 8px;
+	}
+
+}

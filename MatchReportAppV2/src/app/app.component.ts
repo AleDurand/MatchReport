@@ -5,6 +5,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { ClubsPage } from '../pages/clubs/clubs';
 import { LiveMatchesPage } from '../pages/live-matches/live-matches';
 import { LoginPage } from '../pages/login/login';
+import { MatchesPage } from '../pages/matches/matches'; 
 import { SettingsPage } from  '../pages/settings/settings';
 
 @Component({
@@ -21,6 +22,7 @@ export class MyApp {
     this.initializeApp();
     this.pages = [
       { title: 'Clubs', component: ClubsPage },
+      { title: 'Matches', component: MatchesPage },
       { title: 'Live matches', component: LiveMatchesPage },
       { title: 'Settings', component: SettingsPage },
       { title: 'Login', component: LoginPage }
