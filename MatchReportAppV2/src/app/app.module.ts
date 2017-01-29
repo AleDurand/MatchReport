@@ -1,5 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { Configuration } from './app.constants';
 
 import { MyApp } from './app.component';
@@ -12,6 +13,7 @@ import { LoginPage } from '../pages/login/login';
 import { MatchesPage } from '../pages/matches/matches';
 import { MatchTimelinePage } from  '../pages/match-timeline/match-timeline';
 import { SettingsPage } from  '../pages/settings/settings';
+import { TutorialPage } from  '../pages/tutorial/tutorial';
 
 import { Timeline } from '../components/timeline/timeline/timeline';
 import { TimelineBlock } from '../components/timeline/timeline-block/timeline-block';
@@ -29,6 +31,7 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     MatchesPage,
     MatchTimelinePage,
     SettingsPage,
+    TutorialPage,
     Timeline, TimelineBlock, TimelineContent, TimelineImg
   ],
   imports: [
@@ -44,8 +47,9 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     LoginPage,
     MatchesPage,
     MatchTimelinePage,
-    SettingsPage
+    SettingsPage,
+    TutorialPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ToastService, Configuration]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage, ToastService, Configuration]
 })
 export class AppModule {}
