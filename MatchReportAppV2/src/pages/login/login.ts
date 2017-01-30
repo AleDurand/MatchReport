@@ -26,4 +26,9 @@ export class LoginPage {
     }
   }
 
+  loginWithFacebook() {
+    this.userService.loginWithFacebook();
+    this.navCtrl.setRoot(ClubsPage);
+  }
+
 }

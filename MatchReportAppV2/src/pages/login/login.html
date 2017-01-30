@@ -7,7 +7,7 @@
 	</ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 	<div class="logo">
 		<img src="assets/logo.png">
 	</div>
@@ -36,9 +36,15 @@
 
 		<ion-row responsive-sm>
 			<ion-col>
-				<button ion-button (click)="onLogin(loginForm)" type="submit" block>Login</button>
+				<button ion-button block (click)="onLogin(loginForm)" type="submit">Login</button>
 			</ion-col>
 		</ion-row>
 	</form>
+
+	<ion-row responsive-sm>
+		<ion-col>
+			<button ion-button block color="facebook" (click)="loginWithFacebook()">Login with Facebook</button>
+		</ion-col>
+	</ion-row>
 
 </ion-content>

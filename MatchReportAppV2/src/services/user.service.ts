@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Facebook } from 'ionic-native';
 
+import { User } from '../models/user.model';
 
 @Injectable()
 export class UserService {
@@ -12,24 +14,24 @@ export class UserService {
 
   login(username: string) {
     this.storage.set('logged-in', true);
-    this.storage.set('username', username);
+    this.storage.set('user', new User({ name: username, gender: 'Unknown', picture: null }));
     this.events.publish('user:login');
   };
 
   signup(username: string) {
     this.storage.set('logged-in', true);
-    this.storage.set('username', username);
+    this.storage.set('user', new User({ name: username, gender: 'Unknown', picture: null }));
     this.events.publish('user:signup');
   };
 
   logout() {
     this.storage.remove('logged-in');
-    this.storage.remove('username');
+    this.storage.remove('user');
     this.events.publish('user:logout');
   };
 
-  getUsername() {
-    return this.storage.get('username').then((value) => {
+  getUser() {
+    return this.storage.get('user').then((value) => {
       return value;
     });
   };
@@ -39,5 +41,21 @@ export class UserService {
       return value === true;
     });
   };
+
+   loginWithFacebook(){
+    let permissions = [ "public_profile" ];
+   
+    Facebook.login(permissions).then((response) => {
+      let userId = response.authResponse.userID;
+      let params = new Array<string>();
+
+      Facebook.api("/me?fields=name,gender", params).then((data) => {
+        data.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
+        let user = new User({ name: data.name, gender: data.gender, picture: data.picture });
+        this.storage.set('user', user);
+        this.events.publish('user:signup');
+      })
+    });
+  }
 
 }
