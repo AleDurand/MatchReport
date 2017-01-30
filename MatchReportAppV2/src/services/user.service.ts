@@ -43,15 +43,15 @@ export class UserService {
   };
 
    loginWithFacebook(){
-    let permissions = [ "public_profile" ];
+    let permissions = [ "public_profile", "email" ];
    
     Facebook.login(permissions).then((response) => {
       let userId = response.authResponse.userID;
       let params = new Array<string>();
 
-      Facebook.api("/me?fields=name,gender", params).then((data) => {
+      Facebook.api("/me?fields=name,gender,email", params).then((data) => {
         data.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
-        let user = new User({ name: data.name, gender: data.gender, picture: data.picture });
+        let user = new User({ name: data.name, gender: data.gender, picture: data.picture, email: data.email });
         this.storage.set('user', user);
         this.events.publish('user:signup');
       })
