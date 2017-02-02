@@ -5,8 +5,11 @@ page-tutorial {
     border-color: transparent;
   }
 
+  ion-slides {
+    height: calc(100% - 40px);
+  }
   .slide-zoom {
-    height: 100%;
+    height: 80%;
   }
 
   .slide-title {

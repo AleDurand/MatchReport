@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { MenuController, NavController, Slides } from 'ionic-angular';
+import { Loading, LoadingController, MenuController, NavController, Slides } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+
 import { ClubsPage } from '../clubs/clubs';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'page-tutorial',
@@ -9,20 +11,14 @@ import { ClubsPage } from '../clubs/clubs';
 })
 
 export class TutorialPage {
-  showSkip = true;
 
-  constructor(public navCtrl: NavController, public menu: MenuController, public storage: Storage) {
+  public loader: Loading;
 
-  }
-
-  startApp() {
-    this.navCtrl.setRoot(ClubsPage).then(() => {
-      this.storage.set('hasSeenTutorial', 'true');
-    })
-  }
-
-  onSlideChangeStart(slider: Slides) {
-    this.showSkip = !slider.isEnd();
+  constructor(
+    public loadingCtrl: LoadingController, public menu: MenuController, public navCtrl: NavController, 
+    public storage: Storage, public userService: UserService
+  ) {
+    this.loader = this.loadingCtrl.create({ content: 'Loading...' });
   }
 
   ionViewDidEnter() {
@@ -31,6 +27,14 @@ export class TutorialPage {
 
   ionViewDidLeave() {
     this.menu.enable(true);
+  }
+
+  loginWithFacebook() {
+    this.userService.login().then((result) => {
+      this.loader.present();
+      this.navCtrl.setRoot(ClubsPage);
+      setTimeout(() => this.loader.dismiss(), 2000);
+    }).catch((error) => {})
   }
 
 }
