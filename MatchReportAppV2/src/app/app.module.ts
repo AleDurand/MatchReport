@@ -15,6 +15,10 @@ import { MatchTimelinePage } from  '../pages/match-timeline/match-timeline';
 import { SettingsPage } from  '../pages/settings/settings';
 import { TutorialPage } from  '../pages/tutorial/tutorial';
 
+import { SafePipe } from '../pipes/safe.pipe';
+import { SearchPipe } from '../pipes/search.pipe';
+import { SortPipe } from '../pipes/sort.pipe';
+
 import { UserService } from '../services/user.service';
 import { ToastService } from '../services/toast.service';
 
@@ -32,7 +36,10 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     LiveMatchesPage,
     MatchesPage,
     MatchTimelinePage,
+    SafePipe,
+    SearchPipe,
     SettingsPage,
+    SortPipe,    
     TutorialPage,
     Timeline, TimelineBlock, TimelineContent, TimelineImg
   ],
