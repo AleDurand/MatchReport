@@ -1,6 +1,8 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
+import { ChartsModule } from 'ng2-charts';
 import { Configuration } from './app.constants';
 
 import { MyApp } from './app.component';
@@ -35,7 +37,7 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     Timeline, TimelineBlock, TimelineContent, TimelineImg
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp), ChartsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

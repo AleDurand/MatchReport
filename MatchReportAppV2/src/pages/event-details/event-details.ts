@@ -15,6 +15,11 @@ export class EventDetailsPage {
 	public eventId: number;
 	public event: Event;
 
+  public chartLabels: Array<string> = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
+  public chartData: Array<number> = [300, 500, 100, 52, 155];
+  public charType: string = 'pie';
+  public options: any = { responsive: true };
+
   constructor(private eventService: EventService, public navCtrl: NavController, public navParams: NavParams) {
   	this.eventId = this.navParams.get('index');
   }
@@ -27,3 +32,6 @@ export class EventDetailsPage {
   }
 
 }
+
+
+

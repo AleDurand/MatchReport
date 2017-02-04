@@ -11,4 +11,22 @@
 	<ion-label>{{ event?.name}}</ion-label> 
 </ion-item>
 
+	<div style="display: block">
+  	<canvas baseChart width="95%" height="95%" [options]="options"
+          [data]="chartData"
+          [labels]="chartLabels"
+          [chartType]="charType">     	
+    </canvas>
+	</div>
+
+	<ion-fab bottom center>
+	    <button ion-fab color="light"><ion-icon name="add"></ion-icon></button>
+	    <ion-fab-list side="top">
+	      <button ion-fab><ion-icon name="logo-facebook"></ion-icon></button>
+	      <button ion-fab><ion-icon name="logo-twitter"></ion-icon></button>
+	      <button ion-fab><ion-icon name="logo-vimeo"></ion-icon></button>
+	      <button ion-fab><ion-icon name="logo-googleplus"></ion-icon></button>
+	    </ion-fab-list>
+	</ion-fab>
+
 </ion-content>
