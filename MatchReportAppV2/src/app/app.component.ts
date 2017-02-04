@@ -37,7 +37,7 @@ export class MyApp {
 
   initializeApp() {
     this.storage.get('logged-in').then((loggedIn) => {
-      if (!loggedIn) this.rootPage = ClubsPage;
+      if (loggedIn) this.rootPage = ClubsPage;
       else this.rootPage = TutorialPage;
         
       this.platform.ready().then(() => {
