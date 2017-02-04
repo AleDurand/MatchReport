@@ -4,8 +4,15 @@
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
-
   <ion-content>
+    <section>
+      <div class="banner">
+        <img src="assets/images/banner.jpg" />
+      </div>
+      <div class="avatar">
+        <img [src]="user?.picture" onError="this.src='assets/images/profile.png'" />
+      </div>
+    </section>
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
          <ion-icon item-left [name]="p.icon"></ion-icon>

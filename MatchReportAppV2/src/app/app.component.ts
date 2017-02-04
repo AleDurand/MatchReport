@@ -1,16 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import { Events, MenuController, Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { ClubsPage } from '../pages/clubs/clubs';
 import { LiveMatchesPage } from '../pages/live-matches/live-matches';
 import { MatchesPage } from '../pages/matches/matches'; 
-import { ProfilePage } from '../pages/profile/profile';
 import { SettingsPage } from  '../pages/settings/settings';
 import { TutorialPage } from  '../pages/tutorial/tutorial';
 
 import { UserService } from '../services/user.service';
+
+import { User } from '../models/user.model';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,17 +18,20 @@ import { UserService } from '../services/user.service';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ClubsPage;
+  public user: User;
+  public rootPage: any = ClubsPage;
 
   pages: Array<{title: string, component: any, icon: string, logsOut: boolean}>;
 
-  constructor(public platform: Platform, public storage: Storage, public userService: UserService) {
+  constructor(
+    public events: Events, public menu: MenuController, public platform: Platform, 
+    public userService: UserService
+  ) {
     this.initializeApp();
     this.pages = [
       { title: 'Clubs', component: ClubsPage, icon: 'people', logsOut: false },
       { title: 'Matches', component: MatchesPage, icon: 'calendar', logsOut: false },
       { title: 'Live matches', component: LiveMatchesPage, icon: 'pulse', logsOut: false },
-      { title: 'Profile', component: ProfilePage, icon: 'contact', logsOut: false },
       { title: 'Settings', component: SettingsPage, icon: 'settings', logsOut: false },      
       { title: 'Logout', component: TutorialPage, icon: 'log-out', logsOut: true }
     ];
@@ -36,15 +39,18 @@ export class MyApp {
   }
 
   initializeApp() {
-    this.storage.get('logged-in').then((loggedIn) => {
-      if (!loggedIn) this.rootPage = ClubsPage;
-      else this.rootPage = TutorialPage;
+    this.userService.hasLoggedIn().then((loggedIn) => {
+      if (loggedIn) {
+        this.userService.getUser().then((user) => { this.user = user; });
+        this.rootPage = ClubsPage;
+      } else this.rootPage = TutorialPage;
         
       this.platform.ready().then(() => {
         StatusBar.styleDefault();
         setTimeout(() => { Splashscreen.hide(); }, 1000);
       });    
-    })    
+    })
+    this.listenToLoginEvents();
   }
 
   openPage(page) {
@@ -56,4 +62,17 @@ export class MyApp {
       this.nav.setRoot(page.component);
     }
   }
+
+  listenToLoginEvents() {
+    this.events.subscribe('user:login', () => {
+      this.userService.getUser().then((user) => { this.user = user; console.log(user);}); 
+      this.menu.enable(true);
+      this.nav.setRoot(ClubsPage);
+    });
+    this.events.subscribe('user:logout', () => { 
+      this.menu.enable(false); 
+      this.nav.setRoot(TutorialPage);
+    });      
+  }
+
 }

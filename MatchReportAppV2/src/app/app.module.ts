@@ -12,8 +12,6 @@ import { EventDetailsPage } from  '../pages/event-details/event-details';
 import { LiveMatchesPage } from  '../pages/live-matches/live-matches';
 import { MatchesPage } from '../pages/matches/matches';
 import { MatchTimelinePage } from  '../pages/match-timeline/match-timeline';
-import { ProfilePage } from '../pages/profile/profile';
-import { ProfileEditPage } from '../pages/profile-edit/profile-edit';
 import { SettingsPage } from  '../pages/settings/settings';
 import { TutorialPage } from  '../pages/tutorial/tutorial';
 
@@ -38,8 +36,6 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     LiveMatchesPage,
     MatchesPage,
     MatchTimelinePage,
-    ProfilePage,
-    ProfileEditPage,
     SafePipe,
     SearchPipe,
     SettingsPage,
@@ -59,8 +55,6 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     LiveMatchesPage,
     MatchesPage,
     MatchTimelinePage,
-    ProfilePage,
-    ProfileEditPage,
     SettingsPage,
     TutorialPage
   ],

@@ -26,7 +26,7 @@ export class UserService {
             let user = new User({ firstname: data.first_name, lastname: data.last_name, gender: data.gender, picture: data.picture, email: data.email });
             this.storage.set('logged-in', true);
             this.storage.set('user', user);
-            this.events.publish('user:logged-in');
+            this.events.publish('user:login');
             resolve(true);
           }).catch((error) => { 
             console.log(error);
