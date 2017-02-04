@@ -6,6 +6,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { ClubsPage } from '../pages/clubs/clubs';
 import { LiveMatchesPage } from '../pages/live-matches/live-matches';
 import { MatchesPage } from '../pages/matches/matches'; 
+import { ProfilePage } from '../pages/profile/profile';
 import { SettingsPage } from  '../pages/settings/settings';
 import { TutorialPage } from  '../pages/tutorial/tutorial';
 
@@ -24,10 +25,11 @@ export class MyApp {
   constructor(public platform: Platform, public storage: Storage, public userService: UserService) {
     this.initializeApp();
     this.pages = [
-      { title: 'Clubs', component: ClubsPage, icon: 'log-in', logsOut: false },
-      { title: 'Matches', component: MatchesPage, icon: 'log-in', logsOut: false },
-      { title: 'Live matches', component: LiveMatchesPage, icon: 'log-in', logsOut: false },
-      { title: 'Settings', component: SettingsPage, icon: 'log-in', logsOut: false },
+      { title: 'Clubs', component: ClubsPage, icon: 'people', logsOut: false },
+      { title: 'Matches', component: MatchesPage, icon: 'calendar', logsOut: false },
+      { title: 'Live matches', component: LiveMatchesPage, icon: 'pulse', logsOut: false },
+      { title: 'Profile', component: ProfilePage, icon: 'contact', logsOut: false },
+      { title: 'Settings', component: SettingsPage, icon: 'settings', logsOut: false },      
       { title: 'Logout', component: TutorialPage, icon: 'log-out', logsOut: true }
     ];
 
@@ -35,7 +37,7 @@ export class MyApp {
 
   initializeApp() {
     this.storage.get('logged-in').then((loggedIn) => {
-      if (loggedIn) this.rootPage = ClubsPage;
+      if (!loggedIn) this.rootPage = ClubsPage;
       else this.rootPage = TutorialPage;
         
       this.platform.ready().then(() => {

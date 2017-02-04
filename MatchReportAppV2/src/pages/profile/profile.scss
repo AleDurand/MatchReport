@@ -1,0 +1,42 @@
+page-profile {
+
+  .banner {
+    max-height: 150px;
+    overflow: hidden;
+    border-bottom: 2px solid #fff; 
+    margin-bottom: 75px;
+
+    img {
+      -webkit-filter: blur(25px);
+      -moz-filter: blur(25px);
+      -o-filter: blur(25px);
+      -ms-filter: blur(25px);
+      filter: blur(25px);
+      min-width: 130%;
+    }
+  }
+
+  .avatar {
+    position: absolute;
+    max-width: 45%;
+    overflow: hidden;
+    top: 75px; left: 0; right: 0;
+    margin: auto;
+
+    img {
+      max-height: 150px;
+      width: auto;
+      margin: auto;
+      display: block;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      overflow: hidden
+    }
+  }
+
+  .button {
+    max-width: 500px;
+    margin: auto;
+  }
+
+}

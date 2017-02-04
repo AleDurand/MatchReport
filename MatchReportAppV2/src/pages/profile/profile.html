@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <section>
+    <div class="banner">
+      <img [src]="user?.picture" onError="'assets/images/profile.png'" />
+    </div>
+    <div class="avatar">
+      <img [src]="user?.picture" onError="'assets/images/profile.png'" />
+    </div>
+  </section>
+
+  <section padding-left padding-right padding-bottom>
+    <ion-item>
+      <ion-label stacked color="primary">Firstname</ion-label>
+      <ion-label>{{ user?.firstname }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked color="primary">Lastname</ion-label>
+      <ion-label>{{ user?.lastname }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked color="primary">Email</ion-label>
+      <ion-label>{{ user?.email }}</ion-label>
+    </ion-item>   
+    <div padding-left padding-top>
+      <button ion-button block outline color="primary" (click)="edit()">Edit profile</button>
+    </div>
+  </section>
+
+</ion-content>
