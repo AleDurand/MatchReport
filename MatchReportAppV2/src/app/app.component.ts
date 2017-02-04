@@ -10,6 +10,7 @@ import { TutorialPage } from  '../pages/tutorial/tutorial';
 
 import { UserService } from '../services/user.service';
 
+import { Page } from '../models/page.model';
 import { User } from '../models/user.model';
 
 @Component({
@@ -18,10 +19,9 @@ import { User } from '../models/user.model';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  public user: User;
+  public pages: Array<Page>;
   public rootPage: any = ClubsPage;
-
-  pages: Array<{title: string, component: any, icon: string, logsOut: boolean}>;
+  public user: User;
 
   constructor(
     public events: Events, public menu: MenuController, public platform: Platform, 
@@ -29,11 +29,11 @@ export class MyApp {
   ) {
     this.initializeApp();
     this.pages = [
-      { title: 'Clubs', component: ClubsPage, icon: 'people', logsOut: false },
-      { title: 'Matches', component: MatchesPage, icon: 'calendar', logsOut: false },
-      { title: 'Live matches', component: LiveMatchesPage, icon: 'pulse', logsOut: false },
-      { title: 'Settings', component: SettingsPage, icon: 'settings', logsOut: false },      
-      { title: 'Logout', component: TutorialPage, icon: 'log-out', logsOut: true }
+      new Page({ title: 'Clubs', component: ClubsPage, icon: 'people', logsOut: false }),
+      new Page({ title: 'Matches', component: MatchesPage, icon: 'calendar', logsOut: false }),
+      new Page({ title: 'Live matches', component: LiveMatchesPage, icon: 'pulse', logsOut: false }),
+      new Page({ title: 'Settings', component: SettingsPage, icon: 'settings', logsOut: false }),
+      new Page({ title: 'Logout', component: TutorialPage, icon: 'log-out', logsOut: true })
     ];
 
   }
@@ -73,6 +73,13 @@ export class MyApp {
       this.menu.enable(false); 
       this.nav.setRoot(TutorialPage);
     });      
+  }
+
+  isActive(page: Page) {
+    if (this.nav.getActive() && this.nav.getActive().component === page.component) {
+      return 'primary';
+    }
+    return;
   }
 
 }
