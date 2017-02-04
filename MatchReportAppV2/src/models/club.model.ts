@@ -1,13 +1,11 @@
-export class Club {
-	id: number;
-	name: string;
-	address: string;
-	image: string;
-	url: string;
+import { alias } from '../decorators/alias.decorator';
+import { ModelFactory } from './model-factory.model';
 
-	constructor(args: any = null) {
-		for (var key in args) {
-			this[key] = args[key];
-		}
-	}
+export class Club extends ModelFactory {
+	@alias('id') id: number;
+	@alias('name') name: string;
+	@alias('address') address: string;
+	@alias('image') image: string;
+	@alias('url') url: string;
+
 }

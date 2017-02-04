@@ -1,16 +1,13 @@
-export class Event {
-	id: number;
-	name: string;
-	team: string;
-	desc: string;
-	minute: number;
-	extraMinute: number;
-	type: string;
+import { alias } from '../decorators/alias.decorator';
+import { ModelFactory } from './model-factory.model';
 
-	constructor(args: any = null) {
-		for (var key in args) {
-			this[key] = args[key];
-		}
-	}
+export class Event extends ModelFactory {
+	@alias('id') id: number;
+	@alias('name') name: string;
+	@alias('team') team: string;
+	@alias('desc') desc: string;
+	@alias('minute') minute: number;
+	@alias('extra-minute') extraMinute: number;
+	@alias('type') type: string;
 
 }
