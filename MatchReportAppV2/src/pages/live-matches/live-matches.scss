@@ -15,11 +15,56 @@ page-live-matches {
   }
 
   .card-subtitle {
-    font-size: 1.0em;
+    font-size: 1.2em;
     position: absolute;
     top: 52%;
     width: 100%;
     color: #fff;
+  }
+
+  @media only screen and (min-device-width: 1025px) { 
+    ion-col[col-width]{
+      -webkit-flex: 0 0 33.3333%;
+      -ms-flex: 0 0 33.3333%;
+      flex: 0 0 33.3333%;
+      max-width: 33.3333%;
+    } 
+  }
+
+  @media only screen and (min-device-width : 768px) and (max-device-width : 1024px)  {
+    ion-col[col-width]{
+      -webkit-flex: 0 0 50%;
+      -ms-flex: 0 0 50%;
+      flex: 0 0 50%;
+      max-width: 50%;
+    } 
+  }
+
+  @media only screen and (min-device-width : 668px) and (max-device-width : 767px) { 
+    ion-col[col-width]{
+      -webkit-flex: 0 0 50%;
+      -ms-flex: 0 0 50%;
+      flex: 0 0 50%;
+      max-width: 50%;
+    } 
+  }
+
+  @media only screen and (min-device-width : 375px) and (max-device-width : 667px) { 
+    ion-col[col-width]{
+      -webkit-flex: 0 0 100%;
+      -ms-flex: 0 0 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
+    } 
+  }
+
+  @media only screen and (max-device-width : 374px) { 
+    ion-col[col-width]{
+      -webkit-flex: 0 0 100%;
+      -ms-flex: 0 0 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
+    } 
   }
 
 }

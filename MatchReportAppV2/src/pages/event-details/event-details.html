@@ -4,15 +4,13 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-
-<ion-item>
-	<ion-icon name="text"></ion-icon>
-	<ion-label>{{ event?.name}}</ion-label> 
-</ion-item>
-
-	<div style="display: block">
-  	<canvas baseChart width="95%" height="95%" [options]="options"
+<ion-content>
+	<div class="banner">
+    <img src="assets/images/banner.jpg" />
+	</div>
+	
+	<div style="display: block" padding>
+  	<canvas baseChart width="45%" height="45%" [options]="options"
           [data]="chartData"
           [labels]="chartLabels"
           [chartType]="charType">     	

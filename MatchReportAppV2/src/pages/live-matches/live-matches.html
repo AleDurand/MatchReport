@@ -7,18 +7,16 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content>
 	<ion-grid>
 		<ion-row wrap>
-			<ion-col width-50 *ngFor="let match of matches; ">
+			<ion-col col-width *ngFor="let match of matches; ">
 				<ion-card (click)="openMatch(match)">
 			    <img src="http://www.diario4v.com/u/fotografias/fotosnoticias/2015/5/14/12034.jpg"/>
 			    <div class="card-title">{{ match.localTeam }} - {{ match.visitorTeam }}</div>
-			    <div class="card-subtitle">{{ match.date | date:'dd/MM/yy'}}</div>
+			    <div class="card-subtitle">{{ match.date | date:'hh:mm dd/MM/yy'}}</div>
 			  </ion-card>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
-
 </ion-content>
