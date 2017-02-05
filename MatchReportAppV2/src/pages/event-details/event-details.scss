@@ -4,7 +4,7 @@ page-event-details {
     max-height: 150px;
     overflow: hidden;
     border-bottom: 2px solid #fff; 
-    margin-bottom: 75px;
+    margin-bottom: 25px;
 
     img {
       -webkit-filter: blur(25px);
@@ -13,6 +13,14 @@ page-event-details {
       -ms-filter: blur(25px);
       filter: blur(25px);
       min-width: 130%;
+    }
+  }
+
+  div {
+    canvas {
+      width: 90% !important;
+      height: 90% !important;
+      margin: auto;
     }
   }
 
