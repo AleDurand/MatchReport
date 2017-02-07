@@ -8,8 +8,12 @@
 	<div class="banner">
     <img src="assets/images/banner.jpg" />
 	</div>
+
+	<div class="avatar2">
+    <img [src]="user?.picture" onError="this.src='assets/images/profile.png'" />
+  </div>
 	
-	<div>
+	<div padding-top>
   	<canvas baseChart [options]="options"
           [data]="chartData"
           [labels]="chartLabels"

@@ -16,10 +16,28 @@ page-event-details {
     }
   }
 
+  .avatar2 {
+    position: absolute;
+    max-width: 30%;
+    overflow: hidden;
+    top: 90px; left: 20px;
+    
+    img {
+        max-height: 150px;
+        width: auto;
+        margin: auto;
+        display: block;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        overflow: hidden
+    }
+  }
+
   div {
     canvas {
-      width: 90% !important;
-      height: 90% !important;
+      width: 70% !important;
+      height: 70% !important;
+      padding-top: 5%;
       margin: auto;
     }
 
