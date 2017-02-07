@@ -38,6 +38,11 @@ page-event-details {
   }
 
   ion-fab {
+    .fab-in-list {
+      height: 60px;
+      width: 60px;
+    }
+
     $initial-delay: 0;
     $delay-increment: 0.05;
     $delay: $initial-delay;
@@ -45,9 +50,10 @@ page-event-details {
 
     $increment: 180deg/($items - 1);                               
     $angle: $increment;                                               
-    $spread-radius: 125px !default;                               
+    $spread-radius: 100px !default;                               
     
-    $position: -69px;
+    $position: -118px;
+
     @for $i from 1 through ($items) {
 
       ion-fab-list button[ion-fab]:nth-child(#{$i}) {

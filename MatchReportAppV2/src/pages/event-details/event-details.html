@@ -21,11 +21,21 @@
 	<ion-fab bottom center #fab>
 	    <button ion-fab color="light" (click)="toggle()"><ion-icon name="add"></ion-icon></button>
 	    <ion-fab-list side="right">
-	      <button ion-fab><ion-icon name="logo-facebook" (click)="vote(fab)" ></ion-icon></button>
-	      <button ion-fab><ion-icon name="logo-twitter" (click)="vote(fab)"></ion-icon></button>
-	      <button ion-fab><ion-icon name="logo-vimeo" (click)="vote(fab)"></ion-icon></button>
-	      <button ion-fab><ion-icon name="logo-googleplus" (click)="vote(fab)"></ion-icon></button>
-	      <button ion-fab><ion-icon name="logo-googleplus" (click)="vote(fab)"></ion-icon></button>
+	      <button ion-fab (click)="vote(fab)">
+	      	<img src="assets/images/emojis/happy-4.png"/>
+      	</button>
+	      <button ion-fab (click)="vote(fab)">
+	      	<img src="assets/images/emojis/bored.png"/>
+	      </button>
+	      <button ion-fab (click)="vote(fab)">
+	      	<img src="assets/images/emojis/angry.png"/>
+	      </button>
+	      <button ion-fab (click)="vote(fab)">
+	      	<img src="assets/images/emojis/crying-2.png"/>
+	      </button>
+	      <button ion-fab (click)="vote(fab)">
+	      	<img src="assets/images/emojis/sad.png"/>
+	      </button>
 	    </ion-fab-list>
 	</ion-fab>
 
