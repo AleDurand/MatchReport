@@ -18,8 +18,8 @@
 	</div>
 
 	<div class="fab-menu-overlay" [ngClass]="fabMenuOpen === true ? 'active' : ''"></div>
-	<ion-fab bottom center (click)="toggle()" #fab>
-	    <button ion-fab color="light"><ion-icon name="add"></ion-icon></button>
+	<ion-fab bottom center #fab>
+	    <button ion-fab color="light" (click)="toggle()"><ion-icon name="add"></ion-icon></button>
 	    <ion-fab-list side="right">
 	      <button ion-fab><ion-icon name="logo-facebook" (click)="vote(fab)" ></ion-icon></button>
 	      <button ion-fab><ion-icon name="logo-twitter" (click)="vote(fab)"></ion-icon></button>

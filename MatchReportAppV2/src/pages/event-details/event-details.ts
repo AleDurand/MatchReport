@@ -43,6 +43,7 @@ export class EventDetailsPage {
 
   vote(fab: FabContainer) {
     fab.close();
+    this.toggle();
   }
 
 }
