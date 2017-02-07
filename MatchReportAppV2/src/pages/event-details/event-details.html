@@ -9,7 +9,7 @@
     <img src="assets/images/banner.jpg" />
 	</div>
 	
-	<div padding>
+	<div>
   	<canvas baseChart [options]="options"
           [data]="chartData"
           [labels]="chartLabels"
@@ -17,13 +17,15 @@
     </canvas>
 	</div>
 
-	<ion-fab bottom center>
+	<div class="fab-menu-overlay" [ngClass]="fabMenuOpen === true ? 'active' : ''"></div>
+	<ion-fab bottom center (click)="toggle()" #fab>
 	    <button ion-fab color="light"><ion-icon name="add"></ion-icon></button>
-	    <ion-fab-list side="top">
-	      <button ion-fab><ion-icon name="logo-facebook"></ion-icon></button>
-	      <button ion-fab><ion-icon name="logo-twitter"></ion-icon></button>
-	      <button ion-fab><ion-icon name="logo-vimeo"></ion-icon></button>
-	      <button ion-fab><ion-icon name="logo-googleplus"></ion-icon></button>
+	    <ion-fab-list side="right">
+	      <button ion-fab><ion-icon name="logo-facebook" (click)="vote(fab)" ></ion-icon></button>
+	      <button ion-fab><ion-icon name="logo-twitter" (click)="vote(fab)"></ion-icon></button>
+	      <button ion-fab><ion-icon name="logo-vimeo" (click)="vote(fab)"></ion-icon></button>
+	      <button ion-fab><ion-icon name="logo-googleplus" (click)="vote(fab)"></ion-icon></button>
+	      <button ion-fab><ion-icon name="logo-googleplus" (click)="vote(fab)"></ion-icon></button>
 	    </ion-fab-list>
 	</ion-fab>
 
