@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Events, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { Facebook } from 'ionic-native';
+import { Facebook } from '@ionic-native/facebook';
+import { Events, Platform } from 'ionic-angular';
 
 import { User } from '../models/user.model';
 
 @Injectable()
 export class UserService {
 
-  constructor(public events: Events, public platform: Platform, public storage: Storage) {
+  constructor(
+    public events: Events, public facebook: Facebook, 
+    public platform: Platform, public storage: Storage
+  ) {
 
   }
 
@@ -16,47 +19,39 @@ export class UserService {
     let permissions = [ "public_profile", "email" ];
     
     return new Promise((resolve, reject) => {
-      if(this.platform.is('cordova')) {
-        Facebook.login(permissions).then((response) => {
-          let userId = response.authResponse.userID;
-          let params = new Array<string>();
+      this.facebook.login(permissions).then((response) => {
+        let userId = response.authResponse.userID;
+        let params = new Array<string>();
 
-          Facebook.api("/me?fields=first_name,last_name,gender,email", params).then((data) => {
-            data.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
-            let user = new User({ firstname: data.first_name, lastname: data.last_name, gender: data.gender, picture: data.picture, email: data.email });
-            this.storage.set('logged-in', true);
-            this.storage.set('user', user);
-            this.events.publish('user:login');
-            resolve(true);
-          }).catch((error) => { 
-            console.log(error);
-            reject(error);
-          });
+        this.facebook.api("/me?fields=first_name,last_name,gender,email", params).then((data) => {
+          data.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
+          let user = new User({ firstname: data.first_name, lastname: data.last_name, gender: data.gender, picture: data.picture, email: data.email });
+          this.storage.set('logged-in', true);
+          this.storage.set('user', user);
+          this.events.publish('user:login');
+          resolve(true);
         }).catch((error) => { 
-          console.log(error);
+          console.log(JSON.stringify(error));
           reject(error);
-        })
-      } else {
-        reject('Cordova is not available');
-      }
+        });
+      }).catch((error) => { 
+        console.log(JSON.stringify(error));
+        reject(error);
+      })
     });
   }
 
   logout() {
     return new Promise((resolve, reject) => {
-      if(this.platform.is('cordova')) {
-        Facebook.logout().then(() => {
-          this.storage.remove('logged-in');
-          this.storage.remove('user');
-          this.events.publish('user:logout');
-          resolve(true);
-        }).catch((error) => { 
-          console.log(error);
-          reject(error);
-        })    
-      } else {
-        reject('Cordova is not available');
-      }      
+      this.facebook.logout().then(() => {
+        this.storage.remove('logged-in');
+        this.storage.remove('user');
+        this.events.publish('user:logout');
+        resolve(true);
+      }).catch((error) => { 
+        console.log(JSON.stringify(error));
+        reject(error);
+      })
     })
     
   };

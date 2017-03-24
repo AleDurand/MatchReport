@@ -1,6 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { IonicStorageModule } from '@ionic/storage';
+import { Facebook } from '@ionic-native/facebook';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsModule } from 'ng2-charts';
 import { Configuration } from './app.constants';
@@ -44,7 +45,8 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     Timeline, TimelineBlock, TimelineContent, TimelineImg
   ],
   imports: [
-    IonicModule.forRoot(MyApp), ChartsModule
+    IonicModule.forRoot(MyApp), ChartsModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -58,6 +60,9 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     SettingsPage,
     TutorialPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, UserService, Storage, ToastService, Configuration]
+  providers: [
+    {provide: ErrorHandler, useClass: IonicErrorHandler}, 
+    Configuration, Facebook, UserService, ToastService, 
+  ]
 })
 export class AppModule {}

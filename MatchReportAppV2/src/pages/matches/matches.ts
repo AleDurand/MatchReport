@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Loading, LoadingController, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { MatchTimelinePage } from '../match-timeline/match-timeline';
 import { MatchService } from '../../services/match.service';
@@ -14,14 +14,8 @@ import { Match } from '../../models/match.model';
 export class MatchesPage {
 
 	public matches: Array<Match>;
-	public loader: Loading;
 
-  constructor(
-  	private loadingCtrl: LoadingController,	private matchService: MatchService, public navCtrl: NavController, 
-  	public navParams: NavParams
-	) {
-  	this.loader = this.loadingCtrl.create({ content: 'Loading...' });
-  	this.loader.present();
+  constructor(private matchService: MatchService, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewWillEnter() {
@@ -29,10 +23,6 @@ export class MatchesPage {
   		(data) => { this.matches = data; },
   		(error) => { console.log(error); }
 		);
-  }
-
-  ionViewDidEnter() {
-  	this.loader.dismissAll();
   }
 
   openMatch(match: Match) {

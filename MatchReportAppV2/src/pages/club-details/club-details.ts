@@ -15,8 +15,4 @@ export class ClubDetailsPage {
   	this.club = this.navParams.get('club');
   }
 
-  ionViewDidLoad() {
-  	
-  }
-
 }

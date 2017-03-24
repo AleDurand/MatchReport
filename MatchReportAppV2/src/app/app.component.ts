@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Events, MenuController, Nav, Platform } from 'ionic-angular';
+import { Events, LoadingController, MenuController, Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { ClubsPage } from '../pages/clubs/clubs';
@@ -24,8 +24,8 @@ export class MyApp {
   public user: User;
 
   constructor(
-    public events: Events, public menu: MenuController, public platform: Platform, 
-    public userService: UserService
+    public events: Events, private loadingCtrl: LoadingController, public menu: MenuController, 
+    public platform: Platform, public userService: UserService
   ) {
     this.initializeApp();
     this.pages = [
@@ -54,24 +54,30 @@ export class MyApp {
   }
 
   openPage(page) {
+    var loader = this.loadingCtrl.create();
+    loader.present();
     if (page.logsOut === true) {
       this.userService.logout().then((result) => {
-        this.nav.setRoot(page.component);
-      }).catch((error) => { console.log(error); });
+        this.nav.setRoot(page.component).then(() => loader.dismissAll());
+      }).catch((error) => loader.dismissAll());
     } else {
-      this.nav.setRoot(page.component);
+      this.nav.setRoot(page.component).then(() => loader.dismissAll());
     }
   }
 
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
-      this.userService.getUser().then((user) => { this.user = user; console.log(user);}); 
+      this.userService.getUser().then((user) => { this.user = user; }); 
       this.menu.enable(true);
-      this.nav.setRoot(ClubsPage);
+      var loader = this.loadingCtrl.create();
+      loader.present();
+      this.nav.setRoot(ClubsPage).then(() => loader.dismissAll());
     });
     this.events.subscribe('user:logout', () => { 
       this.menu.enable(false); 
-      this.nav.setRoot(TutorialPage);
+      var loader = this.loadingCtrl.create();
+      loader.present();
+      this.nav.setRoot(TutorialPage).then(() => loader.dismissAll());
     });      
   }
 
