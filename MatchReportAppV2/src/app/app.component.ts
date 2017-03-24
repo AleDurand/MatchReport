@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { Events, LoadingController, MenuController, Nav, Platform } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { ClubsPage } from '../pages/clubs/clubs';
 import { LiveMatchesPage } from '../pages/live-matches/live-matches';
@@ -25,7 +25,7 @@ export class MyApp {
 
   constructor(
     public events: Events, private loadingCtrl: LoadingController, public menu: MenuController, 
-    public platform: Platform, public userService: UserService
+    public platform: Platform, public splashScreen: SplashScreen, public userService: UserService
   ) {
     this.initializeApp();
     this.pages = [
@@ -46,8 +46,7 @@ export class MyApp {
       } else this.rootPage = TutorialPage;
         
       this.platform.ready().then(() => {
-        StatusBar.styleDefault();
-        setTimeout(() => { Splashscreen.hide(); }, 1000);
+        setTimeout(() => { this.splashScreen.hide(); }, 1000);
       });    
     })
     this.listenToLoginEvents();

@@ -1,12 +1,17 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicStorageModule } from '@ionic/storage';
 import { Facebook } from '@ionic-native/facebook';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsModule } from 'ng2-charts';
-import { Configuration } from './app.constants';
+
+//import { FacebookMock } from '../mocks/facebook.mock';
 
 import { MyApp } from './app.component';
+import { Configuration } from './app.constants';
+
 import { ClubsPage } from '../pages/clubs/clubs';
 import { ClubDetailsPage } from '../pages/club-details/club-details';
 import { EventDetailsPage } from  '../pages/event-details/event-details';
@@ -62,7 +67,9 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler}, 
-    Configuration, Facebook, UserService, ToastService, 
+    Configuration, UserService, ToastService, 
+    //{ provide: Facebook, useClass: FacebookMock },
+    Facebook, SplashScreen, StatusBar
   ]
 })
 export class AppModule {}
