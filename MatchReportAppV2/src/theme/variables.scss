@@ -24,7 +24,8 @@ $colors: (
   warning:    #f0ff5e,
   error:      #f53d3d,
   bg-color:   #222220,
-  facebook:   #3b5998
+  facebook:   #3b5998,
+  navbar:     #00887A
 );
 
 
@@ -45,14 +46,14 @@ $background-color:  color($colors, bg-color);
 // iOS only Sass variables can go here
 
 // Toolbar
-$toolbar-ios-background:                   color($colors, dark);
-$toolbar-ios-active-color:                 color($colors, dark);
+$toolbar-ios-background:                   color($colors, navbar);
+$toolbar-ios-active-color:                 color($colors, navbar);
 $toolbar-ios-inactive-color:               color($colors, light);
 
 // Tabs
 $tabs-ios-background:                      color($colors, dark);
 $tabs-ios-tab-color-active:                color($colors, primary);
-$tabs-ios-tab-color:                       color($colors, light);  
+$tabs-ios-tab-color:                       color($colors, light);
 $tabs-ios-tab-min-height: 49px;
 $tabs-ios-tab-padding: 0 2px;
 $tabs-ios-tab-font-size: 10px;
@@ -69,8 +70,8 @@ $segment-button-ios-text-color-activated:  color($colors, dark);
 // Material Design only Sass variables can go here
 
 // Toolbar
-$toolbar-md-background:                   color($colors, dark);
-$toolbar-md-active-color:                 color($colors, dark);
+$toolbar-md-background:                   color($colors, navbar);
+$toolbar-md-active-color:                 color($colors, navbar);
 $toolbar-md-inactive-color:               color($colors, light);
 
 // Tabs
@@ -97,14 +98,14 @@ $segment-button-md-text-color-activated:  color($colors, dark);
 // Windows only Sass variables can go here
 
 // Toolbar
-$toolbar-wp-background:                   color($colors, dark);
-$toolbar-wp-active-color:                 color($colors, dark);
+$toolbar-wp-background:                   color($colors, navbar);
+$toolbar-wp-active-color:                 color($colors, navbar);
 $toolbar-wp-inactive-color:               color($colors, light);
 
 // Tabs
 $tabs-wp-background:                      color($colors, dark);
 $tabs-wp-tab-color-active:                color($colors, primary);
-$tabs-wp-tab-color:                       color($colors, light);  
+$tabs-wp-tab-color:                       color($colors, light);
 $tabs-wp-tab-min-height: 49px;
 $tabs-wp-tab-padding: 0 2px 0px 0;
 $tabs-wp-tab-font-size: 10px;

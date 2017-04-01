@@ -1,9 +1,13 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+
 import { Facebook } from '@ionic-native/facebook';
+import { Network } from '@ionic-native/network';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsModule } from 'ng2-charts';
 
@@ -45,12 +49,13 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     SafePipe,
     SearchPipe,
     SettingsPage,
-    SortPipe,    
+    SortPipe,
     TutorialPage,
     Timeline, TimelineBlock, TimelineContent, TimelineImg
   ],
   imports: [
-    IonicModule.forRoot(MyApp), ChartsModule,
+    ChartsModule, HttpModule,
+    IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -66,10 +71,10 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     TutorialPage
   ],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler}, 
-    Configuration, UserService, ToastService, 
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Configuration, UserService, ToastService,
     //{ provide: Facebook, useClass: FacebookMock },
-    Facebook, SplashScreen, StatusBar
+    Facebook, Network, SplashScreen, StatusBar
   ]
 })
 export class AppModule {}
