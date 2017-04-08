@@ -15,74 +15,147 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+.searchbar-ios, .searchbar-md, .searchbar-wp {
+  .searchbar-clear-icon {
+    background-color: transparent;
+  }
+}
+
 .toast-success {
-    .toast-wrapper {
-        background:   color($colors, success);
-    }
-    .toast-message {
-         color:  color($colors, dark);
-     }
-     .toast-button {
-         color:  color($colors, dark);
-     }
+  top: -20px;
+
+  .toast-wrapper {
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 20px;
+    width: 90%;
+  }
+  .toast-message {
+    color:  color($colors, light);
+  }
+  .toast-button {
+    color:  color($colors, dark);
+  }
 }
 
 .toast-warning {
-     .toast-wrapper {
-         background-color:   color($colors, warning);
-     }
-     .toast-message {
-         color:  color($colors, dark);
-     }
-     .toast-button {
-         color:  color($colors, dark);
-     }
+  top: -20px;
+
+  .toast-wrapper {
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 20px;
+    width: 90%;
+  }
+  .toast-message {
+    color:  color($colors, light);
+  }
+  .toast-button {
+    color:  color($colors, dark);
+  }
 }
 
 .toast-error {
-     .toast-wrapper {
-         background-color:   color($colors, danger);
-     }
-     .toast-message {
-         color:  color($colors, dark);
-     }
-     .toast-button {
-         color:  color($colors, dark);
-     }
+  top: -20px;
+
+  .toast-wrapper {
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 20px;
+    width: 90%;
+  }
+  .toast-message {
+    color:  color($colors, light);
+  }
+  .toast-button {
+    color:  color($colors, dark);
+  }
+}
+
+div[empty-state] {
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  left: 10%;
+  right: 10%;
+
+  img {
+    width: auto;
+    margin: auto;
+    display: block;
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+  }
+
+}
+
+div[loading] {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+
+  ion-spinner * {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.bar-buttons .bar-button-md {
+  margin: 0 6px 0 6px;
+  padding: 0 6px 0 6px;
+}
+
+.loading-ios, .loading-md, .loading-wp {
+  ion-spinner {
+    width: 60px;
+    height: 60px;
+
+    * {
+      width: 60px;
+      height: 60px;
+      stroke: color($colors, primary);
+    }
+  }
+
+  .loading-wrapper {
+    color: transparent;
+    background: transparent;
+    box-shadow: none;
+  }
 }
 
 .banner {
-    max-height: 150px;
-    overflow: hidden;
-    border-bottom: 2px solid #fff; 
-    margin-bottom: 50px;
+  max-height: 150px;
+  overflow: hidden;
+  border-bottom: 2px solid #fff;
+  margin-bottom: 50px;
 
-    img {
-        -webkit-filter: blur(25px);
-        -moz-filter: blur(25px);
-        -o-filter: blur(25px);
-        -ms-filter: blur(25px);
-        filter: blur(25px);
-        min-width: 130%;
-    }
+  img {
+    -webkit-filter: blur(25px);
+    -moz-filter: blur(25px);
+    -o-filter: blur(25px);
+    -ms-filter: blur(25px);
+    filter: blur(25px);
+    min-width: 130%;
+  }
 }
 
 .avatar {
-    position: absolute;
-    max-width: 40%;
-    overflow: hidden;
-    top: 75px; left: 0; right: 0;
-    margin: auto;
+  position: absolute;
+  max-width: 40%;
+  overflow: hidden;
+  top: 75px; left: 0; right: 0;
+  margin: auto;
 
-    img {
-        max-height: 150px;
-        width: auto;
-        margin: auto;
-        display: block;
-        border: 2px solid #fff;
-        border-radius: 50%;
-        overflow: hidden
-    }
+  img {
+    max-height: 150px;
+    width: auto;
+    margin: auto;
+    display: block;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    overflow: hidden
+  }
 }
 
 

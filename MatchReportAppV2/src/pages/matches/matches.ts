@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
 import { MatchTimelinePage } from '../match-timeline/match-timeline';
 import { MatchService } from '../../services/match.service';
+import { ToastService } from '../../services/toast.service';
 
 import { Match } from '../../models/match.model';
 
@@ -14,14 +15,15 @@ import { Match } from '../../models/match.model';
 export class MatchesPage {
 
 	public matches: Array<Match>;
+  public loading: boolean = true;
 
-  constructor(private matchService: MatchService, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private matchService: MatchService, public navCtrl: NavController, private toast: ToastService) {
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
   	this.matchService.getAll().subscribe(
-  		(data) => { this.matches = data; },
-  		(error) => { console.log(error); }
+  		(data) => { this.matches = data; this.loading = false; },
+  		(error) => { this.loading = false; this.toast.error(error.message); }
 		);
   }
 

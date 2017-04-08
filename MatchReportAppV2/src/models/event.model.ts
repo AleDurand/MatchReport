@@ -9,5 +9,4 @@ export class Event extends ModelFactory {
 	@alias('minute') minute: number;
 	@alias('extra-minute') extraMinute: number;
 	@alias('type') type: string;
-
 }

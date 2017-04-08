@@ -8,13 +8,18 @@
 </ion-header>
 
 <ion-content padding>
+  <div *ngIf="(!loading) && (clubs === undefined || clubs === null || clubs.length === 0)" empty-state padding>
+    <img src="assets/images/empty-state.png" />
+    <h3 text-center>No clubs found.</h3>
+  </div>
+
 	<ion-list>
 	  <ion-item *ngFor="let club of clubs; let i = index; " (click)="open(i)">
 	    <ion-avatar item-left>
 	      <img [src]="club.image">
 	    </ion-avatar>
-	    <h2>{{club.name}}</h2>
-	    <p>{{club.address}}</p>
+	    <h2>{{ club.name }}</h2>
+	    <p>{{ club.address }}</p>
 	  </ion-item>
 	</ion-list>
 </ion-content>

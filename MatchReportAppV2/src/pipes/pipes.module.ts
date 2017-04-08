@@ -5,7 +5,6 @@ import { SearchPipe } from './search.pipe';
 import { SortPipe } from './sort.pipe';
 
 @NgModule({
-  imports: [],
   declarations: [ SafePipe, SearchPipe, SortPipe ],
   exports: [ SafePipe, SearchPipe, SortPipe ]
 })

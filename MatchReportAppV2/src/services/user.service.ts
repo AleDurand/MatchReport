@@ -9,7 +9,7 @@ import { User } from '../models/user.model';
 export class UserService {
 
   constructor(
-    public events: Events, public facebook: Facebook, 
+    public events: Events, public facebook: Facebook,
     public platform: Platform, public storage: Storage
   ) {
 
@@ -17,7 +17,7 @@ export class UserService {
 
   login() {
     let permissions = [ "public_profile", "email" ];
-    
+
     return new Promise((resolve, reject) => {
       this.facebook.login(permissions).then((response) => {
         let userId = response.authResponse.userID;
@@ -25,19 +25,13 @@ export class UserService {
 
         this.facebook.api("/me?fields=first_name,last_name,gender,email", params).then((data) => {
           data.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
-          let user = new User({ firstname: data.first_name, lastname: data.last_name, gender: data.gender, picture: data.picture, email: data.email });
+          let user = { firstname: data.first_name, lastname: data.last_name, gender: data.gender, picture: data.picture, email: data.email };
           this.storage.set('logged-in', true);
           this.storage.set('user', user);
           this.events.publish('user:login');
           resolve(true);
-        }).catch((error) => { 
-          console.log(JSON.stringify(error));
-          reject(error);
-        });
-      }).catch((error) => { 
-        console.log(JSON.stringify(error));
-        reject(error);
-      })
+        }).catch((error) => { reject(error); });
+      }).catch((error) => { reject(error); })
     });
   }
 
@@ -48,12 +42,9 @@ export class UserService {
         this.storage.remove('user');
         this.events.publish('user:logout');
         resolve(true);
-      }).catch((error) => { 
-        console.log(JSON.stringify(error));
-        reject(error);
-      })
+      }).catch((error) => { reject(error); })
     })
-    
+
   };
 
   getUser() {
@@ -66,6 +57,6 @@ export class UserService {
     return this.storage.get('logged-in').then((value) => {
       return value === true;
     });
-  }  
+  }
 
 }

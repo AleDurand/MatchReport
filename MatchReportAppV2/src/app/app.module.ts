@@ -46,7 +46,17 @@ import { ToastService } from '../services/toast.service';
   ],
   imports: [
     BrowserModule, ChartsModule, ComponentsModule, HttpModule, PipesModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {}, {
+      links: [
+        { component: ClubsPage, name: 'Clubs', segment: 'clubs' },
+        { component: ClubDetailsPage, name: 'ClubDetails', segment: 'clubs/:id' },
+        { component: EventDetailsPage, name: 'EventDetails', segment: 'event/:id' },
+        { component: LiveMatchesPage, name: 'LiveMatches', segment: 'matches/live' },
+        { component: MatchesPage, name: 'Matches', segment: 'matches' },
+        { component: MatchTimelinePage, name: 'MatchDetails', segment: 'matches/:id' },
+        { component: SettingsPage, name: 'Settings', segment: 'settings' },
+        { component: TutorialPage, name: 'Tutorial', segment: 'tutorial' }
+      ]}),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],

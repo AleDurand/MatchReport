@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { EventDetailsPage } from '../event-details/event-details';
-import { EventService } from  '../../services/event.service'; 
+import { EventService } from  '../../services/event.service';
+import { ToastService } from '../../services/toast.service';
 
 import { Event } from '../../models/event.model';
 
@@ -13,24 +14,22 @@ import { Event } from '../../models/event.model';
 
 })
 export class MatchTimelinePage {
-	
+
   public events : Array<Event>;
 
-  constructor(public navCtrl: NavController, private EventService: EventService) {}
-  
-  ionViewWillEnter() {
-  	this.getAll();
+  constructor(private eventService: EventService, public navCtrl: NavController, private toast: ToastService) {
 
   }
 
-  getAll() {
-  	this.EventService.getAll().subscribe((events) => {
-  		this.events = events;
-  	})
+  ionViewDidEnter() {
+    this.eventService.getAll().subscribe(
+      (data) => { this.events = data; },
+      (error) => { this.toast.error(error.message); }
+    );
   }
 
   openEvent(event: Event) {
     this.navCtrl.push(EventDetailsPage, { index: event.id });
-  }  
- 
+  }
+
 }

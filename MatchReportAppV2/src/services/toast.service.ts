@@ -4,15 +4,16 @@ import { ToastController } from 'ionic-angular';
 @Injectable()
 export class ToastService {
 
-  constructor(private toast : ToastController){
+  constructor(private toast : ToastController) {
 
   }
 
   default(message){
     let toast = this.toast.create({
       message: message,
-      duration: 3000,
-      showCloseButton: true
+      duration: 5000,
+      showCloseButton: false,
+      dismissOnPageChange: true
     });
     toast.present();
   }
@@ -20,19 +21,21 @@ export class ToastService {
   success(message){
     let toast = this.toast.create({
       message: message,
-      duration: 3000,
+      duration: 5000,
       cssClass: 'toast-success',
-      showCloseButton: true
+      showCloseButton: false,
+      dismissOnPageChange: true
     });
-    toast.present();   
+    toast.present();
   }
 
   warning(message){
     let toast = this.toast.create({
       message: message,
-      duration: 3000,
+      duration: 5000,
       cssClass: 'toast-warning',
-      showCloseButton: true
+      showCloseButton: false,
+      dismissOnPageChange: true
     });
     toast.present();
   }
@@ -40,9 +43,10 @@ export class ToastService {
   error(message){
     let toast = this.toast.create({
       message: message,
-      duration: 3000,
+      duration: 5000,
       cssClass: 'toast-error',
-      showCloseButton: true
+      showCloseButton: false,
+      dismissOnPageChange: true
     });
     toast.present();
   }

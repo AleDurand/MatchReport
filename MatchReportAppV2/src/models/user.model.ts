@@ -7,5 +7,4 @@ export class User extends ModelFactory {
   @alias('gender') gender: string;
   @alias('picture') picture: string;
   @alias('email') email: string;
-
 }
