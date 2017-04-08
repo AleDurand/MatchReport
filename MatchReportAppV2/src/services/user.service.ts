@@ -25,7 +25,7 @@ export class UserService {
 
         this.facebook.api("/me?fields=first_name,last_name,gender,email", params).then((data) => {
           data.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
-          let user = { firstname: data.first_name, lastname: data.last_name, gender: data.gender, picture: data.picture, email: data.email };
+          let user = new User({ firstname: data.first_name, lastname: data.last_name, gender: data.gender, picture: data.picture, email: data.email });
           this.storage.set('logged-in', true);
           this.storage.set('user', user);
           this.events.publish('user:login');

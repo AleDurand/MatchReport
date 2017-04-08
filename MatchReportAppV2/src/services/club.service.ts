@@ -23,9 +23,9 @@ export class ClubService {
 }
 
 let clubs = [
-  { id: 1, name: 'Boca Juniors', address: 'Alem 2200', image: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png', url: 'http://www.bocajuniors.com.ar/'},
-  { id: 2, name: 'River Plate', address: 'Alem 2200', image: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png', url: 'http://www.bocajuniors.com.ar/'},
-  { id: 3, name: 'San Lorenzo', address: 'Alem 2200', image: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png', url: 'http://www.bocajuniors.com.ar/'},
-  { id: 4, name: 'Independiente', address: 'Alem 2200', image: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png', url: 'http://www.bocajuniors.com.ar/'},
-  { id: 5, name: 'Racing club', address: 'Alem 2200', image: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png', url: 'http://www.bocajuniors.com.ar/'},
+  new Club({ id: 1, name: 'Boca Juniors', address: 'Alem 2200', image: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png', url: 'http://www.bocajuniors.com.ar/'}),
+  new Club({ id: 2, name: 'River Plate', address: 'Alem 2200', image: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png', url: 'http://www.bocajuniors.com.ar/'}),
+  new Club({ id: 3, name: 'San Lorenzo', address: 'Alem 2200', image: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png', url: 'http://www.bocajuniors.com.ar/'}),
+  new Club({ id: 4, name: 'Independiente', address: 'Alem 2200', image: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png', url: 'http://www.bocajuniors.com.ar/'}),
+  new Club({ id: 5, name: 'Racing club', address: 'Alem 2200', image: 'http://a.espncdn.com/i/teamlogos/soccer/500/5.png', url: 'http://www.bocajuniors.com.ar/'}),
 ]
