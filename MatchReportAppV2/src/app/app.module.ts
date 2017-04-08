@@ -1,5 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
@@ -54,7 +55,7 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     Timeline, TimelineBlock, TimelineContent, TimelineImg
   ],
   imports: [
-    ChartsModule, HttpModule,
+    BrowserModule, ChartsModule, HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
