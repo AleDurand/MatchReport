@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'timeline-content',
-  templateUrl: 'timeline-content.html',
+  templateUrl: 'timeline-content.html'
 })
 export class TimelineContent {
 

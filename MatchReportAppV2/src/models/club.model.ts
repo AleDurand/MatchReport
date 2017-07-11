@@ -7,5 +7,4 @@ export class Club extends ModelFactory {
 	@alias('address') address: string;
 	@alias('image') image: string;
 	@alias('url') url: string;
-
 }

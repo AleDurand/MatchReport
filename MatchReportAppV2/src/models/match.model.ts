@@ -9,5 +9,4 @@ export class Match extends ModelFactory {
 	@alias('local') localTeam: string;
 	@alias('visitor') visitorTeam: string;
 	@alias('status') status: MatchStatus;
-	
 }

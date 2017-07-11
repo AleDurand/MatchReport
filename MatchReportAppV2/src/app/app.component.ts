@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { Events, MenuController, Nav, Platform } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { Events, LoadingController, MenuController, Nav, Platform } from 'ionic-angular';
 
 import { ClubsPage } from '../pages/clubs/clubs';
 import { LiveMatchesPage } from '../pages/live-matches/live-matches';
-import { MatchesPage } from '../pages/matches/matches'; 
+import { MatchesPage } from '../pages/matches/matches';
 import { SettingsPage } from  '../pages/settings/settings';
 import { TutorialPage } from  '../pages/tutorial/tutorial';
 
@@ -24,8 +24,8 @@ export class MyApp {
   public user: User;
 
   constructor(
-    public events: Events, public menu: MenuController, public platform: Platform, 
-    public userService: UserService
+    public events: Events, private loadingCtrl: LoadingController, public menu: MenuController,
+    public platform: Platform, public splashScreen: SplashScreen, public userService: UserService
   ) {
     this.initializeApp();
     this.pages = [
@@ -44,35 +44,40 @@ export class MyApp {
         this.userService.getUser().then((user) => { this.user = user; });
         this.rootPage = ClubsPage;
       } else this.rootPage = TutorialPage;
-        
+
       this.platform.ready().then(() => {
-        StatusBar.styleDefault();
-        setTimeout(() => { Splashscreen.hide(); }, 1000);
-      });    
+        setTimeout(() => { this.splashScreen.hide(); }, 1000);
+      });
     })
     this.listenToLoginEvents();
   }
 
   openPage(page) {
     if (page.logsOut === true) {
+      var loader = this.loadingCtrl.create();
+      loader.present();
       this.userService.logout().then((result) => {
-        this.nav.setRoot(page.component);
-      }).catch((error) => { console.log(error); });
+        this.nav.setRoot(page.component).then(() => loader.dismiss().then(() => {}));
+      }).catch((error) => loader.dismiss().then(() => {}));
     } else {
-      this.nav.setRoot(page.component);
+      this.nav.setRoot(page.component).then(() => {});
     }
   }
 
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
-      this.userService.getUser().then((user) => { this.user = user; console.log(user);}); 
+      this.userService.getUser().then((user) => { this.user = user; });
       this.menu.enable(true);
-      this.nav.setRoot(ClubsPage);
+      var loader = this.loadingCtrl.create();
+      loader.present();
+      this.nav.setRoot(ClubsPage).then(() => loader.dismiss().then(() => {}));
     });
-    this.events.subscribe('user:logout', () => { 
-      this.menu.enable(false); 
-      this.nav.setRoot(TutorialPage);
-    });      
+    this.events.subscribe('user:logout', () => {
+      this.menu.enable(false);
+      var loader = this.loadingCtrl.create();
+      loader.present();
+      this.nav.setRoot(TutorialPage).then(() => loader.dismiss().then(() => {}));
+    });
   }
 
   isActive(page: Page) {

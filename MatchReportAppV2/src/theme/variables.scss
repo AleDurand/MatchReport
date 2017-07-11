@@ -1,5 +1,7 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/v2/theming/
+$font-path: "../assets/fonts";
+
 @import "ionic.globals";
 
 
@@ -22,8 +24,10 @@ $colors: (
   warning:    #f0ff5e,
   error:      #f53d3d,
   bg-color:   #222220,
-  facebook:   #3b5998
+  facebook:   #3b5998,
+  navbar:     #00887A
 );
+
 
 // Shared Variables
 // --------------------------------------------------
@@ -34,15 +38,16 @@ $colors: (
 
 $headings-font-weight: 300;
 $text-color:        color($colors, light);
-$background-color:	color($colors, bg-color);
+$background-color:  color($colors, bg-color);
+
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
 // Toolbar
-$toolbar-ios-background:                   color($colors, dark);
-$toolbar-ios-active-color:                 color($colors, dark);
+$toolbar-ios-background:                   color($colors, navbar);
+$toolbar-ios-active-color:                 color($colors, navbar);
 $toolbar-ios-inactive-color:               color($colors, light);
 
 // Tabs
@@ -58,13 +63,14 @@ $toast-ios-background:                     color($colors, primary);
 // Change the color of the segment button text
 $segment-button-ios-text-color-activated:  color($colors, dark);
 
+
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
 // Toolbar
-$toolbar-md-background:                   color($colors, dark);
-$toolbar-md-active-color:                 color($colors, dark);
+$toolbar-md-background:                   color($colors, navbar);
+$toolbar-md-active-color:                 color($colors, navbar);
 $toolbar-md-inactive-color:               color($colors, light);
 
 // Tabs
@@ -88,8 +94,8 @@ $segment-button-md-text-color-activated:  color($colors, dark);
 // Windows only Sass variables can go here
 
 // Toolbar
-$toolbar-wp-background:                   color($colors, dark);
-$toolbar-wp-active-color:                 color($colors, dark);
+$toolbar-wp-background:                   color($colors, navbar);
+$toolbar-wp-active-color:                 color($colors, navbar);
 $toolbar-wp-inactive-color:               color($colors, light);
 
 // Tabs
@@ -106,6 +112,7 @@ $toast-wp-background:                     color($colors, primary);
 // Change the color of the segment button text
 $segment-button-wp-text-color-activated:  color($colors, dark);
 
+
 // App Theme
 // --------------------------------------------------
 // Ionic apps can have different themes applied, which can
@@ -121,5 +128,11 @@ $segment-button-wp-text-color-activated:  color($colors, dark);
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/v2/ionicons/
 
-$ionicons-font-path: "../assets/fonts";
-@import "ionicons";
+@import "ionic.ionicons";
+
+
+// Fonts
+// --------------------------------------------------
+
+@import "roboto";
+@import "noto-sans";

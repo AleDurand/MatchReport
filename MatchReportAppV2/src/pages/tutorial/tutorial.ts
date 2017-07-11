@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import { ToastService } from '../../services/toast.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -10,12 +11,14 @@ import { UserService } from '../../services/user.service';
 
 export class TutorialPage {
 
-  constructor(public navCtrl: NavController, public userService: UserService) {}
+  constructor(public navCtrl: NavController, private toast: ToastService, public userService: UserService) {
+    
+  }
 
   loginWithFacebook() {
     this.userService.login()
       .then((result) => {})
-      .catch((error) => {})
+      .catch((error) => { this.toast.error(error.message); })
   }
 
 }

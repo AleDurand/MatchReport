@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "description": "MatchReportAppV2: An Ionic project",
-  "author": "Ionic Framework",
+  "name": "MatchReportAppV2",
+  "description": "MatchReportAppV2: Final Project",
+  "author": "Alejandro Durand - Francisco Cuenca",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {

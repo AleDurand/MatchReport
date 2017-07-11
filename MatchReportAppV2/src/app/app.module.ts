@@ -1,5 +1,6 @@
 import { NgModule, LOCALE_ID, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
@@ -17,6 +18,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
+
 import { ClubsPage } from '../pages/clubs/clubs';
 import { ClubDetailsPage } from '../pages/club-details/club-details';
 import { EventDetailsPage } from  '../pages/event-details/event-details';
@@ -42,7 +44,7 @@ import { ToastService } from '../services/toast.service';
     TutorialPage
   ],
   imports: [
-    BrowserModule, ChartsModule, ComponentsModule,
+    BrowserModule, ChartsModule, ComponentsModule, HttpModule,
     IonicModule.forRoot(MyApp), IonicStorageModule.forRoot(),
     PipesModule
   ],

@@ -8,6 +8,11 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="(!loading) && (matches === undefined || matches === null || matches.length === 0)" empty-state padding>
+    <img src="assets/images/empty-state.png" />
+    <h3 text-center>No matches found.</h3>
+  </div>
+
 	<ion-grid>
 		<ion-row wrap>
 			<ion-col col-width *ngFor="let match of matches; ">
