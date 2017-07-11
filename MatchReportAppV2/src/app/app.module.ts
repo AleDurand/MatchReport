@@ -1,9 +1,20 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, LOCALE_ID, ErrorHandler } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsModule } from 'ng2-charts';
+
 import { Configuration } from './app.constants';
+import { ComponentsModule } from '../components/components.module';
+import { PipesModule } from '../pipes/pipes.module';
+
+import { Facebook } from '@ionic-native/facebook';
+import { Keyboard } from '@ionic-native/keyboard';
+import { HeaderColor } from '@ionic-native/header-color';
+import { Network } from '@ionic-native/network';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { ClubsPage } from '../pages/clubs/clubs';
@@ -15,17 +26,8 @@ import { MatchTimelinePage } from  '../pages/match-timeline/match-timeline';
 import { SettingsPage } from  '../pages/settings/settings';
 import { TutorialPage } from  '../pages/tutorial/tutorial';
 
-import { SafePipe } from '../pipes/safe.pipe';
-import { SearchPipe } from '../pipes/search.pipe';
-import { SortPipe } from '../pipes/sort.pipe';
-
 import { UserService } from '../services/user.service';
 import { ToastService } from '../services/toast.service';
-
-import { Timeline } from '../components/timeline/timeline/timeline';
-import { TimelineBlock } from '../components/timeline/timeline-block/timeline-block';
-import { TimelineContent } from '../components/timeline/timeline-content/timeline-content';
-import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
 
 @NgModule({
   declarations: [
@@ -36,15 +38,13 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     LiveMatchesPage,
     MatchesPage,
     MatchTimelinePage,
-    SafePipe,
-    SearchPipe,
     SettingsPage,
-    SortPipe,    
-    TutorialPage,
-    Timeline, TimelineBlock, TimelineContent, TimelineImg
+    TutorialPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp), ChartsModule
+    BrowserModule, ChartsModule, ComponentsModule,
+    IonicModule.forRoot(MyApp), IonicStorageModule.forRoot(),
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -58,6 +58,11 @@ import { TimelineImg } from '../components/timeline/timeline-img/timeline-img';
     SettingsPage,
     TutorialPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, UserService, Storage, ToastService, Configuration]
+  providers: [
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: LOCALE_ID, useValue: "es-AR" },
+    UserService, Storage, ToastService, Configuration,
+    Facebook, Keyboard, HeaderColor, Network, SplashScreen, StatusBar
+  ]
 })
 export class AppModule {}
